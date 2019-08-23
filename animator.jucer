@@ -5,6 +5,17 @@
               companyWebsite="http://bgporter.net">
   <MAINGROUP id="HYQXHl" name="animator">
     <GROUP id="{A498D611-780A-08AE-6DE7-089A2C3BDDFA}" name="Source">
+      <GROUP id="{414A9F45-5BCF-6CAE-B3BB-428C120433CF}" name="animator">
+        <FILE id="Ao7lwP" name="animatedValue.cpp" compile="1" resource="0"
+              file="Source/animator/animatedValue.cpp"/>
+        <FILE id="HhEzmx" name="animatedValue.h" compile="0" resource="0" file="Source/animator/animatedValue.h"/>
+        <FILE id="Y7MCDz" name="animationController.cpp" compile="1" resource="0"
+              file="Source/animator/animationController.cpp"/>
+        <FILE id="Yb5bLP" name="animationController.h" compile="0" resource="0"
+              file="Source/animator/animationController.h"/>
+        <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
+        <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
+      </GROUP>
       <FILE id="rwQYM5" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="iYgyZN" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>

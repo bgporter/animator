@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="animator\Source\animator">
+      <UniqueIdentifier>{C4B927BD-8AB2-FEA9-D5EE-B5898D390F5F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="animator\Source">
       <UniqueIdentifier>{2D6E53D5-FE30-02D0-FC7D-1B4AF58E8305}</UniqueIdentifier>
     </Filter>
@@ -232,6 +235,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\animator\animatedValue.cpp">
+      <Filter>animator\Source\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\animator\animationController.cpp">
+      <Filter>animator\Source\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\animator\animator.cpp">
+      <Filter>animator\Source\animator</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>animator\Source</Filter>
     </ClCompile>
@@ -1551,6 +1563,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\animator\animatedValue.h">
+      <Filter>animator\Source\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\animator\animationController.h">
+      <Filter>animator\Source\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\animator\animator.h">
+      <Filter>animator\Source\animator</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>animator\Source</Filter>
     </ClInclude>

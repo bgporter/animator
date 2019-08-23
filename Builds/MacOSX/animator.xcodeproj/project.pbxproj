@@ -37,6 +37,18 @@
 			isa = PBXBuildFile;
 			fileRef = 26B4DF4F9E460E34079D015B;
 		};
+		AD9F2649E3CD91947E59471F = {
+			isa = PBXBuildFile;
+			fileRef = 7BF5439F045E9693B5963AB1;
+		};
+		BCAAE021DBDCFE925E36B90B = {
+			isa = PBXBuildFile;
+			fileRef = BFA510CA6A9CB11559F52688;
+		};
+		8E558732725F73C9F8C5DAFB = {
+			isa = PBXBuildFile;
+			fileRef = 001B902D85C93690AC3E20BE;
+		};
 		93C3A228B793259CAC1A4DF6 = {
 			isa = PBXBuildFile;
 			fileRef = 77682DC2163B76CD96A3E6CB;
@@ -72,6 +84,13 @@
 		23383ECC4A0452418B962579 = {
 			isa = PBXBuildFile;
 			fileRef = 07429F43650E3B38AD856F61;
+		};
+		001B902D85C93690AC3E20BE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = animator.cpp;
+			path = ../../Source/animator/animator.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		07429F43650E3B38AD856F61 = {
 			isa = PBXFileReference;
@@ -185,6 +204,20 @@
 			path = ../../Source/MainComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7BF5439F045E9693B5963AB1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = animatedValue.cpp;
+			path = ../../Source/animator/animatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		86CCFD019A40DE65460F38CD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = animator.h;
+			path = ../../Source/animator/animator.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8C63EAA908F1692804B4E48B = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -225,6 +258,20 @@
 			lastKnownFileType = text.plist.xml;
 			name = "Info-App.plist";
 			path = "Info-App.plist";
+			sourceTree = "SOURCE_ROOT";
+		};
+		B842E12F59DFF3F92EAD1084 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = animationController.h;
+			path = ../../Source/animator/animationController.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BFA510CA6A9CB11559F52688 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = animationController.cpp;
+			path = ../../Source/animator/animationController.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C36B848EB447C013DBAF350D = {
@@ -269,9 +316,30 @@
 			path = ../../Source/MainComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		EDDF1A770038317C064E2F9E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = animatedValue.h;
+			path = ../../Source/animator/animatedValue.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DEAEF87A30228C9BDB5BE903 = {
+			isa = PBXGroup;
+			children = (
+				7BF5439F045E9693B5963AB1,
+				EDDF1A770038317C064E2F9E,
+				BFA510CA6A9CB11559F52688,
+				B842E12F59DFF3F92EAD1084,
+				001B902D85C93690AC3E20BE,
+				86CCFD019A40DE65460F38CD,
+			);
+			name = animator;
+			sourceTree = "<group>";
+		};
 		8564D09EA783AD2C0C1E2B44 = {
 			isa = PBXGroup;
 			children = (
+				DEAEF87A30228C9BDB5BE903,
 				E55679B42F2D7BA8EBB07359,
 				77682DC2163B76CD96A3E6CB,
 				240E4503C3966755A99108BD,
@@ -570,6 +638,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD9F2649E3CD91947E59471F,
+				BCAAE021DBDCFE925E36B90B,
+				8E558732725F73C9F8C5DAFB,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
 				71BFA7C1B048FD696017ACE1,
