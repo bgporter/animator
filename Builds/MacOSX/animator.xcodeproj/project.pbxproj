@@ -49,6 +49,10 @@
 			isa = PBXBuildFile;
 			fileRef = 001B902D85C93690AC3E20BE;
 		};
+		89A00FFFA00DEC117A0A5105 = {
+			isa = PBXBuildFile;
+			fileRef = 5A52104C12AEBAA4C3B17904;
+		};
 		93C3A228B793259CAC1A4DF6 = {
 			isa = PBXBuildFile;
 			fileRef = 77682DC2163B76CD96A3E6CB;
@@ -183,6 +187,13 @@
 			path = "../../JuceLibraryCode/modules/juce_events";
 			sourceTree = "SOURCE_ROOT";
 		};
+		5A52104C12AEBAA4C3B17904 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = linearAnimatedValue.cpp;
+			path = ../../Source/animator/linearAnimatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		657934ED3EE52533E03EC2CB = {
 			isa = PBXFileReference;
 			explicitFileType = wrapper.application;
@@ -288,6 +299,13 @@
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		CFDDA62D198D43FB87293D7C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = linearAnimatedValue.h;
+			path = ../../Source/animator/linearAnimatedValue.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		D937EA11CFE842B78CB80E10 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -332,6 +350,8 @@
 				B842E12F59DFF3F92EAD1084,
 				001B902D85C93690AC3E20BE,
 				86CCFD019A40DE65460F38CD,
+				5A52104C12AEBAA4C3B17904,
+				CFDDA62D198D43FB87293D7C,
 			);
 			name = animator;
 			sourceTree = "<group>";
@@ -641,6 +661,7 @@
 				AD9F2649E3CD91947E59471F,
 				BCAAE021DBDCFE925E36B90B,
 				8E558732725F73C9F8C5DAFB,
+				89A00FFFA00DEC117A0A5105,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
 				71BFA7C1B048FD696017ACE1,

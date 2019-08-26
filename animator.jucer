@@ -15,6 +15,10 @@
               file="Source/animator/animationController.h"/>
         <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
         <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
+        <FILE id="zJIprT" name="linearAnimatedValue.cpp" compile="1" resource="0"
+              file="Source/animator/linearAnimatedValue.cpp"/>
+        <FILE id="hBiFL9" name="linearAnimatedValue.h" compile="0" resource="0"
+              file="Source/animator/linearAnimatedValue.h"/>
       </GROUP>
       <FILE id="rwQYM5" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="iYgyZN" name="MainComponent.cpp" compile="1" resource="0"
