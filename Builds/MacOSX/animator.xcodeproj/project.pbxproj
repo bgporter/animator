@@ -49,6 +49,10 @@
 			isa = PBXBuildFile;
 			fileRef = 001B902D85C93690AC3E20BE;
 		};
+		3137A8D456077DB2573D4B17 = {
+			isa = PBXBuildFile;
+			fileRef = DA3D1855CA6ABD7AC2AE9AA8;
+		};
 		89A00FFFA00DEC117A0A5105 = {
 			isa = PBXBuildFile;
 			fileRef = 5A52104C12AEBAA4C3B17904;
@@ -250,6 +254,13 @@
 			path = System/Library/Frameworks/WebKit.framework;
 			sourceTree = SDKROOT;
 		};
+		99828A0F02116A80CF24E542 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = constantAnimatedValue.h;
+			path = ../../Source/animator/constantAnimatedValue.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9CBCC63355F8E32C0E672267 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -327,6 +338,13 @@
 			path = "../../JuceLibraryCode/modules/juce_data_structures";
 			sourceTree = "SOURCE_ROOT";
 		};
+		DA3D1855CA6ABD7AC2AE9AA8 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = constantAnimatedValue.cpp;
+			path = ../../Source/animator/constantAnimatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E3BC0F150F8E6E8C5820BB5B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -364,6 +382,8 @@
 				B842E12F59DFF3F92EAD1084,
 				001B902D85C93690AC3E20BE,
 				86CCFD019A40DE65460F38CD,
+				DA3D1855CA6ABD7AC2AE9AA8,
+				99828A0F02116A80CF24E542,
 				5A52104C12AEBAA4C3B17904,
 				CFDDA62D198D43FB87293D7C,
 			);
@@ -677,6 +697,7 @@
 				AD9F2649E3CD91947E59471F,
 				BCAAE021DBDCFE925E36B90B,
 				8E558732725F73C9F8C5DAFB,
+				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,

@@ -244,6 +244,9 @@
     <ClCompile Include="..\..\Source\animator\animator.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\animator\constantAnimatedValue.cpp">
+      <Filter>animator\Source\animator</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\animator\linearAnimatedValue.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
@@ -1579,6 +1582,9 @@
       <Filter>animator\Source\animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\animator\animator.h">
+      <Filter>animator\Source\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\animator\constantAnimatedValue.h">
       <Filter>animator\Source\animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\animator\linearAnimatedValue.h">

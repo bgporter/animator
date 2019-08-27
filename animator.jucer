@@ -17,6 +17,10 @@
               file="Source/animator/animationController.h"/>
         <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
         <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
+        <FILE id="j8J8U6" name="constantAnimatedValue.cpp" compile="1" resource="0"
+              file="Source/animator/constantAnimatedValue.cpp"/>
+        <FILE id="qJIfSm" name="constantAnimatedValue.h" compile="0" resource="0"
+              file="Source/animator/constantAnimatedValue.h"/>
         <FILE id="zJIprT" name="linearAnimatedValue.cpp" compile="1" resource="0"
               file="Source/animator/linearAnimatedValue.cpp"/>
         <FILE id="hBiFL9" name="linearAnimatedValue.h" compile="0" resource="0"
