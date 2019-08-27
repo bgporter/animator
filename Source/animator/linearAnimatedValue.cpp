@@ -18,7 +18,12 @@ LinearAnimatedValue::LinearAnimatedValue(float startVal, float endVal,
 
 float LinearAnimatedValue::GenerateNextValue(int deltaTime)
 {
-   return fCurrentVal + (deltaTime * fDelta);
+   auto calculated = fCurrentVal + (deltaTime * fDelta);
+   if (fStartVal < fEndVal)
+   {
+      return jmin(calculated, fEndVal);
+   }
+   return jmax(calculated, fEndVal);
 }
 
 #ifdef qRunUnitTests

@@ -92,6 +92,24 @@ public:
          
       });
       
+      Test("Missed the end time", [=]{
+         auto inc = std::make_unique<LinearAnimatedValue>(0, 100, 0.5f, 100);
+         expectWithinAbsoluteError<float>(inc->GetNextValue(0), 0.f, 0.01);
+         expect(! inc->IsFinished());
+         expectWithinAbsoluteError<float>(inc->GetNextValue(200), 100.f, 0.01);
+         expect(inc->IsFinished());
+         
+         
+         
+         
+         auto dec = std::make_unique<LinearAnimatedValue>(100, 0, 0.5f, 100);
+         expectWithinAbsoluteError<float>(dec->GetNextValue(0), 100.f, 0.01);
+         expect(! dec->IsFinished());
+         expectWithinAbsoluteError<float>(dec->GetNextValue(200), 0.f, 0.01);
+         expect(dec->IsFinished());
+         
+      });
+      
    }
 
 };
