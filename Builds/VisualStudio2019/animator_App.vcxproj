@@ -1359,6 +1359,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\subTest.h"/>
+    <ClInclude Include="..\..\Source\animatorApp.h"/>
     <ClInclude Include="..\..\Source\animator\animatedValue.h"/>
     <ClInclude Include="..\..\Source\animator\animationController.h"/>
     <ClInclude Include="..\..\Source\animator\animator.h"/>

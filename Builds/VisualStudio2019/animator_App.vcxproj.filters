@@ -1566,6 +1566,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\subTest.h">
+      <Filter>animator\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\animatorApp.h">
+      <Filter>animator\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\animator\animatedValue.h">
       <Filter>animator\Source\animator</Filter>
     </ClInclude>

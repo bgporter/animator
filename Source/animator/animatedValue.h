@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../JuceLibraryCode/JuceHeader.h"
+#include "../animatorApp.h"
 
 
 class AnimatedValue 

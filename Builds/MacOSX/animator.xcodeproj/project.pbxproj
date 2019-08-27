@@ -208,6 +208,13 @@
 			path = System/Library/Frameworks/Carbon.framework;
 			sourceTree = SDKROOT;
 		};
+		6B852C7690B68A55A08BC0C5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = subTest.h;
+			path = ../../Source/subTest.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		77682DC2163B76CD96A3E6CB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -255,6 +262,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_events.mm";
 			path = "../../JuceLibraryCode/include_juce_events.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		A57E39A6FB6CF44703B6E686 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = animatorApp.h;
+			path = ../../Source/animatorApp.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AA7F4FFC1D18A2054C9E0F13 = {
@@ -359,6 +373,8 @@
 		8564D09EA783AD2C0C1E2B44 = {
 			isa = PBXGroup;
 			children = (
+				6B852C7690B68A55A08BC0C5,
+				A57E39A6FB6CF44703B6E686,
 				DEAEF87A30228C9BDB5BE903,
 				E55679B42F2D7BA8EBB07359,
 				77682DC2163B76CD96A3E6CB,

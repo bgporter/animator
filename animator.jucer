@@ -5,6 +5,8 @@
               companyWebsite="http://bgporter.net">
   <MAINGROUP id="HYQXHl" name="animator">
     <GROUP id="{A498D611-780A-08AE-6DE7-089A2C3BDDFA}" name="Source">
+      <FILE id="fWfr4k" name="subTest.h" compile="0" resource="0" file="Source/subTest.h"/>
+      <FILE id="wrwu39" name="animatorApp.h" compile="0" resource="0" file="Source/animatorApp.h"/>
       <GROUP id="{414A9F45-5BCF-6CAE-B3BB-428C120433CF}" name="animator">
         <FILE id="Ao7lwP" name="animatedValue.cpp" compile="1" resource="0"
               file="Source/animator/animatedValue.cpp"/>

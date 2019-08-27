@@ -8,8 +8,9 @@
   ==============================================================================
 */
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
+
+
 
 //==============================================================================
 class animatorApplication  : public JUCEApplication
@@ -28,6 +29,10 @@ public:
         // This method is where you should put your application's initialisation code..
 
         mainWindow.reset (new MainWindow (getApplicationName()));
+#ifdef qRunUnitTests 
+       UnitTestRunner testRunner;
+       testRunner.runAllTests();
+#endif
     }
 
     void shutdown() override
