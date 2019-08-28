@@ -57,6 +57,10 @@
 			isa = PBXBuildFile;
 			fileRef = 5A52104C12AEBAA4C3B17904;
 		};
+		0209DC20A33C55AF1591D221 = {
+			isa = PBXBuildFile;
+			fileRef = 68F0D4952AE6631B8ED0D9D3;
+		};
 		93C3A228B793259CAC1A4DF6 = {
 			isa = PBXBuildFile;
 			fileRef = 77682DC2163B76CD96A3E6CB;
@@ -205,6 +209,13 @@
 			path = animator.app;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
+		68F0D4952AE6631B8ED0D9D3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = slewAnimatedValue.cpp;
+			path = ../../Source/animator/slewAnimatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6A5FF67644A34C0AD4FCBE77 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -217,6 +228,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = subTest.h;
 			path = ../../Source/subTest.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		75B5E20BCC5FEE3AF0BB41E3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = slewAnimatedValue.h;
+			path = ../../Source/animator/slewAnimatedValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		77682DC2163B76CD96A3E6CB = {
@@ -386,6 +404,8 @@
 				99828A0F02116A80CF24E542,
 				5A52104C12AEBAA4C3B17904,
 				CFDDA62D198D43FB87293D7C,
+				68F0D4952AE6631B8ED0D9D3,
+				75B5E20BCC5FEE3AF0BB41E3,
 			);
 			name = animator;
 			sourceTree = "<group>";
@@ -699,6 +719,7 @@
 				8E558732725F73C9F8C5DAFB,
 				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
+				0209DC20A33C55AF1591D221,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
 				71BFA7C1B048FD696017ACE1,

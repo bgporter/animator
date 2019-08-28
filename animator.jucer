@@ -25,6 +25,10 @@
               file="Source/animator/linearAnimatedValue.cpp"/>
         <FILE id="hBiFL9" name="linearAnimatedValue.h" compile="0" resource="0"
               file="Source/animator/linearAnimatedValue.h"/>
+        <FILE id="PyuRCK" name="slewAnimatedValue.cpp" compile="1" resource="0"
+              file="Source/animator/slewAnimatedValue.cpp"/>
+        <FILE id="OL1aBh" name="slewAnimatedValue.h" compile="0" resource="0"
+              file="Source/animator/slewAnimatedValue.h"/>
       </GROUP>
       <FILE id="rwQYM5" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="iYgyZN" name="MainComponent.cpp" compile="1" resource="0"
