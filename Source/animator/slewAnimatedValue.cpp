@@ -13,7 +13,7 @@ SlewAnimatedValue::SlewAnimatedValue(int startVal, int endVal, float tolerance, 
    
 }
 
-float SlewAnimatedValue::GenerateNextValue(int deltaTime)
+float SlewAnimatedValue::GenerateNextValue()
 {
    return fCurrentVal + fSlewRate * (fEndVal - fCurrentVal);
 }

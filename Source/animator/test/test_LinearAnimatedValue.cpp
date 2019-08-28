@@ -52,63 +52,46 @@ public:
       Test("simple test", [=] {
          auto val = std::make_unique<LinearAnimatedValue>(0, 100, 0.5f, 100);
          
-         expectWithinAbsoluteError<float>(val->GetNextValue(1000), 0.f, 0.01f);
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 0.f, 0.01f);
          expect(! val->IsFinished());
          
-         expectWithinAbsoluteError<float>(val->GetNextValue(1010), 10.f, 0.01);
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 1.f, 0.01);
          expect(! val->IsFinished());
          
          
-         int time = 1010;
-         float expected = 10.f;
+         float expected = 1.f;
+         int frame = 1;
          
          while (! val->IsFinished())
          {
-            time += 10;
-            expected += 10.f;
+            expected += 1.f;
+            frame++;
             
-            expectWithinAbsoluteError<float>(val->GetNextValue(time), expected, 0.01);
+            expectWithinAbsoluteError<float>(val->GetNextValue(), expected, 0.01);
          }
-         expectEquals(time, 1100);
+         expectEquals(frame, 100);
          
       });
       
       Test("Decrease value", [=] {
          auto val = std::make_unique<LinearAnimatedValue>(100, 0, 0.5f, 100);
-         int time = 2000;
+         int frame = 0;
          float expected = 100.f;
          
          while (1)
          {
-            expectWithinAbsoluteError<float>(val->GetNextValue(time), expected, 0.01);
+            expectWithinAbsoluteError<float>(val->GetNextValue(), expected, 0.01);
             if (val->IsFinished())
             {
                break;
             }
-            time += 10;
-            expected -= 10.f;
+            ++frame;
+            expected -= 1.f;
          }
-         expectEquals(time, 2100);
+         expectEquals(frame, 100);
          
       });
       
-      Test("Missed the end time", [=]{
-         auto inc = std::make_unique<LinearAnimatedValue>(0, 100, 0.5f, 100);
-         expectWithinAbsoluteError<float>(inc->GetNextValue(0), 0.f, 0.01);
-         expect(! inc->IsFinished());
-         expectWithinAbsoluteError<float>(inc->GetNextValue(200), 100.f, 0.01);
-         expect(inc->IsFinished());
-         
-         
-         
-         
-         auto dec = std::make_unique<LinearAnimatedValue>(100, 0, 0.5f, 100);
-         expectWithinAbsoluteError<float>(dec->GetNextValue(0), 100.f, 0.01);
-         expect(! dec->IsFinished());
-         expectWithinAbsoluteError<float>(dec->GetNextValue(200), 0.f, 0.01);
-         expect(dec->IsFinished());
-         
-      });
       
    }
 

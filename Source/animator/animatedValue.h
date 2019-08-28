@@ -21,7 +21,7 @@ public:
    ,  fEndVal(endVal)
    ,  fTolerance(tolerance)
    ,  fCurrentVal(startVal)
-   ,  fLastTime(-1)
+   ,  fFrameCount(0)
    {
       
    };
@@ -34,21 +34,20 @@ public:
    /**
     * Derived classes should do whatever is needed to generate and 
     * return the next value. 
-    * @param  msTime current time in ms. 
     * @return        next value (or last value if we're finished)
     */
-   float GetNextValue(int msTime)
+   float GetNextValue()
    {
-      if (-1 == fLastTime)
+      if (0 == fFrameCount)
       {
          fCurrentVal = fStartVal;
-         fLastTime = msTime;
       }
       else 
       {
-         fCurrentVal = this->GenerateNextValue(msTime - fLastTime);
-         fLastTime = msTime;
+         fCurrentVal = this->GenerateNextValue();
       }
+      
+      ++fFrameCount;
       return fCurrentVal;
    }
    
@@ -67,7 +66,7 @@ public:
     */
    void Reset()
    {
-      fLastTime = -1;
+      fFrameCount = 0;
       this->DoReset();
    }
 
@@ -79,7 +78,7 @@ private:
     * @param  time ms since the last time we were called. 
     * @return      next value.
     */
-   virtual float GenerateNextValue(int deltaTime) = 0;
+   virtual float GenerateNextValue() = 0;
    
    /**
     * Override in derived classes to perform any additional reset of calculations. 
@@ -96,7 +95,7 @@ protected:
    float fTolerance;
    float fCurrentVal;
    
-   int fLastTime;
+   int fFrameCount;
    
 private:
    

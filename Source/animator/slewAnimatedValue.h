@@ -12,7 +12,7 @@ public:
    SlewAnimatedValue(int startVal, int endVal, float tolerance, float slewRate);
    
 private:
-   float GenerateNextValue(int deltaTime) override;
+   float GenerateNextValue() override;
    
 private:
    float fSlewRate;

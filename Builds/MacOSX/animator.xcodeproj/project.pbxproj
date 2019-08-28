@@ -61,6 +61,10 @@
 			isa = PBXBuildFile;
 			fileRef = 68F0D4952AE6631B8ED0D9D3;
 		};
+		EAB8922669197056B4D03F16 = {
+			isa = PBXBuildFile;
+			fileRef = E43C7967A6FCB78B4A9C0E0E;
+		};
 		93C3A228B793259CAC1A4DF6 = {
 			isa = PBXBuildFile;
 			fileRef = 77682DC2163B76CD96A3E6CB;
@@ -208,6 +212,13 @@
 			includeInIndex = 0;
 			path = animator.app;
 			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		65ED0424FA4C4DA1BF45F3B1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = vectorAnimatedValue.h;
+			path = ../../Source/animator/vectorAnimatedValue.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		68F0D4952AE6631B8ED0D9D3 = {
 			isa = PBXFileReference;
@@ -370,6 +381,13 @@
 			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		E43C7967A6FCB78B4A9C0E0E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = vectorAnimatedValue.cpp;
+			path = ../../Source/animator/vectorAnimatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E467475CD08B22DED76C2CEE = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -406,6 +424,8 @@
 				CFDDA62D198D43FB87293D7C,
 				68F0D4952AE6631B8ED0D9D3,
 				75B5E20BCC5FEE3AF0BB41E3,
+				E43C7967A6FCB78B4A9C0E0E,
+				65ED0424FA4C4DA1BF45F3B1,
 			);
 			name = animator;
 			sourceTree = "<group>";
@@ -720,6 +740,7 @@
 				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
 				0209DC20A33C55AF1591D221,
+				EAB8922669197056B4D03F16,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
 				71BFA7C1B048FD696017ACE1,

@@ -6,19 +6,19 @@
 
 
 LinearAnimatedValue::LinearAnimatedValue(float startVal, float endVal, 
-   float tolerance, int msDuration)
+   float tolerance, int duration)
 :  AnimatedValue(startVal, endVal, tolerance) 
-,  fDuration(msDuration) 
+,  fDuration(duration) 
 {
-   jassert(msDuration > 0);
+   jassert(duration > 0);
    fDelta = (fEndVal - fStartVal) / fDuration;
 }
 
 
 
-float LinearAnimatedValue::GenerateNextValue(int deltaTime)
+float LinearAnimatedValue::GenerateNextValue()
 {
-   auto calculated = fCurrentVal + (deltaTime * fDelta);
+   auto calculated = fCurrentVal + fDelta;
    if (fStartVal < fEndVal)
    {
       return jmin(calculated, fEndVal);

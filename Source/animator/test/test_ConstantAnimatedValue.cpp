@@ -50,13 +50,13 @@ public:
    void runTest() override
    {
       Test("Constant", [=] {
-         auto val = std::make_unique<ConstantAnimatedValue>(100, 250);
+         auto val = std::make_unique<ConstantAnimatedValue>(100, 3);
          
-         expectWithinAbsoluteError<float>(val->GetNextValue(1000), 100.f, 0.01f);
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
          expect(! val->IsFinished());
-         expectWithinAbsoluteError<float>(val->GetNextValue(1249), 100.f, 0.01f);
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
          expect(! val->IsFinished());
-         expectWithinAbsoluteError<float>(val->GetNextValue(1251), 100.f, 0.01f);
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
          expect(val->IsFinished());
          
       });

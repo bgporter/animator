@@ -1,9 +1,9 @@
 
-class Test_SlewAnimatedValue : public SubTest
+class Test_VectorAnimatedValue : public SubTest
 {
 public:
-   Test_SlewAnimatedValue() 
-   : SubTest("SlewAnimatedValue", "!!! category !!!")
+   Test_VectorAnimatedValue() 
+   : SubTest("VectorAnimatedValue", "!!! category !!!")
    {
 
    }
@@ -49,29 +49,10 @@ public:
    
    void runTest() override
    {
-      Test("calculated slew #1", [=] {
-         auto val = std::make_unique<SlewAnimatedValue>(0, 100, 0.5f, 0.5f);
-         
-         expectWithinAbsoluteError<float>(val->GetNextValue(), 0.f, 0.01f);
-         
-         // hand-calculated values. 
-         std::vector<float> expected{50.f, 75.f, 87.5f, 93.75f, 96.875f, 
-            98.4375f, 99.21875f, 99.6094f};
-            
-         for (auto expVal: expected)
-         {
-            expect(! val->IsFinished());
-            expectWithinAbsoluteError<float>(val->GetNextValue(), expVal, 0.001f);
-         }
-         expect(val->IsFinished());
-         
-         
-         
-         
-         
-      });
+      // !!! Add tests.
+      beginTest("!!! WRITE SOME TESTS FOR THE VectorAnimatedValue Class !!!");
    }
 
 };
 
-static Test_SlewAnimatedValue   testSlewAnimatedValue;
+static Test_VectorAnimatedValue   testVectorAnimatedValue;

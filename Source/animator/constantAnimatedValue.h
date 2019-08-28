@@ -10,18 +10,21 @@
 class ConstantAnimatedValue   : public AnimatedValue 
 {
 public:
-   ConstantAnimatedValue(int value, int msDuration);
+   /**
+    * A value that doesn't change. 
+    * @param value      Value to generate. 
+    * @param duration # of frames the effect should take. 
+    */
+   ConstantAnimatedValue(int value, int duration);
    
    bool IsFinished() override;
    
 private:
-   float GenerateNextValue(int deltaTime) override;
+   float GenerateNextValue() override;
    void DoReset() override;
   
 private:
    /// keep track of how long this effect has been running. 
    int fDuration;
    
-   /// ...how long should the effect last?
-   int fElapsedTime;
 };

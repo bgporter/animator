@@ -9,16 +9,23 @@
 class LinearAnimatedValue  : public AnimatedValue 
 {
 public:
-   LinearAnimatedValue(float startVal, float endVal, float tolerance, int msDuration);
+   /**
+    * A value that changes linearly. 
+    * @param startVal  initial value 
+    * @param endVal    ending value 
+    * @param tolerance tolerance for completion. 
+    * @param duration  # of frames the effect should take. 
+    */
+   LinearAnimatedValue(float startVal, float endVal, float tolerance, int duration);
    
    
    
 private:
-   float GenerateNextValue(int deltaTime) override;
+   float GenerateNextValue() override;
 
 private:
    
-   /// duration of this effect in ms. 
+   /// duration of this effect in frames. 
    int fDuration;
    
    
