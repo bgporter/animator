@@ -9,3 +9,7 @@
 */
 
 #include "animationController.h"
+
+#ifdef qRunUnitTests
+#include "test/test_AnimationController.cpp"
+#endif
