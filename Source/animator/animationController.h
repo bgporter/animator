@@ -41,6 +41,12 @@ public:
       return fId;
    }
    
+   /**
+    * Set the AnimatedValue object to use for one of this animation's slots. 
+    * @param  index Value index, 0..valueCount-1
+    * @param  value AnimatedValue object to generate data. 
+    * @return       true on success. 
+    */
    bool SetValue(size_t index, std::unique_ptr<AnimatedValue> value)
    {
       if (index < valueCount)
@@ -52,11 +58,21 @@ public:
       return false;
    }
    
+   /**
+    * Set the function that will be called with an array of animation values 
+    * once per frame. 
+    * @param update UpdateFn function. 
+    */
    void SetUpdateFunction(UpdateFn update)
    {
       fUpdateFn = update;
    }
    
+   /**
+    * Set the (optional) function that will be called once when this 
+    * animation is complete. 
+    * @param complete CompletionFn function. 
+    */
    void SetCompletionFunction(CompletionFn complete)
    {
       fCompleteFn = complete;
@@ -111,6 +127,7 @@ private:
    /// optional ID value for this animation. 
    int fId;
    
+   /// The array of animated value objects. 
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
    
    /// function to call on each frame. Pass in std::array of new values, 
