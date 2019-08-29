@@ -15,7 +15,7 @@ class AnimationController
 public:
    
    using ValueList = std::array<float, valueCount>;
-   using UpdateFn = std::function<bool(ValueList)>;
+   using UpdateFn = std::function<bool(const ValueList&)>;
    using CompletionFn = std::function<void(void)>;
    
    
