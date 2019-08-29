@@ -52,7 +52,7 @@ public:
     */
    int Update()
    {
-      std::array<float, valueCount> values;
+      ValueList values;
       int completeCount{0};
       
       for (int i = 0; i < valueCount; ++i)
