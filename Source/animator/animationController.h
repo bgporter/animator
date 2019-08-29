@@ -18,10 +18,27 @@ public:
    using UpdateFn = std::function<bool(const ValueList&)>;
    using CompletionFn = std::function<void(void)>;
    
-   
-   AnimationController()
+
+   /**
+    * Create an animationController object that can be populated with changing 
+    * values and functions to call at important points (each frame of animation, 
+    * sequence completion)
+    * 
+    * @param id Optional identifier, use as you wish. We don't enforce uniqueness, 
+    *           for example. 
+    */
+   AnimationController(int id=0)
+   :  fId{0}
    {
       
+   }
+   
+   /**
+    * @return ID value for this controller. 
+    */
+   int GetId() const 
+   {
+      return fId;
    }
    
    bool SetValue(size_t index, std::unique_ptr<AnimatedValue> value)
@@ -90,6 +107,9 @@ public:
    
    
 private:
+   
+   /// optional ID value for this animation. 
+   int fId;
    
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
    
