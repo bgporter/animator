@@ -71,3 +71,7 @@ void Animator::Cleanup()
 }
 
 
+
+#ifdef qRunUnitTests
+#include "test/test_Animator.cpp"
+#endif

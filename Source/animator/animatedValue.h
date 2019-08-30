@@ -87,7 +87,6 @@ private:
    
    /**
     * Implemented in base classes to generate the next value in the sequence. 
-    * @param  time ms since the last time we were called. 
     * @return      next value.
     */
    virtual float GenerateNextValue() = 0;
