@@ -22,6 +22,7 @@ public:
    ,  fTolerance(tolerance)
    ,  fCurrentVal(startVal)
    ,  fFrameCount(0)
+   ,  fCanceled(false)
    {
       
    };
@@ -38,27 +39,30 @@ public:
     */
    float GetNextValue()
    {
-      if (0 == fFrameCount)
+      if (! fCanceled)
       {
-         fCurrentVal = fStartVal;
-      }
-      else 
-      {
-         fCurrentVal = this->GenerateNextValue();
+         if (0 == fFrameCount++)
+         {
+            fCurrentVal = fStartVal;
+         }
+         else 
+         {
+            fCurrentVal = this->GenerateNextValue();
+         }
       }
       
-      ++fFrameCount;
       return fCurrentVal;
    }
    
    /**
     * Have we reached the end of this animation sequence? By default, 
-    * we're done when the current value is within `fTolerance` of the endValue.
+    * we're done when the current value is within `fTolerance` of the endValue
+    * (or if we've been canceled...)
     * @return [description]
     */
    virtual bool IsFinished()
    {
-      return (std::fabs(fCurrentVal - fEndVal) < fTolerance);
+      return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
    }
    
    /**
@@ -67,7 +71,15 @@ public:
    void Reset()
    {
       fFrameCount = 0;
+      fCanceled = false;
       this->DoReset();
+   }
+
+
+   void Cancel(bool moveToEndPosition)
+   {
+      fCanceled = true;
+      this->DoCancel(moveToEndPosition);
    }
 
 
@@ -87,6 +99,17 @@ private:
    {
       
    }
+   
+   /**
+    * Override in derived classes to perform any unusual cancellation logic. 
+    */
+   virtual void DoCancel(bool moveToEndPosition)
+   {
+      if (moveToEndPosition)
+      {
+         fCurrentVal = fEndVal;
+      }
+   }
 
 
 protected: 
@@ -96,7 +119,7 @@ protected:
    float fCurrentVal;
    
    int fFrameCount;
-   
+   bool fCanceled;
 private:
    
 };

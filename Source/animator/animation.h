@@ -8,9 +8,40 @@
 
 #include "animatedValue.h"
 
+class AnimationType 
+{
+public:
+   
+   AnimationType(int id)
+   :  fId{id}
+   {
+      
+   }
+   
+   virtual ~AnimationType() = default;
+   /**
+    * @return ID value for this Animation. 
+    */
+   int GetId() const 
+   {
+      return fId;
+   }
+   
+   virtual int Update() = 0;
+   
+   virtual void Cancel(bool moveToEndPosition) = 0;
+   
+   virtual bool IsFinished() = 0;
+   
+private:
+   /// optional ID value for this animation. 
+   int fId;
+   
+};
+
 
 template <std::size_t valueCount>
-class AnimationController 
+class Animation  : public AnimationType
 {
 public:
    
@@ -20,27 +51,21 @@ public:
    
 
    /**
-    * Create an animationController object that can be populated with changing 
+    * Create an animation object that can be populated with changing 
     * values and functions to call at important points (each frame of animation, 
     * sequence completion)
     * 
     * @param id Optional identifier, use as you wish. We don't enforce uniqueness, 
     *           for example. 
     */
-   AnimationController(int id=0)
-   :  fId{0}
+   Animation(int id=0)
+   :  AnimationType(id)
+   ,  fFinished{false}
    {
       
    }
    
-   /**
-    * @return ID value for this controller. 
-    */
-   int GetId() const 
-   {
-      return fId;
-   }
-   
+
    /**
     * Set the AnimatedValue object to use for one of this animation's slots. 
     * @param  index Value index, 0..valueCount-1
@@ -83,7 +108,7 @@ public:
     * to our UpdateFn function. 
     * @return        Zero if we have more data in the future, 1 if we're done. 
     */
-   int Update()
+   int Update() override
    {
       ValueList values;
       int completeCount{0};
@@ -114,18 +139,54 @@ public:
          {
             fCompleteFn();
          }
+          fFinished = true;
          return 1;
       }
       
       return 0;
    }
    
+   void Cancel(bool moveToEndPosition) override
+   {
+      for (int i = 0; i < valueCount; ++i)
+      {
+         auto& ptr = fValues[i];
+         if (ptr)
+         {
+            ptr->Cancel(moveToEndPosition);
+         }
+         else 
+         {
+            jassert(false);
+         }
+      }
+      
+      if (moveToEndPosition)
+      {
+         // send out one more value update message sending the end positions
+         this->Update();
+      }
+      else 
+      {
+         // ...just notify that the effect is complete. 
+         if (fCompleteFn)
+         {
+            fCompleteFn();
+         }
+      }
+       fFinished = true;
+   }
    
+   bool IsFinished() override 
+   {
+       return fFinished;
+   }
    
 private:
    
-   /// optional ID value for this animation. 
-   int fId;
+   
+   /// is this animation complete? 
+   bool fFinished; 
    
    /// The array of animated value objects. 
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;

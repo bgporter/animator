@@ -3,11 +3,11 @@
 // include some animated value classes for testing...
 #include "../constantAnimatedValue.h"
 
-class Test_AnimationController : public SubTest
+class Test_Animation : public SubTest
 {
 public:
-   Test_AnimationController() 
-   : SubTest("AnimationController", "!!! category !!!")
+   Test_Animation() 
+   : SubTest("Animation", "!!! category !!!")
    {
 
    }
@@ -54,18 +54,18 @@ public:
    void runTest() override
    {
       
-      Test("Create controller", [=] {
+      Test("Create animation", [=] {
          float val0{0};
          float val1{0};
          bool isComplete{false};
          
          
-         auto control = std::make_unique<AnimationController<2>>();
+         auto control = std::make_unique<Animation<2>>();
          
          control->SetValue(0, std::make_unique<ConstantAnimatedValue>(100, 2));
          control->SetValue(1, std::make_unique<ConstantAnimatedValue>(200, 3));
          
-         control->SetUpdateFunction([&] (const AnimationController<2>::ValueList& val) -> bool {
+         control->SetUpdateFunction([&] (const Animation<2>::ValueList& val) -> bool {
             val0 = val[0];
             val1 = val[1];
             return true;
@@ -93,4 +93,4 @@ public:
 
 };
 
-static Test_AnimationController   testAnimationController;
+static Test_Animation   testAnimation;

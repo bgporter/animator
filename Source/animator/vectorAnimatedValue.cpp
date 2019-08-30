@@ -35,6 +35,10 @@ float VectorAnimatedValue::GenerateNextValue()
       }
       else 
       {
+         // reverse our acceleration direction and reduce it by the 
+         // damping factor; we'll keep oscillating around the end value 
+         // until we're within the tolerance value of it, at which 
+         // point we'll stop.
          fAcceleration = -1 * fAcceleration * fDamping;
       }
    }

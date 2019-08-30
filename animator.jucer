@@ -11,10 +11,8 @@
         <FILE id="Ao7lwP" name="animatedValue.cpp" compile="1" resource="0"
               file="Source/animator/animatedValue.cpp"/>
         <FILE id="HhEzmx" name="animatedValue.h" compile="0" resource="0" file="Source/animator/animatedValue.h"/>
-        <FILE id="Y7MCDz" name="animationController.cpp" compile="1" resource="0"
-              file="Source/animator/animationController.cpp"/>
-        <FILE id="Yb5bLP" name="animationController.h" compile="0" resource="0"
-              file="Source/animator/animationController.h"/>
+        <FILE id="Y7MCDz" name="animation.cpp" compile="1" resource="0" file="Source/animator/animation.cpp"/>
+        <FILE id="Yb5bLP" name="animation.h" compile="0" resource="0" file="Source/animator/animation.h"/>
         <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
         <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
         <FILE id="j8J8U6" name="constantAnimatedValue.cpp" compile="1" resource="0"

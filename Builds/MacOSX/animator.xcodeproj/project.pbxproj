@@ -41,9 +41,9 @@
 			isa = PBXBuildFile;
 			fileRef = 7BF5439F045E9693B5963AB1;
 		};
-		BCAAE021DBDCFE925E36B90B = {
+		14D5F1B2D18C6660C77258E0 = {
 			isa = PBXBuildFile;
-			fileRef = BFA510CA6A9CB11559F52688;
+			fileRef = F8E3C431B40F6DE4D5778661;
 		};
 		8E558732725F73C9F8C5DAFB = {
 			isa = PBXBuildFile;
@@ -206,6 +206,13 @@
 			path = ../../Source/animator/linearAnimatedValue.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		656F1A79E007AC70EA5F2047 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = animation.h;
+			path = ../../Source/animator/animation.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		657934ED3EE52533E03EC2CB = {
 			isa = PBXFileReference;
 			explicitFileType = wrapper.application;
@@ -325,20 +332,6 @@
 			path = "Info-App.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
-		B842E12F59DFF3F92EAD1084 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = animationController.h;
-			path = ../../Source/animator/animationController.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		BFA510CA6A9CB11559F52688 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = animationController.cpp;
-			path = ../../Source/animator/animationController.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		C36B848EB447C013DBAF350D = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -409,13 +402,20 @@
 			path = ../../Source/animator/animatedValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		F8E3C431B40F6DE4D5778661 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = animation.cpp;
+			path = ../../Source/animator/animation.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		DEAEF87A30228C9BDB5BE903 = {
 			isa = PBXGroup;
 			children = (
 				7BF5439F045E9693B5963AB1,
 				EDDF1A770038317C064E2F9E,
-				BFA510CA6A9CB11559F52688,
-				B842E12F59DFF3F92EAD1084,
+				F8E3C431B40F6DE4D5778661,
+				656F1A79E007AC70EA5F2047,
 				001B902D85C93690AC3E20BE,
 				86CCFD019A40DE65460F38CD,
 				DA3D1855CA6ABD7AC2AE9AA8,
@@ -735,7 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9F2649E3CD91947E59471F,
-				BCAAE021DBDCFE925E36B90B,
+				14D5F1B2D18C6660C77258E0,
 				8E558732725F73C9F8C5DAFB,
 				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
