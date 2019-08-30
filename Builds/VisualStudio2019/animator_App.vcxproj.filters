@@ -235,6 +235,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\demoComponent.cpp">
+      <Filter>animator\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\animator\animatedValue.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
@@ -1575,6 +1578,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\demoComponent.h">
+      <Filter>animator\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\subTest.h">
       <Filter>animator\Source</Filter>
     </ClInclude>

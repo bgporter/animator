@@ -37,6 +37,10 @@
 			isa = PBXBuildFile;
 			fileRef = 26B4DF4F9E460E34079D015B;
 		};
+		56E7BBFFB3EAEB9D19968DED = {
+			isa = PBXBuildFile;
+			fileRef = 38EB687C8E55B69BEE6700D2;
+		};
 		AD9F2649E3CD91947E59471F = {
 			isa = PBXBuildFile;
 			fileRef = 7BF5439F045E9693B5963AB1;
@@ -178,11 +182,25 @@
 			path = System/Library/Frameworks/OpenGL.framework;
 			sourceTree = SDKROOT;
 		};
+		38EB687C8E55B69BEE6700D2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = demoComponent.cpp;
+			path = ../../Source/demoComponent.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		40B4E6E0C4FC9D08A3A21A68 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_gui_extra";
 			path = "../../JuceLibraryCode/modules/juce_gui_extra";
+			sourceTree = "SOURCE_ROOT";
+		};
+		4536626BA8BA135A16F80353 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = demoComponent.h;
+			path = ../../Source/demoComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4BB1EE6F2E26349EF2E9F8E4 = {
@@ -433,6 +451,8 @@
 		8564D09EA783AD2C0C1E2B44 = {
 			isa = PBXGroup;
 			children = (
+				38EB687C8E55B69BEE6700D2,
+				4536626BA8BA135A16F80353,
 				6B852C7690B68A55A08BC0C5,
 				A57E39A6FB6CF44703B6E686,
 				DEAEF87A30228C9BDB5BE903,
@@ -734,6 +754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56E7BBFFB3EAEB9D19968DED,
 				AD9F2649E3CD91947E59471F,
 				14D5F1B2D18C6660C77258E0,
 				8E558732725F73C9F8C5DAFB,
