@@ -65,10 +65,9 @@ public:
          control->SetValue(0, std::make_unique<ConstantAnimatedValue>(100, 2));
          control->SetValue(1, std::make_unique<ConstantAnimatedValue>(200, 3));
          
-         control->SetUpdateFunction([&] (const Animation<2>::ValueList& val) -> bool {
+         control->SetUpdateFunction([&] (const Animation<2>::ValueList& val) {
             val0 = val[0];
             val1 = val[1];
-            return true;
          });
          
          control->SetCompletionFunction([&] {

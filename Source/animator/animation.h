@@ -15,6 +15,8 @@ public:
    AnimationType(int id)
    :  fId{id}
    {
+      // only allow positive animation IDs. 
+      jassert(id >= 0);
       
    }
    
@@ -46,7 +48,7 @@ class Animation  : public AnimationType
 public:
    
    using ValueList = std::array<float, valueCount>;
-   using UpdateFn = std::function<bool(const ValueList&)>;
+   using UpdateFn = std::function<void(const ValueList&)>;
    using CompletionFn = std::function<void(void)>;
    
 
@@ -129,7 +131,7 @@ public:
       
       if (fUpdateFn)
       {
-         bool ok = fUpdateFn(values);
+         fUpdateFn(values);
       }
       
       
@@ -163,7 +165,7 @@ public:
       
       if (moveToEndPosition)
       {
-         // send out one more value update message sending the end positions
+         // send out one more value update message sending the end positions;
          this->Update();
       }
       else 
