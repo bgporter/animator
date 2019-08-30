@@ -17,7 +17,16 @@ Animator::~Animator()
 
 void Animator::timerCallback() 
 {
+   int finishedCount = 0;
+   for (auto& animation : fAnimations)
+   {
+      finishedCount += animation->Update();
+   }
    
+   if (finishedCount > 0)
+   {
+      this->Cleanup();
+   }
 }
 
 bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)

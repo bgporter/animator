@@ -58,7 +58,7 @@ public:
     * sequence completion)
     * 
     * @param id Optional identifier, use as you wish. We don't enforce uniqueness, 
-    *           for example. 
+    *           for example. Must be >= 0. 
     */
    Animation(int id=0)
    :  AnimationType(id)
@@ -81,6 +81,7 @@ public:
          fValues[index] = std::move(value);
          return true;
       }
+      
       jassert(false);
       return false;
    }
@@ -90,7 +91,7 @@ public:
     * once per frame. 
     * @param update UpdateFn function. 
     */
-   void SetUpdateFunction(UpdateFn update)
+   void OnUpdate(UpdateFn update)
    {
       fUpdateFn = update;
    }
@@ -100,7 +101,7 @@ public:
     * animation is complete. 
     * @param complete CompletionFn function. 
     */
-   void SetCompletionFunction(CompletionFn complete)
+   void OnCompletion(CompletionFn complete)
    {
       fCompleteFn = complete;
    }
@@ -117,15 +118,12 @@ public:
       
       for (int i = 0; i < valueCount; ++i)
       {
-         auto& ptr = fValues[i];
-         if (ptr)
+         auto& val = fValues[i];
+         jassert(val);
+         if (val)
          {
-            values[i] = ptr->GetNextValue();
-            completeCount += (ptr->IsFinished())  ? 1 : 0;
-         }
-         else 
-         {
-            jassert(false);
+            values[i] = val->GetNextValue();
+            completeCount += (val->IsFinished())  ? 1 : 0;
          }
       }
       
@@ -141,7 +139,7 @@ public:
          {
             fCompleteFn();
          }
-          fFinished = true;
+         fFinished = true;
          return 1;
       }
       
@@ -152,14 +150,11 @@ public:
    {
       for (int i = 0; i < valueCount; ++i)
       {
-         auto& ptr = fValues[i];
-         if (ptr)
+         auto& val = fValues[i];
+         jassert(val);
+         if (val)
          {
-            ptr->Cancel(moveToEndPosition);
-         }
-         else 
-         {
-            jassert(false);
+            val->Cancel(moveToEndPosition);
          }
       }
       
@@ -176,7 +171,7 @@ public:
             fCompleteFn();
          }
       }
-       fFinished = true;
+      fFinished = true;
    }
    
    bool IsFinished() override 
