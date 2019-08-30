@@ -1,18 +1,51 @@
 /*
-  ==============================================================================
+ * Copyright (c) 2019 Brett g Porter. All Rights Reserved.
+ */
 
-    demoComponent.cpp
-    Created: 30 Aug 2019 4:22:45pm
-    Author:  Brett Porter
 
-  ==============================================================================
-*/
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "animatorApp.h"
 #include "demoComponent.h"
+
+#include "animator/linearAnimatedValue.h"
+#include "animator/animation.h"
+
+
+
+class DemoBox : public Component 
+{
+public:
+   DemoBox()
+   {
+      Random r;
+      fFill = Colour(r.nextFloat(), 0.9f, 0.9f, 1.f);
+      fSize = r.nextInt({50, 100});
+   }
+   
+   void paint(Graphics& g) override 
+   {
+      g.fillAll(fFill);
+      auto bounds = this->getLocalBounds();
+      g.setColour(Colours::black);
+      g.drawRect(bounds, 4);
+   }
+   
+public:
+   
+   Colour fFill;
+   
+   int fSize;
+   
+   
+};
+
+
+
+
 
 //==============================================================================
 DemoComponent::DemoComponent()
+:  fAnimator(50)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -21,6 +54,7 @@ DemoComponent::DemoComponent()
 
 DemoComponent::~DemoComponent()
 {
+   this->Clear();
 }
 
 void DemoComponent::paint (Graphics& g)
@@ -32,15 +66,11 @@ void DemoComponent::paint (Graphics& g)
        drawing code..
     */
 
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));   // clear the background
+    g.fillAll (Colours::lightgrey);
 
     g.setColour (Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
 
-    g.setColour (Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("DemoComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
 }
 
 void DemoComponent::resized()
@@ -48,4 +78,51 @@ void DemoComponent::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
+}
+
+void DemoComponent::Clear()
+{
+   fAnimator.CancelAllAnimations(false);
+   this->deleteAllChildren();
+}
+
+
+void DemoComponent::mouseDown(const MouseEvent& e)
+{
+   if (e.mods.isPopupMenu())
+   {
+      this->Clear();
+   }
+   else 
+   {
+      this->CreateDemo(e.getPosition());
+   }
+}
+
+void DemoComponent::CreateDemo(Point<int> startPoint)
+{
+   Random r;
+   auto box = new DemoBox(); 
+   this->addAndMakeVisible(box);
+   box->setBounds(startPoint.x, startPoint.y, box->fSize, box->fSize);
+   
+   // set the animation parameters. 
+   auto yVal = std::make_unique<LinearAnimatedValue>(startPoint.y, 
+      (this->getHeight()-box->getHeight()), 0.5, 30);
+      
+   auto xVal = std::make_unique<LinearAnimatedValue>(startPoint.x, 
+      startPoint.x + r.nextInt({-100, 100}), 0.5, 30);
+      
+   auto animation = std::make_unique<Animation<2>>(1);
+   // animation->SetValue(0, xVal);
+   animation->SetValue(0, std::make_unique<LinearAnimatedValue>(startPoint.x, 
+      startPoint.x + r.nextInt({-100, 100}), 0.5, 30));
+   animation->SetValue(1, std::move(yVal));
+   
+   animation->OnUpdate([=] (const Animation<2>::ValueList& val) {
+      box->setTopLeftPosition(val[0], val[1]);
+   });
+   
+   fAnimator.AddAnimation(std::move(animation));
+   
 }
