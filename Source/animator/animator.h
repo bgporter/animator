@@ -7,6 +7,11 @@
 #include "../animatorApp.h"
 
 #include "animation.h"
+#include "constantAnimatedValue.h"
+#include "linearAnimatedValue.h"
+#include "slewAnimatedValue.h"
+#include "vectorAnimatedValue.h"
+
 
 class Animator : public Timer
 {

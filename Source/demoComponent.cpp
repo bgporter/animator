@@ -7,9 +7,6 @@
 #include "animatorApp.h"
 #include "demoComponent.h"
 
-#include "animator/linearAnimatedValue.h"
-#include "animator/animation.h"
-
 
 
 class DemoBox : public Component 
@@ -107,17 +104,33 @@ void DemoComponent::CreateDemo(Point<int> startPoint)
    box->setBounds(startPoint.x, startPoint.y, box->fSize, box->fSize);
    
    // set the animation parameters. 
+/*
    auto yVal = std::make_unique<LinearAnimatedValue>(startPoint.y, 
       (this->getHeight()-box->getHeight()), 0.5, 30);
       
    auto xVal = std::make_unique<LinearAnimatedValue>(startPoint.x, 
       startPoint.x + r.nextInt({-100, 100}), 0.5, 30);
       
-   auto animation = std::make_unique<Animation<2>>(1);
    // animation->SetValue(0, xVal);
    animation->SetValue(0, std::make_unique<LinearAnimatedValue>(startPoint.x, 
       startPoint.x + r.nextInt({-100, 100}), 0.5, 30));
    animation->SetValue(1, std::move(yVal));
+*/
+
+   int startX = startPoint.x;
+   int endX = r.nextInt({0, this->getWidth() - box->getWidth()});
+   int startY = startPoint.y;
+   int endY = this->getHeight() - box->getHeight();
+   
+   auto animation = std::make_unique<Animation<2>>(1);
+#if 1 
+   animation->SetValue(0, std::make_unique<SlewAnimatedValue>(startX, endX, 0.5f, 0.1f));
+   animation->SetValue(1, std::make_unique<SlewAnimatedValue>(startY, endY, 0.5f, 0.1f));
+#else 
+   animation->SetValue(0, std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.1f));
+   animation->SetValue(1, std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.1f));
+
+#endif
    
    animation->OnUpdate([=] (const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
