@@ -24,7 +24,8 @@ public:
    {
       kLinear = 0,
       kSlew, 
-      kVector
+      kVector, 
+      kSlewVector
    };
     DemoComponent();
     ~DemoComponent();

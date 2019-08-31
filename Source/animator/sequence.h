@@ -7,11 +7,11 @@
 #include "animation.h"
 
 template <int valueCount>
-class Sequence : public AnimationType
+class Sequence : public Animation<valueCount>
 {
 public:
    Sequence(int id=0)
-   :  AnimationType(0)
+   :  Animation<valueCount>(0)
    ,  fCurrentEffect{0}
    {
       
@@ -54,8 +54,18 @@ public:
    
    void AddAnimation(std::unique_ptr<Animation<valueCount>> effect)
    {
+       effect->OnUpdate([=] (const typename Animation<valueCount>::ValueList& val){
+         if (this->fUpdateFn)
+         {
+            this->fUpdateFn(val);
+         }
+         
+      });
+      
       fSequence.push_back(std::move(effect));
+      
    }
+   
    
    
 private:

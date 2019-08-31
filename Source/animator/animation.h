@@ -211,6 +211,13 @@ public:
    {
        return fFinished;
    }
+protected: 
+   /// function to call on each frame. Pass in std::array of new values, 
+   /// return true if all is okay, false to cancel this animation. 
+   UpdateFn fUpdateFn;
+
+   /// function to call when the animation is completed or canceled. 
+   CompletionFn fCompleteFn;
    
 private:
    
@@ -221,13 +228,7 @@ private:
    /// The array of animated value objects. 
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
    
-   /// function to call on each frame. Pass in std::array of new values, 
-   /// return true if all is okay, false to cancel this animation. 
-   UpdateFn fUpdateFn;
-   
-   /// function to call when the animation is completed or canceled. 
-   CompletionFn fCompleteFn;
-   
+
    
    
 };

@@ -105,7 +105,14 @@ void DemoComponent::mouseDown(const MouseEvent& e)
       
       if (e.mods.isShiftDown())
       {
-         type = EffectType::kSlew;
+         if (e.mods.isAltDown())
+         {
+            type = EffectType::kSlewVector;
+         }
+         else 
+         {
+            type = EffectType::kSlew;
+         }
       }
       else if (e.mods.isAltDown())
       {
@@ -150,9 +157,38 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       xCurve = std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.3f);
       yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.3f);
    }
+   else if (EffectType::kSlewVector == type)
+   {
+      auto midX = (startX + endX) / 2;
+      auto midY = (startY + endY) / 2;
+      
+      
+      auto xCurve1 = std::make_unique<SlewAnimatedValue>(startX, midX, 1.f, 0.2f);
+      auto yCurve1 = std::make_unique<SlewAnimatedValue>(startY, midY, 1.f, 0.2f);
+      auto effect1 = std::make_unique<Animation<2>>();
+      effect1->SetValue(0, std::move(xCurve1));
+      effect1->SetValue(1, std::move(yCurve1));
+      
+      auto xCurve2 = std::make_unique<VectorAnimatedValue>(midX, endX, 0.5f, 0.5f, 0.3f);
+      auto yCurve2 = std::make_unique<VectorAnimatedValue>(midY, endY, 0.5f, 2, 0.3f);
+      auto effect2 = std::make_unique<Animation<2>>();
+      effect2->SetValue(0, std::move(xCurve2));
+      effect2->SetValue(1, std::move(yCurve2));
+      
+      auto sequence = std::make_unique<Sequence<2>>();
+      sequence->AddAnimation(std::move(effect1));
+      sequence->AddAnimation(std::move(effect2));
+      
+      movement = std::move(sequence);
+      
+   }
    
-   movement->SetValue(0, std::move(xCurve));
-   movement->SetValue(1, std::move(yCurve));
+
+   if (EffectType::kSlewVector != type)
+   {
+      movement->SetValue(0, std::move(xCurve));
+      movement->SetValue(1, std::move(yCurve));
+   }
    
    // On each update: move this box to the next position on the (x,y) curve.
    movement->OnUpdate([=] (const Animation<2>::ValueList& val) {
