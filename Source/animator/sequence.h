@@ -82,10 +82,14 @@ public:
    
    
 private:
-   
+   /**
+    * Get a pointer to one of our effects by its index. 
+    * @param  index 0..size-1
+    * @return       nullptr if index is out of range. 
+    */
    Animation<valueCount>* GetEffect(int index)
    {
-      if (index < fSequence.size())
+      if (isPositiveAndBelow(index, fSequence.size()))
       {
          return fSequence[index].get();
       }
