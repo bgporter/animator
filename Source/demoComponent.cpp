@@ -167,6 +167,9 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       
       auto fade = std::make_unique<Animation<1>>(); 
       fade->SetValue(0, std::make_unique<LinearAnimatedValue>(currentSat, 0.f, 0.01f, 200));
+      // don't start fading until 50 frames have elapsed
+      fade->SetDelay(50);
+      
       fade->OnUpdate([=] (const Animation<1>::ValueList& val) {
          // every update, change the saturation value of the color. 
          box->SetSaturation(val[0]);

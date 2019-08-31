@@ -14,6 +14,7 @@ public:
    
    AnimationType(int id)
    :  fId{id}
+   ,  fDelay{0}
    {
       // only allow positive animation IDs. 
       jassert(id >= 0);
@@ -29,6 +30,30 @@ public:
       return fId;
    }
    
+   void SetDelay(int delay) 
+   {
+      if (delay >= 0)
+      {
+         fDelay = delay;
+      }
+   }
+   
+   /**
+    * Before generating values, see if we should be delaying. 
+    * @return True to wait before generating effect values. 
+    */
+   bool DelayElapsed() 
+   {
+      if (0 == fDelay)
+      {
+         return true;
+      }
+      
+      --fDelay;
+      return false;
+      
+   }
+   
    virtual int Update() = 0;
    
    virtual void Cancel(bool moveToEndPosition) = 0;
@@ -38,6 +63,9 @@ public:
 private:
    /// optional ID value for this animation. 
    int fId;
+   
+   /// an optional pre-delay before beginning to execute the effect. 
+   int fDelay; 
    
 };
 
@@ -115,6 +143,11 @@ public:
    {
       ValueList values;
       int completeCount{0};
+      
+      if (! this->DelayElapsed())
+      {
+         return 0;
+      }
       
       for (int i = 0; i < valueCount; ++i)
       {
