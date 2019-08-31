@@ -129,7 +129,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    int startY = startPoint.y;
    int endY = r.nextInt({0, this->getHeight() - box->getHeight()});
    
-   auto animation = std::make_unique<Animation<2>>(1);
+   auto movement = std::make_unique<Animation<2>>(1);
    
    
    std::unique_ptr<AnimatedValue> xCurve; 
@@ -151,18 +151,18 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.3f);
    }
    
-   animation->SetValue(0, std::move(xCurve));
-   animation->SetValue(1, std::move(yCurve));
+   movement->SetValue(0, std::move(xCurve));
+   movement->SetValue(1, std::move(yCurve));
    
    // On each update: move this box to the next position on the (x,y) curve.
-   animation->OnUpdate([=] (const Animation<2>::ValueList& val) {
+   movement->OnUpdate([=] (const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
    });
    
    
    // When the main animation completes: start a second animation that slowly
    // fades the color all the way out. 
-   animation->OnCompletion([=] {
+   movement->OnCompletion([=] {
       float currentSat = box->GetSaturation();
       
       auto fade = std::make_unique<Animation<1>>(); 
@@ -185,6 +185,6 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       fAnimator.AddAnimation(std::move(fade));
    });
    
-   fAnimator.AddAnimation(std::move(animation));
+   fAnimator.AddAnimation(std::move(movement));
    
 }
