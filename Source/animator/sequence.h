@@ -55,12 +55,24 @@ public:
    
    void AddAnimation(std::unique_ptr<Animation<valueCount>> effect)
    {
-       effect->OnUpdate([=] (const typename Animation<valueCount>::ValueList& val){
+      // We need to make each of the effects notify us on update or completion, 
+      // so that we can pass those along to whoever passed in a single 
+      // lambda to us. 
+      effect->OnUpdate([=] (const typename Animation<valueCount>::ValueList& val){
          if (this->fUpdateFn)
          {
             this->fUpdateFn(val);
          }
          
+      });
+      
+      effect->OnCompletion([=] {
+         // Each effect in the sequence will notify us, but we only pass 
+         // along the final one. 
+         if ((fCurrentEffect == fSequence.size() - 1) && this->fCompleteFn)
+         {
+            this->fCompleteFn();
+         }
       });
       
       fSequence.push_back(std::move(effect));
