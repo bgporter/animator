@@ -9,6 +9,7 @@
 
 
 
+
 class DemoBox : public Component 
 {
 public:
@@ -16,7 +17,8 @@ public:
    {
       Random r;
       fFill = Colour(r.nextFloat(), 0.9f, 0.9f, 1.f);
-      fSize = r.nextInt({50, 100});
+      int size = r.nextInt({50, 100});
+      this->setSize(size, size);
    }
    
    void paint(Graphics& g) override 
@@ -30,10 +32,6 @@ public:
 public:
    
    Colour fFill;
-   
-   int fSize;
-   
-   
 };
 
 
@@ -92,45 +90,52 @@ void DemoComponent::mouseDown(const MouseEvent& e)
    }
    else 
    {
-      this->CreateDemo(e.getPosition());
+      EffectType type = EffectType::kLinear;
+      
+      if (e.mods.isShiftDown())
+      {
+         type = EffectType::kSlew;
+      }
+      else if (e.mods.isAltDown())
+      {
+         type = EffectType::kVector;
+      }
+      
+      this->CreateDemo(e.getPosition(), type);
    }
 }
 
-void DemoComponent::CreateDemo(Point<int> startPoint)
+void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
 {
    Random r;
    auto box = new DemoBox(); 
    this->addAndMakeVisible(box);
-   box->setBounds(startPoint.x, startPoint.y, box->fSize, box->fSize);
+   box->setBounds(startPoint.x, startPoint.y, box->getWidth(), box->getHeight());
    
    // set the animation parameters. 
-/*
-   auto yVal = std::make_unique<LinearAnimatedValue>(startPoint.y, 
-      (this->getHeight()-box->getHeight()), 0.5, 30);
-      
-   auto xVal = std::make_unique<LinearAnimatedValue>(startPoint.x, 
-      startPoint.x + r.nextInt({-100, 100}), 0.5, 30);
-      
-   // animation->SetValue(0, xVal);
-   animation->SetValue(0, std::make_unique<LinearAnimatedValue>(startPoint.x, 
-      startPoint.x + r.nextInt({-100, 100}), 0.5, 30));
-   animation->SetValue(1, std::move(yVal));
-*/
-
    int startX = startPoint.x;
    int endX = r.nextInt({0, this->getWidth() - box->getWidth()});
    int startY = startPoint.y;
-   int endY = this->getHeight() - box->getHeight();
+   int endY = r.nextInt({0, this->getHeight() - box->getHeight()});
    
    auto animation = std::make_unique<Animation<2>>(1);
-#if 1 
-   animation->SetValue(0, std::make_unique<SlewAnimatedValue>(startX, endX, 0.5f, 0.1f));
-   animation->SetValue(1, std::make_unique<SlewAnimatedValue>(startY, endY, 0.5f, 0.1f));
-#else 
-   animation->SetValue(0, std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.1f));
-   animation->SetValue(1, std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.1f));
-
-#endif
+   
+   if (EffectType::kLinear == type)
+   {
+      animation->SetValue(0, std::make_unique<LinearAnimatedValue>(startX, endX, 0.5f, 50));
+      animation->SetValue(1, std::make_unique<LinearAnimatedValue>(startY, endY, 0.5f, 50));
+   }
+   else if (EffectType::kSlew == type)
+   {
+      animation->SetValue(0, std::make_unique<SlewAnimatedValue>(startX, endX, 0.6f, 0.1f));
+      animation->SetValue(1, std::make_unique<SlewAnimatedValue>(startY, endY, 0.6f, 0.1f));
+   }
+   else if (EffectType::kVector == type)
+   {
+      animation->SetValue(0, std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.1f));
+      animation->SetValue(1, std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.1f));
+   }
+   
    
    animation->OnUpdate([=] (const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);

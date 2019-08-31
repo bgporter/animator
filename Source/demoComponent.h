@@ -20,6 +20,12 @@
 class DemoComponent    : public Component
 {
 public:
+   enum class EffectType 
+   {
+      kLinear = 0,
+      kSlew, 
+      kVector
+   };
     DemoComponent();
     ~DemoComponent();
 
@@ -28,7 +34,7 @@ public:
     
     void mouseDown(const MouseEvent& e) override;
     
-    void CreateDemo(Point<int> startPoint);
+    void CreateDemo(Point<int> startPoint, EffectType type);
     
     void Clear(); 
 
