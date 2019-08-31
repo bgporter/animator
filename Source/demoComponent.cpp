@@ -155,7 +155,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    else if (EffectType::kVector == type)
    {
       xCurve = std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.3f);
-      yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.3f);
+      yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 0.5, 0.3f);
    }
    else if (EffectType::kSlewVector == type)
    {

@@ -12,6 +12,12 @@ class AnimationType
 {
 public:
    
+   enum 
+   {
+      kProcessing = 0,
+      kFinished
+   };
+   
    AnimationType(int id)
    :  fId{id}
    ,  fDelay{0}
@@ -146,7 +152,7 @@ public:
       
       if (! this->DelayElapsed())
       {
-         return 0;
+         return kProcessing;
       }
       
       for (int i = 0; i < valueCount; ++i)
@@ -173,10 +179,10 @@ public:
             fCompleteFn();
          }
          fFinished = true;
-         return 1;
+         return kFinished;
       }
       
-      return 0;
+      return kProcessing;
    }
    
    void Cancel(bool moveToEndPosition) override
@@ -220,15 +226,10 @@ protected:
    CompletionFn fCompleteFn;
    
 private:
-   
-   
    /// is this animation complete? 
    bool fFinished; 
    
    /// The array of animated value objects. 
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
-   
 
-   
-   
 };

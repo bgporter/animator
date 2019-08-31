@@ -32,20 +32,21 @@ public:
             ++fCurrentEffect;
          }
          
-         return this->IsFinished() ? 1 : 0;
+         return this->IsFinished() ? AnimationType::kFinished : AnimationType::kProcessing;
       }
       
-      return 1;
+      return AnimationType::kFinished;
    }
    
    void Cancel(bool moveToEndPosition) override
    {
       if (moveToEndPosition)
       {
-         auto last = this->GetEffect(fSequence.size()-1); 
-         if (last)
+         auto lastIndex = static_cast<int>(fSequence.size() - 1);
+         auto lastEffect = this->GetEffect(lastIndex); 
+         if (lastEffect)
          {
-            last->Cancel(moveToEndPosition);
+            lastEffect->Cancel(moveToEndPosition);
          }
       }
       
@@ -70,7 +71,7 @@ public:
    
 private:
    
-   AnimationType* GetEffect(int index)
+   Animation<valueCount>* GetEffect(int index)
    {
       if (index < fSequence.size())
       {
