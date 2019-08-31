@@ -26,6 +26,8 @@
               file="Source/animator/linearAnimatedValue.cpp"/>
         <FILE id="hBiFL9" name="linearAnimatedValue.h" compile="0" resource="0"
               file="Source/animator/linearAnimatedValue.h"/>
+        <FILE id="lHKSCS" name="sequence.cpp" compile="1" resource="0" file="Source/animator/sequence.cpp"/>
+        <FILE id="vDD3B4" name="sequence.h" compile="0" resource="0" file="Source/animator/sequence.h"/>
         <FILE id="PyuRCK" name="slewAnimatedValue.cpp" compile="1" resource="0"
               file="Source/animator/slewAnimatedValue.cpp"/>
         <FILE id="OL1aBh" name="slewAnimatedValue.h" compile="0" resource="0"

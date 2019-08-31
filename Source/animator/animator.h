@@ -11,7 +11,7 @@
 #include "linearAnimatedValue.h"
 #include "slewAnimatedValue.h"
 #include "vectorAnimatedValue.h"
-
+#include "sequence.h"
 
 class Animator : public Timer
 {
@@ -64,5 +64,9 @@ private:
     std::vector<std::unique_ptr<AnimationType>> fAnimations;
     
     int fFrameRate;
+    
+    /// protect against new effects being added while we're updating or 
+    /// cleaning up. 
+    CriticalSection fMutex;
    
 };

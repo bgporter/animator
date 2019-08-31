@@ -61,6 +61,10 @@
 			isa = PBXBuildFile;
 			fileRef = 5A52104C12AEBAA4C3B17904;
 		};
+		04F3C6E94AC5CC252E1DD84C = {
+			isa = PBXBuildFile;
+			fileRef = 8697CE226C04E3D096305A03;
+		};
 		0209DC20A33C55AF1591D221 = {
 			isa = PBXBuildFile;
 			fileRef = 68F0D4952AE6631B8ED0D9D3;
@@ -182,6 +186,13 @@
 			path = System/Library/Frameworks/OpenGL.framework;
 			sourceTree = SDKROOT;
 		};
+		33F6E8BB1E0F8F5BA5F69DAB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = sequence.h;
+			path = ../../Source/animator/sequence.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		38EB687C8E55B69BEE6700D2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -285,6 +296,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = animatedValue.cpp;
 			path = ../../Source/animator/animatedValue.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8697CE226C04E3D096305A03 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = sequence.cpp;
+			path = ../../Source/animator/sequence.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		86CCFD019A40DE65460F38CD = {
@@ -440,6 +458,8 @@
 				99828A0F02116A80CF24E542,
 				5A52104C12AEBAA4C3B17904,
 				CFDDA62D198D43FB87293D7C,
+				8697CE226C04E3D096305A03,
+				33F6E8BB1E0F8F5BA5F69DAB,
 				68F0D4952AE6631B8ED0D9D3,
 				75B5E20BCC5FEE3AF0BB41E3,
 				E43C7967A6FCB78B4A9C0E0E,
@@ -760,6 +780,7 @@
 				8E558732725F73C9F8C5DAFB,
 				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
+				04F3C6E94AC5CC252E1DD84C,
 				0209DC20A33C55AF1591D221,
 				EAB8922669197056B4D03F16,
 				93C3A228B793259CAC1A4DF6,
