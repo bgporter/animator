@@ -132,8 +132,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    }
    else if (EffectType::kVector == type)
    {
-      animation->SetValue(0, std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.1f));
-      animation->SetValue(1, std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.1f));
+      animation->SetValue(0, std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.3f));
+      animation->SetValue(1, std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 2, 0.3f));
    }
    
    

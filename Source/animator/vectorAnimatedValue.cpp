@@ -57,7 +57,8 @@ float VectorAnimatedValue::GenerateNextValue()
          // until we're within the tolerance value of it, at which 
          // point we'll stop.
          fAcceleration = -1 * fAcceleration * fDamping;
-         fVelocity = 0.f;
+         // fVelocity = 0.f;
+         fVelocity *= -fDamping;
           
       }
    }
