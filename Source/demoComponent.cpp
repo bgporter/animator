@@ -154,21 +154,27 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    animation->SetValue(0, std::move(xCurve));
    animation->SetValue(1, std::move(yCurve));
    
+   // On each update: move this box to the next position on the (x,y) curve.
    animation->OnUpdate([=] (const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
    });
    
    
+   // When the main animation completes: start a second animation that slowly
+   // fades the color all the way out. 
    animation->OnCompletion([=] {
       float currentSat = box->GetSaturation();
       
       auto fade = std::make_unique<Animation<1>>(); 
       fade->SetValue(0, std::make_unique<LinearAnimatedValue>(currentSat, 0.f, 0.01f, 200));
       fade->OnUpdate([=] (const Animation<1>::ValueList& val) {
+         // every update, change the saturation value of the color. 
          box->SetSaturation(val[0]);
       });
       
       fade->OnCompletion([=] {
+         // ...and when the fade animation is complete, delete the box from the 
+         //demo component. 
          this->removeChildComponent(box);
          delete box;
       });
