@@ -16,7 +16,7 @@ public:
    DemoBox()
    {
       Random r;
-      fFill = Colour(r.nextFloat(), 0.9f, 0.9f, 1.f);
+      fFill = Colour(r.nextFloat(), 0.9f, 0.9f, 0.9f);
       int size = r.nextInt({50, 100});
       this->setSize(size, size);
    }
@@ -175,8 +175,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       auto midY = (startY + endY) / 2;
       
       
-      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, 2.f, 0.2f);
-      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, 2.f, 0.2f);
+      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, 5.f, 0.1f);
+      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, 5.f, 0.1f);
       auto effect1 = std::make_unique<Animation<2>>();
       effect1->SetValue(0, std::move(xCurve1));
       effect1->SetValue(1, std::move(yCurve1));
