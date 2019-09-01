@@ -11,7 +11,7 @@ class Sequence : public Animation<valueCount>
 {
 public:
    Sequence(int id=0)
-   :  Animation<valueCount>(0)
+   :  Animation<valueCount>(id)
    ,  fCurrentEffect{0}
    {
       
@@ -58,20 +58,20 @@ public:
       // We need to make each of the effects notify us on update or completion, 
       // so that we can pass those along to whoever passed in a single 
       // lambda to us. 
-      effect->OnUpdate([=] (const typename Animation<valueCount>::ValueList& val){
+      effect->OnUpdate([=] (int id, const typename Animation<valueCount>::ValueList& val){
          if (this->fUpdateFn)
          {
-            this->fUpdateFn(val);
+            this->fUpdateFn(this->GetId(), val);
          }
          
       });
       
-      effect->OnCompletion([=] {
+      effect->OnCompletion([=] (int id){
          // Each effect in the sequence will notify us, but we only pass 
          // along the final one. 
          if ((fCurrentEffect == fSequence.size() - 1) && this->fCompleteFn)
          {
-            this->fCompleteFn();
+            this->fCompleteFn(this->GetId());
          }
       });
       

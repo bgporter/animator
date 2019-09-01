@@ -203,14 +203,14 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    }
    
    // On each update: move this box to the next position on the (x,y) curve.
-   movement->OnUpdate([=] (const Animation<2>::ValueList& val) {
+   movement->OnUpdate([=] (int id, const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
    });
    
    
    // When the main animation completes: start a second animation that slowly
    // fades the color all the way out. 
-   movement->OnCompletion([=] {
+   movement->OnCompletion([=] (int id){
       float currentSat = box->GetSaturation();
       
       auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
@@ -218,14 +218,15 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       // don't start fading until 50 frames have elapsed
       fade->SetDelay(50);
       
-      fade->OnUpdate([=] (const Animation<1>::ValueList& val) {
+      fade->OnUpdate([=] (int id, const Animation<1>::ValueList& val) {
          // every update, change the saturation value of the color. 
          box->SetSaturation(val[0]);
       });
       
-      fade->OnCompletion([=] {
+      fade->OnCompletion([=] (int id){
          // ...and when the fade animation is complete, delete the box from the 
          //demo component. 
+         DBG("Completing # " << id);
          this->removeChildComponent(box);
          delete box;
          

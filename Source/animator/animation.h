@@ -82,8 +82,8 @@ class Animation  : public AnimationType
 public:
    
    using ValueList = std::array<float, valueCount>;
-   using UpdateFn = std::function<void(const ValueList&)>;
-   using CompletionFn = std::function<void(void)>;
+   using UpdateFn = std::function<void(int, const ValueList&)>;
+   using CompletionFn = std::function<void(int)>;
    
 
    /**
@@ -168,7 +168,7 @@ public:
       
       if (fUpdateFn)
       {
-         fUpdateFn(values);
+         fUpdateFn(this->GetId(), values);
       }
       
       
@@ -176,7 +176,7 @@ public:
       {
          if (fCompleteFn)
          {
-            fCompleteFn();
+            fCompleteFn(this->GetId());
          }
          fFinished = true;
          return kFinished;
@@ -207,7 +207,7 @@ public:
          // ...just notify that the effect is complete. 
          if (fCompleteFn)
          {
-            fCompleteFn();
+            fCompleteFn(this->GetId());
          }
       }
       fFinished = true;
