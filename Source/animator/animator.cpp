@@ -98,6 +98,33 @@ void Animator::Cleanup()
 }
 
 
+AnimationType* Animator::GetAnimation(int id)
+{
+   for (auto& animation: fAnimations)
+   {
+      if (id == animation->GetId())
+      {
+         return animation.get();
+      }
+   }
+   return nullptr;
+}
+
+
+int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
+{
+   int foundCount{0};
+   
+   for (auto& animation: fAnimations)
+   {
+      if (id == animation->GetId())
+      {
+         animations.push_back(animation.get());
+         ++foundCount;
+      }
+   }
+   return foundCount;
+}
 
 #ifdef qRunUnitTests
 #include "test/test_Animator.cpp"

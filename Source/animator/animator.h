@@ -49,6 +49,24 @@ public:
    bool CancelAllAnimations(bool moveToEndPosition); 
    
    
+   /**
+    * Attempt to get a running animation object by passing in its ID value. 
+    * @param  id ID of the animation you want. If more than one anumation use 
+    *            the same ID, this will only return the first one found. 
+    * @return    non-owning pointer (or nullptr if not present). Don't store this 
+    *            pointer as it may be deleted from beneath you. 
+    */  
+   AnimationType* GetAnimation(int id);
+   
+   /**
+    * Attempt to get all animations that use a specific ID. 
+    * @param  id         ID to look for. 
+    * @param  animations Vector to fill with non-owning pointers. 
+    * @return            number of effects found. 
+    */
+   int GetAnimations(int id, std::vector<AnimationType*>& animations);
+   
+   
 private:
    /**
     * Remove any animations that are complete or canceled from the list. 

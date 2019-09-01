@@ -3,7 +3,7 @@ class Test_Animator : public SubTest
 {
 public:
    Test_Animator() 
-   : SubTest("Animator", "!!! category !!!")
+   : SubTest("Animator", "Animator")
    {
 
    }
@@ -22,7 +22,7 @@ public:
     */
    void Setup() override
    {
-    
+      fAnimator = std::make_unique<Animator>();
    }
 
    /**
@@ -44,14 +44,70 @@ public:
     */
    void TearDown() override
    {
-    
+      fAnimator.reset(nullptr);
    }
    
    void runTest() override
    {
-      // !!! Add tests.
-      beginTest("!!! WRITE SOME TESTS FOR THE Animator Class !!!");
+      Test("GetOne", [=] {
+         
+      fAnimator->AddAnimation(this->MakeNullAnimation(5));
+      expect(nullptr == fAnimator->GetAnimation(1));
+      expect(nullptr != fAnimator->GetAnimation(5));
+         
+      });
+      
+      
+      Test("Get multiple", [=] {
+         fAnimator->AddAnimation(this->MakeNullAnimation(2));
+         fAnimator->AddAnimation(this->MakeNullAnimation(2));
+         fAnimator->AddAnimation(this->MakeNullAnimation(2));
+         
+         
+         fAnimator->AddAnimation(this->MakeNullAnimation(100));
+         fAnimator->AddAnimation(this->MakeNullAnimation(100));
+         
+         
+         fAnimator->AddAnimation(this->MakeNullAnimation(315));
+         
+         std::vector<AnimationType*> found;
+         
+         expectEquals(fAnimator->GetAnimations(5, found), 0);
+         expect(0 == found.size());
+         
+         found.clear();
+         expectEquals(fAnimator->GetAnimations(2, found), 3);
+         expect(3 == found.size());
+         
+         // don't clear! 
+         expectEquals(fAnimator->GetAnimations(100, found), 2);
+         expect(5 == found.size());
+         
+         found.clear();
+         expectEquals(fAnimator->GetAnimations(315, found), 1);
+         expect(1 == found.size());
+         
+         
+         
+         
+      });
    }
+
+
+   std::unique_ptr<AnimationType> MakeNullAnimation(int id)
+   {
+      auto val = std::make_unique<ConstantAnimatedValue>(0, 1);
+      auto animation = std::make_unique<Animation<1>>(id); 
+      animation->SetValue(0, std::move(val));
+      
+      return animation;
+      
+      
+   }
+
+private:
+   
+   std::unique_ptr<Animator> fAnimator;
 
 };
 
