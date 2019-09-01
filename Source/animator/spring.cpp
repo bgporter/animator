@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2019 Brett g Porter. All Rights Reserved.
  */
-#include "vectorAnimatedValue.h"
+#include "spring.h"
 
-VectorAnimatedValue::VectorAnimatedValue(int startVal, int endVal, float tolerance, 
+Spring::Spring(int startVal, int endVal, float tolerance, 
    float accel, float damping)
 :  AnimatedValue(startVal, endVal, tolerance)
 ,  fStartAcceleration(accel)
@@ -21,7 +21,7 @@ VectorAnimatedValue::VectorAnimatedValue(int startVal, int endVal, float toleran
 }
 
 
-float VectorAnimatedValue::GenerateNextValue()
+float Spring::GenerateNextValue()
 {
    // a weird case we need to handle -- if we're already at our end state, 
    // remain there! Dont' keep oscillating. 
@@ -69,7 +69,7 @@ float VectorAnimatedValue::GenerateNextValue()
    
 }
 
-void VectorAnimatedValue::DoReset()
+void Spring::DoReset()
 {
    fVelocity = 0;
    fAcceleration = fStartAcceleration;
@@ -78,5 +78,5 @@ void VectorAnimatedValue::DoReset()
    
    
 #ifdef qRunUnitTests
-#include "test/test_VectorAnimatedValue.cpp"
+#include "test/test_Spring.cpp"
 #endif

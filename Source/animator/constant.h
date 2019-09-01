@@ -7,7 +7,7 @@
 
 #include "animatedValue.h"
 
-class ConstantAnimatedValue   : public AnimatedValue 
+class Constant   : public AnimatedValue 
 {
 public:
    /**
@@ -15,7 +15,7 @@ public:
     * @param value      Value to generate. 
     * @param duration # of frames the effect should take. 
     */
-   ConstantAnimatedValue(int value, int duration);
+   Constant(int value, int duration);
    
    bool IsFinished() override;
    

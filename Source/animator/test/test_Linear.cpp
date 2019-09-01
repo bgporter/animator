@@ -1,9 +1,9 @@
 
-class Test_LinearAnimatedValue : public SubTest
+class Test_Linear : public SubTest
 {
 public:
-   Test_LinearAnimatedValue() 
-   : SubTest("LinearAnimatedValue", "Values")
+   Test_Linear() 
+   : SubTest("Linear", "Values")
    {
 
    }
@@ -50,7 +50,7 @@ public:
    void runTest() override
    {
       Test("simple test", [=] {
-         auto val = std::make_unique<LinearAnimatedValue>(0, 100, 0.5f, 100);
+         auto val = std::make_unique<Linear>(0, 100, 0.5f, 100);
          
          expectWithinAbsoluteError<float>(val->GetNextValue(), 0.f, 0.01f);
          expect(! val->IsFinished());
@@ -74,7 +74,7 @@ public:
       });
       
       Test("Decrease value", [=] {
-         auto val = std::make_unique<LinearAnimatedValue>(100, 0, 0.5f, 100);
+         auto val = std::make_unique<Linear>(100, 0, 0.5f, 100);
          int frame = 0;
          float expected = 100.f;
          
@@ -97,4 +97,4 @@ public:
 
 };
 
-static Test_LinearAnimatedValue   testLinearAnimatedValue;
+static Test_Linear   testLinear;

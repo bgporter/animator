@@ -1,33 +1,33 @@
 /*
  * Copyright (c) 2019 Brett g Porter. All Rights Reserved.
  */
-#include "constantAnimatedValue.h"
+#include "constant.h"
    
    
    
-ConstantAnimatedValue::ConstantAnimatedValue(int value, int duration)
+Constant::Constant(int value, int duration)
 :  AnimatedValue(value, value, 0)
 ,  fDuration(duration)
 {
    
 }
 
-bool ConstantAnimatedValue::IsFinished()
+bool Constant::IsFinished()
 {
    return (fFrameCount >= fDuration);
 }
 
-float ConstantAnimatedValue::GenerateNextValue()
+float Constant::GenerateNextValue()
 {
    return fStartVal;
 }
 
 
-void ConstantAnimatedValue::DoReset()
+void Constant::DoReset()
 {
    // fElapsedTime = 0;
 }
 
 #ifdef qRunUnitTests
-#include "test/test_ConstantAnimatedValue.cpp"
+#include "test/test_Constant.cpp"
 #endif

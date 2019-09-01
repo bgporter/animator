@@ -96,7 +96,7 @@ public:
 
    std::unique_ptr<AnimationType> MakeNullAnimation(int id)
    {
-      auto val = std::make_unique<ConstantAnimatedValue>(0, 1);
+      auto val = std::make_unique<Constant>(0, 1);
       auto animation = std::make_unique<Animation<1>>(id); 
       animation->SetValue(0, std::move(val));
       

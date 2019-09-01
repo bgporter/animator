@@ -1,11 +1,11 @@
 /*
  * Copyright (c) 2019 Brett g Porter. All Rights Reserved.
  */
-#include "linearAnimatedValue.h"
+#include "linear.h"
 
 
 
-LinearAnimatedValue::LinearAnimatedValue(float startVal, float endVal, 
+Linear::Linear(float startVal, float endVal, 
    float tolerance, int duration)
 :  AnimatedValue(startVal, endVal, tolerance) 
 ,  fDuration(duration) 
@@ -16,7 +16,7 @@ LinearAnimatedValue::LinearAnimatedValue(float startVal, float endVal,
 
 
 
-float LinearAnimatedValue::GenerateNextValue()
+float Linear::GenerateNextValue()
 {
    auto calculated = fCurrentVal + fDelta;
    if (fStartVal < fEndVal)
@@ -27,5 +27,5 @@ float LinearAnimatedValue::GenerateNextValue()
 }
 
 #ifdef qRunUnitTests
-#include "test/test_LinearAnimatedValue.cpp"
+#include "test/test_Linear.cpp"
 #endif

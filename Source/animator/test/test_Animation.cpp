@@ -1,7 +1,7 @@
 
 
 // include some animated value classes for testing...
-#include "../constantAnimatedValue.h"
+#include "../constant.h"
 
 class Test_Animation : public SubTest
 {
@@ -62,8 +62,8 @@ public:
          
          auto control = std::make_unique<Animation<2>>();
          
-         control->SetValue(0, std::make_unique<ConstantAnimatedValue>(100, 2));
-         control->SetValue(1, std::make_unique<ConstantAnimatedValue>(200, 3));
+         control->SetValue(0, std::make_unique<Constant>(100, 2));
+         control->SetValue(1, std::make_unique<Constant>(200, 3));
          
          control->OnUpdate([&] (int id, const Animation<2>::ValueList& val) {
             val0 = val[0];

@@ -53,13 +53,13 @@
 			isa = PBXBuildFile;
 			fileRef = 001B902D85C93690AC3E20BE;
 		};
-		3137A8D456077DB2573D4B17 = {
+		ECEDEE8FAD3C4440FFA98FBC = {
 			isa = PBXBuildFile;
-			fileRef = DA3D1855CA6ABD7AC2AE9AA8;
+			fileRef = 9D3C80A6E00E506461CB1968;
 		};
-		89A00FFFA00DEC117A0A5105 = {
+		11C1DBA28BAFC2E4D463669A = {
 			isa = PBXBuildFile;
-			fileRef = 5A52104C12AEBAA4C3B17904;
+			fileRef = E4E6A372CD5C072999E56707;
 		};
 		04F3C6E94AC5CC252E1DD84C = {
 			isa = PBXBuildFile;
@@ -69,9 +69,9 @@
 			isa = PBXBuildFile;
 			fileRef = E3E916D41C4F89FB545AF348;
 		};
-		EAB8922669197056B4D03F16 = {
+		F3C4555BD5CDB6D568D9BC0B = {
 			isa = PBXBuildFile;
-			fileRef = E43C7967A6FCB78B4A9C0E0E;
+			fileRef = ECFB66557B480865337ECDBD;
 		};
 		93C3A228B793259CAC1A4DF6 = {
 			isa = PBXBuildFile;
@@ -193,6 +193,13 @@
 			path = ../../Source/animator/sequence.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		34B0A00A03B070B98EC45CA3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = spring.h;
+			path = ../../Source/animator/spring.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		38EB687C8E55B69BEE6700D2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -228,13 +235,6 @@
 			path = "../../JuceLibraryCode/modules/juce_events";
 			sourceTree = "SOURCE_ROOT";
 		};
-		5A52104C12AEBAA4C3B17904 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = linearAnimatedValue.cpp;
-			path = ../../Source/animator/linearAnimatedValue.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		656F1A79E007AC70EA5F2047 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -249,13 +249,6 @@
 			path = animator.app;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		65ED0424FA4C4DA1BF45F3B1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = vectorAnimatedValue.h;
-			path = ../../Source/animator/vectorAnimatedValue.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		6A5FF67644A34C0AD4FCBE77 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -268,6 +261,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = subTest.h;
 			path = ../../Source/subTest.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		72F06C210D1DCCE523AD5F6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = constant.h;
+			path = ../../Source/animator/constant.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		77682DC2163B76CD96A3E6CB = {
@@ -312,18 +312,25 @@
 			path = System/Library/Frameworks/WebKit.framework;
 			sourceTree = SDKROOT;
 		};
-		99828A0F02116A80CF24E542 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = constantAnimatedValue.h;
-			path = ../../Source/animator/constantAnimatedValue.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		9CBCC63355F8E32C0E672267 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_data_structures.mm";
 			path = "../../JuceLibraryCode/include_juce_data_structures.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		9D3C80A6E00E506461CB1968 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = constant.cpp;
+			path = ../../Source/animator/constant.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A137640A33F66E091E27C8EE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = linear.h;
+			path = ../../Source/animator/linear.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A2E56F039D8C8EE43A455B93 = {
@@ -368,25 +375,11 @@
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		CFDDA62D198D43FB87293D7C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = linearAnimatedValue.h;
-			path = ../../Source/animator/linearAnimatedValue.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D937EA11CFE842B78CB80E10 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_data_structures";
 			path = "../../JuceLibraryCode/modules/juce_data_structures";
-			sourceTree = "SOURCE_ROOT";
-		};
-		DA3D1855CA6ABD7AC2AE9AA8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = constantAnimatedValue.cpp;
-			path = ../../Source/animator/constantAnimatedValue.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DEFAD973854F8FA6B10A32D9 = {
@@ -410,13 +403,6 @@
 			path = ../../Source/animator/easing.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		E43C7967A6FCB78B4A9C0E0E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = vectorAnimatedValue.cpp;
-			path = ../../Source/animator/vectorAnimatedValue.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		E467475CD08B22DED76C2CEE = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -424,11 +410,25 @@
 			path = System/Library/Frameworks/IOKit.framework;
 			sourceTree = SDKROOT;
 		};
+		E4E6A372CD5C072999E56707 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = linear.cpp;
+			path = ../../Source/animator/linear.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E55679B42F2D7BA8EBB07359 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = MainComponent.h;
 			path = ../../Source/MainComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		ECFB66557B480865337ECDBD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = spring.cpp;
+			path = ../../Source/animator/spring.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		EDDF1A770038317C064E2F9E = {
@@ -454,16 +454,16 @@
 				656F1A79E007AC70EA5F2047,
 				001B902D85C93690AC3E20BE,
 				86CCFD019A40DE65460F38CD,
-				DA3D1855CA6ABD7AC2AE9AA8,
-				99828A0F02116A80CF24E542,
-				5A52104C12AEBAA4C3B17904,
-				CFDDA62D198D43FB87293D7C,
+				9D3C80A6E00E506461CB1968,
+				72F06C210D1DCCE523AD5F6B,
+				E4E6A372CD5C072999E56707,
+				A137640A33F66E091E27C8EE,
 				8697CE226C04E3D096305A03,
 				33F6E8BB1E0F8F5BA5F69DAB,
 				E3E916D41C4F89FB545AF348,
 				DEFAD973854F8FA6B10A32D9,
-				E43C7967A6FCB78B4A9C0E0E,
-				65ED0424FA4C4DA1BF45F3B1,
+				ECFB66557B480865337ECDBD,
+				34B0A00A03B070B98EC45CA3,
 			);
 			name = animator;
 			sourceTree = "<group>";
@@ -778,11 +778,11 @@
 				AD9F2649E3CD91947E59471F,
 				14D5F1B2D18C6660C77258E0,
 				8E558732725F73C9F8C5DAFB,
-				3137A8D456077DB2573D4B17,
-				89A00FFFA00DEC117A0A5105,
+				ECEDEE8FAD3C4440FFA98FBC,
+				11C1DBA28BAFC2E4D463669A,
 				04F3C6E94AC5CC252E1DD84C,
 				C74A1AB45B3703E9316B5500,
-				EAB8922669197056B4D03F16,
+				F3C4555BD5CDB6D568D9BC0B,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
 				71BFA7C1B048FD696017ACE1,

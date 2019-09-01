@@ -1,9 +1,9 @@
 
-class Test_VectorAnimatedValue : public SubTest
+class Test_Constant : public SubTest
 {
 public:
-   Test_VectorAnimatedValue() 
-   : SubTest("VectorAnimatedValue", "!!! category !!!")
+   Test_Constant() 
+   : SubTest("Constant", "Values")
    {
 
    }
@@ -49,10 +49,19 @@ public:
    
    void runTest() override
    {
-      // !!! Add tests.
-      beginTest("!!! WRITE SOME TESTS FOR THE VectorAnimatedValue Class !!!");
+      Test("Constant", [=] {
+         auto val = std::make_unique<Constant>(100, 3);
+         
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
+         expect(! val->IsFinished());
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
+         expect(! val->IsFinished());
+         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
+         expect(val->IsFinished());
+         
+      });
    }
 
 };
 
-static Test_VectorAnimatedValue   testVectorAnimatedValue;
+static Test_Constant   testConstant;

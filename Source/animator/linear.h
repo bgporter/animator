@@ -6,7 +6,7 @@
 
 #include "animatedValue.h"
 
-class LinearAnimatedValue  : public AnimatedValue 
+class Linear  : public AnimatedValue 
 {
 public:
    /**
@@ -16,7 +16,7 @@ public:
     * @param tolerance tolerance for completion. 
     * @param duration  # of frames the effect should take. 
     */
-   LinearAnimatedValue(float startVal, float endVal, float tolerance, int duration);
+   Linear(float startVal, float endVal, float tolerance, int duration);
    
    
    

@@ -18,22 +18,16 @@
         <FILE id="Yb5bLP" name="animation.h" compile="0" resource="0" file="Source/animator/animation.h"/>
         <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
         <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
-        <FILE id="j8J8U6" name="constantAnimatedValue.cpp" compile="1" resource="0"
-              file="Source/animator/constantAnimatedValue.cpp"/>
-        <FILE id="qJIfSm" name="constantAnimatedValue.h" compile="0" resource="0"
-              file="Source/animator/constantAnimatedValue.h"/>
-        <FILE id="zJIprT" name="linearAnimatedValue.cpp" compile="1" resource="0"
-              file="Source/animator/linearAnimatedValue.cpp"/>
-        <FILE id="hBiFL9" name="linearAnimatedValue.h" compile="0" resource="0"
-              file="Source/animator/linearAnimatedValue.h"/>
+        <FILE id="j8J8U6" name="constant.cpp" compile="1" resource="0" file="Source/animator/constant.cpp"/>
+        <FILE id="qJIfSm" name="constant.h" compile="0" resource="0" file="Source/animator/constant.h"/>
+        <FILE id="zJIprT" name="linear.cpp" compile="1" resource="0" file="Source/animator/linear.cpp"/>
+        <FILE id="hBiFL9" name="linear.h" compile="0" resource="0" file="Source/animator/linear.h"/>
         <FILE id="lHKSCS" name="sequence.cpp" compile="1" resource="0" file="Source/animator/sequence.cpp"/>
         <FILE id="vDD3B4" name="sequence.h" compile="0" resource="0" file="Source/animator/sequence.h"/>
         <FILE id="PyuRCK" name="easing.cpp" compile="1" resource="0" file="Source/animator/easing.cpp"/>
         <FILE id="OL1aBh" name="easing.h" compile="0" resource="0" file="Source/animator/easing.h"/>
-        <FILE id="lc7Trx" name="vectorAnimatedValue.cpp" compile="1" resource="0"
-              file="Source/animator/vectorAnimatedValue.cpp"/>
-        <FILE id="hqTLy0" name="vectorAnimatedValue.h" compile="0" resource="0"
-              file="Source/animator/vectorAnimatedValue.h"/>
+        <FILE id="lc7Trx" name="spring.cpp" compile="1" resource="0" file="Source/animator/spring.cpp"/>
+        <FILE id="hqTLy0" name="spring.h" compile="0" resource="0" file="Source/animator/spring.h"/>
       </GROUP>
       <FILE id="rwQYM5" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="iYgyZN" name="MainComponent.cpp" compile="1" resource="0"

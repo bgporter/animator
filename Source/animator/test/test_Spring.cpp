@@ -1,9 +1,9 @@
 
-class Test_ConstantAnimatedValue : public SubTest
+class Test_Spring : public SubTest
 {
 public:
-   Test_ConstantAnimatedValue() 
-   : SubTest("ConstantAnimatedValue", "Values")
+   Test_Spring() 
+   : SubTest("Spring", "!!! category !!!")
    {
 
    }
@@ -49,19 +49,10 @@ public:
    
    void runTest() override
    {
-      Test("Constant", [=] {
-         auto val = std::make_unique<ConstantAnimatedValue>(100, 3);
-         
-         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
-         expect(! val->IsFinished());
-         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
-         expect(! val->IsFinished());
-         expectWithinAbsoluteError<float>(val->GetNextValue(), 100.f, 0.01f);
-         expect(val->IsFinished());
-         
-      });
+      // !!! Add tests.
+      beginTest("!!! WRITE SOME TESTS FOR THE Spring Class !!!");
    }
 
 };
 
-static Test_ConstantAnimatedValue   testConstantAnimatedValue;
+static Test_Spring   testSpring;

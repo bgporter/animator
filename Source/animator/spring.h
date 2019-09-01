@@ -6,10 +6,10 @@
 
 #include "animatedValue.h" 
 
-class VectorAnimatedValue  : public AnimatedValue 
+class Spring  : public AnimatedValue 
 {
 public:
-   VectorAnimatedValue(int startVal, int endVal, float tolerance, float accel, float dampen);
+   Spring(int startVal, int endVal, float tolerance, float accel, float dampen);
    
    
    

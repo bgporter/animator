@@ -7,10 +7,10 @@
 #include "../animatorApp.h"
 
 #include "animation.h"
-#include "constantAnimatedValue.h"
-#include "linearAnimatedValue.h"
+#include "constant.h"
+#include "linear.h"
 #include "easing.h"
-#include "vectorAnimatedValue.h"
+#include "spring.h"
 #include "sequence.h"
 
 class Animator : public Timer

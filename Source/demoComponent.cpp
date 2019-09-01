@@ -149,8 +149,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    
    if (EffectType::kLinear == type)
    {
-      xCurve = std::make_unique<LinearAnimatedValue>(startX, endX, 0.5f, 50);
-      yCurve = std::make_unique<LinearAnimatedValue>(startY, endY, 0.5f, 50);
+      xCurve = std::make_unique<Linear>(startX, endX, 0.5f, 50);
+      yCurve = std::make_unique<Linear>(startY, endY, 0.5f, 50);
    }
    else if (EffectType::kEaseOut == type)
    {
@@ -166,8 +166,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    {
       auto xAccel = std::abs(endX - startX) / 50.f;
       auto yAccel = std::abs(endY - startY) / 50.f;
-      xCurve = std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, xAccel, 0.3f);
-      yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, yAccel, 0.5f);
+      xCurve = std::make_unique<Spring>(startX, endX, 0.5f, xAccel, 0.3f);
+      yCurve = std::make_unique<Spring>(startY, endY, 0.5f, yAccel, 0.5f);
    }
    else if (EffectType::kInOut == type)
    {
@@ -214,7 +214,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       float currentSat = box->GetSaturation();
       
       auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
-      fade->SetValue(0, std::make_unique<LinearAnimatedValue>(currentSat, 0.f, 0.01f, 200));
+      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, 0.01f, 200));
       // don't start fading until 50 frames have elapsed
       fade->SetDelay(50);
       
