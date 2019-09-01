@@ -6,7 +6,18 @@
 
 #include "animatedValue.h" 
 
-class EaseIn : public AnimatedValue 
+
+class EasingCurve : public AnimatedValue 
+{
+public:
+   EasingCurve(int startVal, int endVal, float tolerance, float slewRate);
+   
+protected:
+   float fSlewRate;
+   
+};
+
+class EaseIn : public EasingCurve
 {
 public:
    EaseIn(int startVal, int endVal, float tolerance, float slewRate);
@@ -14,12 +25,10 @@ public:
 private:
    float GenerateNextValue() override;
    
-protected:
-   float fSlewRate;
 };
 
 
-class EaseOut : public EaseIn 
+class EaseOut :public  EasingCurve
 {
 public:
    EaseOut(int startVal, int endVal, float tolerance, float slewRate);

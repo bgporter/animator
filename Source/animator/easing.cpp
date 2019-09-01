@@ -5,10 +5,16 @@
 #include "easing.h"
 
 
-
-EaseIn::EaseIn(int startVal, int endVal, float tolerance, float slewRate)
+EasingCurve::EasingCurve(int startVal, int endVal, float tolerance, float slewRate)
 :  AnimatedValue(startVal, endVal, tolerance) 
 ,  fSlewRate(slewRate)
+{
+   
+}
+
+
+EaseIn::EaseIn(int startVal, int endVal, float tolerance, float slewRate)
+: EasingCurve(startVal, endVal, tolerance, slewRate)
 {
    
 }
@@ -20,9 +26,8 @@ float EaseIn::GenerateNextValue()
 
 
 
-EaseOut::EaseOut(int startVal, int endVal, 
-   float tolerance, float slewRate)
-: EaseIn(startVal, endVal, tolerance, slewRate)
+EaseOut::EaseOut(int startVal, int endVal, float tolerance, float slewRate)
+: EasingCurve(startVal, endVal, tolerance, slewRate)
 {
    
 }
