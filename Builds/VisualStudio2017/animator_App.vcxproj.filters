@@ -256,7 +256,7 @@
     <ClCompile Include="..\..\Source\animator\sequence.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\animator\slewAnimatedValue.cpp">
+    <ClCompile Include="..\..\Source\animator\easing.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\animator\vectorAnimatedValue.cpp">
@@ -1608,7 +1608,7 @@
     <ClInclude Include="..\..\Source\animator\sequence.h">
       <Filter>animator\Source\animator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\animator\slewAnimatedValue.h">
+    <ClInclude Include="..\..\Source\animator\easing.h">
       <Filter>animator\Source\animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\animator\vectorAnimatedValue.h">

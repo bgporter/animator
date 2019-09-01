@@ -65,9 +65,9 @@
 			isa = PBXBuildFile;
 			fileRef = 8697CE226C04E3D096305A03;
 		};
-		0209DC20A33C55AF1591D221 = {
+		C74A1AB45B3703E9316B5500 = {
 			isa = PBXBuildFile;
-			fileRef = 68F0D4952AE6631B8ED0D9D3;
+			fileRef = E3E916D41C4F89FB545AF348;
 		};
 		EAB8922669197056B4D03F16 = {
 			isa = PBXBuildFile;
@@ -256,13 +256,6 @@
 			path = ../../Source/animator/vectorAnimatedValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		68F0D4952AE6631B8ED0D9D3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = slewAnimatedValue.cpp;
-			path = ../../Source/animator/slewAnimatedValue.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		6A5FF67644A34C0AD4FCBE77 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -275,13 +268,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = subTest.h;
 			path = ../../Source/subTest.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		75B5E20BCC5FEE3AF0BB41E3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = slewAnimatedValue.h;
-			path = ../../Source/animator/slewAnimatedValue.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		77682DC2163B76CD96A3E6CB = {
@@ -403,11 +389,25 @@
 			path = ../../Source/animator/constantAnimatedValue.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		DEFAD973854F8FA6B10A32D9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = easing.h;
+			path = ../../Source/animator/easing.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E3BC0F150F8E6E8C5820BB5B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_gui_extra.mm";
 			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		E3E916D41C4F89FB545AF348 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = easing.cpp;
+			path = ../../Source/animator/easing.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E43C7967A6FCB78B4A9C0E0E = {
@@ -460,8 +460,8 @@
 				CFDDA62D198D43FB87293D7C,
 				8697CE226C04E3D096305A03,
 				33F6E8BB1E0F8F5BA5F69DAB,
-				68F0D4952AE6631B8ED0D9D3,
-				75B5E20BCC5FEE3AF0BB41E3,
+				E3E916D41C4F89FB545AF348,
+				DEFAD973854F8FA6B10A32D9,
 				E43C7967A6FCB78B4A9C0E0E,
 				65ED0424FA4C4DA1BF45F3B1,
 			);
@@ -781,7 +781,7 @@
 				3137A8D456077DB2573D4B17,
 				89A00FFFA00DEC117A0A5105,
 				04F3C6E94AC5CC252E1DD84C,
-				0209DC20A33C55AF1591D221,
+				C74A1AB45B3703E9316B5500,
 				EAB8922669197056B4D03F16,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,

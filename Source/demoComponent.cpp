@@ -52,6 +52,7 @@ public:
 //==============================================================================
 DemoComponent::DemoComponent()
 :  fAnimator(50)
+,  fNextEffectId{0}
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -107,14 +108,18 @@ void DemoComponent::mouseDown(const MouseEvent& e)
       {
          if (e.mods.isAltDown())
          {
-            type = EffectType::kSlewVector;
+            type = EffectType::kInOut;
          }
          else 
          {
-            type = EffectType::kSlew;
+            type = EffectType::kEaseOut;
          }
       }
       else if (e.mods.isAltDown())
+      {
+         type = EffectType::kEaseIn;
+      }
+      else if (e.mods.isCommandDown())
       {
          type = EffectType::kVector;
       }
@@ -136,7 +141,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    int startY = startPoint.y;
    int endY = r.nextInt({0, this->getHeight() - box->getHeight()});
    
-   auto movement = std::make_unique<Animation<2>>(1);
+   auto movement = std::make_unique<Animation<2>>(++fNextEffectId);
    
    
    std::unique_ptr<AnimatedValue> xCurve; 
@@ -147,35 +152,42 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       xCurve = std::make_unique<LinearAnimatedValue>(startX, endX, 0.5f, 50);
       yCurve = std::make_unique<LinearAnimatedValue>(startY, endY, 0.5f, 50);
    }
-   else if (EffectType::kSlew == type)
+   else if (EffectType::kEaseOut == type)
    {
-      xCurve = std::make_unique<SlewAnimatedValue>(startX, endX, 0.6f, 0.1f);
-      yCurve = std::make_unique<SlewAnimatedValue>(startY, endY, 0.6f, 0.1f);
+      xCurve = std::make_unique<EaseOut>(startX, endX, 0.6f, 0.01f);
+      yCurve = std::make_unique<EaseOut>(startY, endY, 0.6f, 0.01f);
+   }
+   else if (EffectType::kEaseIn == type)
+   {
+      xCurve = std::make_unique<EaseIn>(startX, endX, 0.6f, 0.1f);
+      yCurve = std::make_unique<EaseIn>(startY, endY, 0.6f, 0.1f);
    }
    else if (EffectType::kVector == type)
    {
-      xCurve = std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, 0.5f, 0.3f);
-      yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, 0.5, 0.3f);
+      auto xAccel = std::abs(endX - startX) / 50.f;
+      auto yAccel = std::abs(endY - startY) / 50.f;
+      xCurve = std::make_unique<VectorAnimatedValue>(startX, endX, 0.5f, xAccel, 0.3f);
+      yCurve = std::make_unique<VectorAnimatedValue>(startY, endY, 0.5f, yAccel, 0.5f);
    }
-   else if (EffectType::kSlewVector == type)
+   else if (EffectType::kInOut == type)
    {
       auto midX = (startX + endX) / 2;
       auto midY = (startY + endY) / 2;
       
       
-      auto xCurve1 = std::make_unique<SlewAnimatedValue>(startX, midX, 1.f, 0.2f);
-      auto yCurve1 = std::make_unique<SlewAnimatedValue>(startY, midY, 1.f, 0.2f);
+      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, 2.f, 0.2f);
+      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, 2.f, 0.2f);
       auto effect1 = std::make_unique<Animation<2>>();
       effect1->SetValue(0, std::move(xCurve1));
       effect1->SetValue(1, std::move(yCurve1));
       
-      auto xCurve2 = std::make_unique<VectorAnimatedValue>(midX, endX, 0.5f, 0.5f, 0.3f);
-      auto yCurve2 = std::make_unique<VectorAnimatedValue>(midY, endY, 0.5f, 2, 0.3f);
+      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, 0.5f, 0.1f);
+      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, 0.5f, 0.1f);
       auto effect2 = std::make_unique<Animation<2>>();
       effect2->SetValue(0, std::move(xCurve2));
       effect2->SetValue(1, std::move(yCurve2));
       
-      auto sequence = std::make_unique<Sequence<2>>();
+      auto sequence = std::make_unique<Sequence<2>>(++fNextEffectId);
       sequence->AddAnimation(std::move(effect1));
       sequence->AddAnimation(std::move(effect2));
       
@@ -184,7 +196,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    }
    
 
-   if (EffectType::kSlewVector != type)
+   if (EffectType::kInOut != type)
    {
       movement->SetValue(0, std::move(xCurve));
       movement->SetValue(1, std::move(yCurve));
@@ -201,7 +213,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    movement->OnCompletion([=] {
       float currentSat = box->GetSaturation();
       
-      auto fade = std::make_unique<Animation<1>>(); 
+      auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
       fade->SetValue(0, std::make_unique<LinearAnimatedValue>(currentSat, 0.f, 0.01f, 200));
       // don't start fading until 50 frames have elapsed
       fade->SetDelay(50);
@@ -216,6 +228,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
          //demo component. 
          this->removeChildComponent(box);
          delete box;
+         
       });
       
       fAnimator.AddAnimation(std::move(fade));

@@ -145,7 +145,7 @@
     <ClCompile Include="..\..\Source\animator\constantAnimatedValue.cpp"/>
     <ClCompile Include="..\..\Source\animator\linearAnimatedValue.cpp"/>
     <ClCompile Include="..\..\Source\animator\sequence.cpp"/>
-    <ClCompile Include="..\..\Source\animator\slewAnimatedValue.cpp"/>
+    <ClCompile Include="..\..\Source\animator\easing.cpp"/>
     <ClCompile Include="..\..\Source\animator\vectorAnimatedValue.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
@@ -1373,7 +1373,7 @@
     <ClInclude Include="..\..\Source\animator\constantAnimatedValue.h"/>
     <ClInclude Include="..\..\Source\animator\linearAnimatedValue.h"/>
     <ClInclude Include="..\..\Source\animator\sequence.h"/>
-    <ClInclude Include="..\..\Source\animator\slewAnimatedValue.h"/>
+    <ClInclude Include="..\..\Source\animator\easing.h"/>
     <ClInclude Include="..\..\Source\animator\vectorAnimatedValue.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h"/>

@@ -1,9 +1,9 @@
 
-class Test_SlewAnimatedValue : public SubTest
+class Test_EaseIn : public SubTest
 {
 public:
-   Test_SlewAnimatedValue() 
-   : SubTest("SlewAnimatedValue", "!!! category !!!")
+   Test_EaseIn() 
+   : SubTest("EaseIn", "!!! category !!!")
    {
 
    }
@@ -50,7 +50,7 @@ public:
    void runTest() override
    {
       Test("calculated slew #1", [=] {
-         auto val = std::make_unique<SlewAnimatedValue>(0, 100, 0.5f, 0.5f);
+         auto val = std::make_unique<EaseIn>(0, 100, 0.5f, 0.5f);
          
          expectWithinAbsoluteError<float>(val->GetNextValue(), 0.f, 0.01f);
          
@@ -74,4 +74,4 @@ public:
 
 };
 
-static Test_SlewAnimatedValue   testSlewAnimatedValue;
+static Test_EaseIn   testEaseIn;

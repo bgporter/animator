@@ -23,9 +23,10 @@ public:
    enum class EffectType 
    {
       kLinear = 0,
-      kSlew, 
+      kEaseIn,
+      kEaseOut,
       kVector, 
-      kSlewVector
+      kInOut
    };
     DemoComponent();
     ~DemoComponent();
@@ -43,4 +44,6 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoComponent)
     
     Animator fAnimator;
+    
+    int fNextEffectId;
 };

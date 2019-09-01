@@ -43,7 +43,7 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    sprintf(address, "%p", (void*) animation.get());
    
    
-   DBG("AddAnimation @ " << String(address)); 
+   DBG("AddAnimation # " << animation->GetId() << " @ " << String(address)); 
    fAnimations.push_back(std::move(animation));
    
    if (! this->isTimerRunning())

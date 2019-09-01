@@ -9,7 +9,7 @@
 #include "animation.h"
 #include "constantAnimatedValue.h"
 #include "linearAnimatedValue.h"
-#include "slewAnimatedValue.h"
+#include "easing.h"
 #include "vectorAnimatedValue.h"
 #include "sequence.h"
 
