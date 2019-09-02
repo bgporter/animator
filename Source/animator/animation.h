@@ -8,6 +8,14 @@
 
 #include "animatedValue.h"
 
+
+/**
+ * @class AnimationType 
+ *
+ * @brief Abstract base class; all the real action happens in the derived 
+ *        templated `Animation` class, below. 
+ */
+
 class AnimationType 
 {
 public:
@@ -74,6 +82,19 @@ private:
    int fDelay; 
    
 };
+
+
+/**
+ * @class Animation 
+ *
+ * @brief This class owns a number of `AnimatedValue` objects. On each animation 
+ * frame it gets the next calculated value from each of the value objects and 
+ * passes those values to its `OnUpdate` handler. When all of the values in the 
+ * animation have reached their end states, calls the `OnCompletion` handler. 
+ *
+ * Once this animation is complete, the `Animator` object that owns it will 
+ * garbage collect it. 
+ */
 
 
 template <std::size_t valueCount>

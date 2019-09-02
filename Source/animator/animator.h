@@ -13,6 +13,16 @@
 #include "spring.h"
 #include "sequence.h"
 
+/**
+ * @class Animator 
+ * @brief A class that can own `Animation` objects and execute them at a regular 
+ *        interval. 
+ *
+ * Since the timer that drives the animations only executes if there is currently 
+ * an animation happening, there's no overhead when the animator is idle. 
+ */
+
+
 class Animator : public Timer
 {
 public:

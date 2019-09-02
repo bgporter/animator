@@ -6,6 +6,15 @@
 
 #include "animatedValue.h" 
 
+
+/**
+ * @class Spring
+ * @brief Accelerates toward the end value -- if this acceleration takes it past 
+ *        the end value, it enters a mode where it acts like a simplified 
+ *        oscillating spring; the behavior of the oscillation can be loosened or 
+ *        tightened using the `dampen` parameter. 
+ */
+
 class Spring  : public AnimatedValue 
 {
 public:

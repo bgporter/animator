@@ -7,6 +7,12 @@
 #include "../animatorApp.h"
 
 
+/**
+ * @class AmimatedValue
+ * @brief Abstract base class for objects that can generate a useful series
+ *        of values to drive UI animations. 
+ */
+
 class AnimatedValue 
 {
 public:

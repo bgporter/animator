@@ -17,6 +17,15 @@ protected:
    
 };
 
+
+/**
+ * @class EaseIn 
+ *
+ * @brief A slew-based ease in curve -- accelerates quickly, then decelerates 
+ *        as it approaches the end value. 
+ * 
+ */
+
 class EaseIn : public EasingCurve
 {
 public:
@@ -27,7 +36,11 @@ private:
    
 };
 
-
+/**
+ * @class EaseOut 
+ *
+ * @brief A slew-based acceleration. starts slowly & accelerates. 
+ */
 class EaseOut :public  EasingCurve
 {
 public:

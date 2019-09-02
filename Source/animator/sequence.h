@@ -6,6 +6,15 @@
 
 #include "animation.h"
 
+/**
+ * @class Sequence 
+ *
+ * @brief An Animation class that can hold multiple Animation objects and 
+ *        execute them in sequence. An easy way to create complex effects 
+ *        from promotove movements. 
+ */
+
+
 template <int valueCount>
 class Sequence : public Animation<valueCount>
 {
