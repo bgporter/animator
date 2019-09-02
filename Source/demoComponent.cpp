@@ -93,13 +93,9 @@ void DemoComponent::resized()
 void DemoComponent::Clear()
 {
    fAnimator.CancelAllAnimations(false);
-#if 1
    fBoxList.clear();
    fBreadcrumbs.Clear();
    this->repaint();
-#else 
-   this->deleteAllChildren();
-#endif
 }
 
 
@@ -140,10 +136,17 @@ void DemoComponent::mouseDown(const MouseEvent& e)
 void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
 {
    Random r;
-   // auto box = std::make_unique<DemoBox>(); 
-   auto box = new DemoBox();
+
+   bool enableCrumbs = fParams.getProperty(ID::kBreadcrumbs);
+   if (enableCrumbs != fBreadcrumbs.IsEnabled())
+   {
+      fBreadcrumbs.Enable(enableCrumbs);
+   }
+   
    fBreadcrumbs.Clear();
    this->repaint();
+   
+   auto box = new DemoBox();
    this->addAndMakeVisible(box);
    box->setBounds(startPoint.x, startPoint.y, box->getWidth(), box->getHeight());
    

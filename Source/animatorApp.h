@@ -14,6 +14,7 @@
 namespace ID 
 {
    const Identifier kParameters{"params"};
+   const Identifier kBreadcrumbs{"breadcrumbs"};
    const Identifier kDuration{"dur"};
    const Identifier kEaseOutToleranceX{"eotx"};
    const Identifier kEaseOutToleranceY{"eoty"};

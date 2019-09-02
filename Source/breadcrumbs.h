@@ -10,10 +10,23 @@ class Breadcrumbs : public Component
 {
 public:
    Breadcrumbs()
+   :  fEnabled(true)
    {
       // ignore all mouse clicks. 
       this->setInterceptsMouseClicks(false, false);
    }
+   
+   void Enable(bool isEnabled)
+   {
+      this->Clear();
+      fEnabled = isEnabled;
+   }
+   
+   bool IsEnabled() const 
+   {
+      return fEnabled;
+   }
+   
    
    void Clear()
    {
@@ -23,15 +36,19 @@ public:
    
    void AddPoint(float x, float y)
    {
-      fBreadcrumbs.addRectangle(x, y, 2, 2);
+      if (fEnabled)
+      {
+         fBreadcrumbs.addRectangle(x, y, 2, 2);
+      }
    }
    
    void paint(Graphics& g) override
    {
-      // PathStrokeType stroke(2);
-      g.setColour(Colours::black);
-      
-      g.fillPath(fBreadcrumbs);
+      if (fEnabled)
+      {
+         g.setColour(Colours::black);
+         g.fillPath(fBreadcrumbs);
+      }
    }
    
    
@@ -39,4 +56,6 @@ public:
    
 private:
    Path fBreadcrumbs;
+   
+   bool fEnabled; 
 };
