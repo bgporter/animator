@@ -57,6 +57,10 @@ DemoComponent::DemoComponent()
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
+
+    this->addAndMakeVisible(fBreadcrumbs);
+    fBreadcrumbs.toBack();
+
 }
 
 DemoComponent::~DemoComponent()
@@ -82,15 +86,19 @@ void DemoComponent::paint (Graphics& g)
 
 void DemoComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
-
+   fBreadcrumbs.setBounds(this->getLocalBounds());
 }
 
 void DemoComponent::Clear()
 {
    fAnimator.CancelAllAnimations(false);
+#if 1
+   fBoxList.clear();
+   fBreadcrumbs.Clear();
+   this->repaint();
+#else 
    this->deleteAllChildren();
+#endif
 }
 
 
@@ -131,7 +139,10 @@ void DemoComponent::mouseDown(const MouseEvent& e)
 void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
 {
    Random r;
-   auto box = new DemoBox(); 
+   // auto box = std::make_unique<DemoBox>(); 
+   auto box = new DemoBox();
+   fBreadcrumbs.Clear();
+   this->repaint();
    this->addAndMakeVisible(box);
    box->setBounds(startPoint.x, startPoint.y, box->getWidth(), box->getHeight());
    
@@ -205,6 +216,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    // On each update: move this box to the next position on the (x,y) curve.
    movement->OnUpdate([=] (int id, const Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
+      fBreadcrumbs.AddPoint(val[0], val[1]);
    });
    
    
@@ -227,8 +239,15 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
          // ...and when the fade animation is complete, delete the box from the 
          //demo component. 
          DBG("Completing # " << id);
+#if 1
+         fBoxList.erase(std::remove_if(fBoxList.begin(), fBoxList.end(),
+          [&] (const std::unique_ptr<DemoBox>& b){
+             return (b.get() == box);
+         }));
+#else 
          this->removeChildComponent(box);
          delete box;
+#endif
          
       });
       
@@ -236,5 +255,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    });
    
    fAnimator.AddAnimation(std::move(movement));
+
+
+   fBoxList.emplace_back(box);
    
 }

@@ -14,9 +14,11 @@
 
 #include "animator/animator.h"
 
-//==============================================================================
-/*
-*/
+#include "breadcrumbs.h"
+
+
+class DemoBox;
+
 class DemoComponent    : public Component
 {
 public:
@@ -44,6 +46,9 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoComponent)
     
     Animator fAnimator;
+    Breadcrumbs fBreadcrumbs;
+    
+    std::vector<std::unique_ptr<DemoBox>> fBoxList;
     
     int fNextEffectId;
 };

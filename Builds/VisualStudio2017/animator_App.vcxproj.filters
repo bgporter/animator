@@ -235,6 +235,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\breadcrumbs.cpp">
+      <Filter>animator\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\demoComponent.cpp">
       <Filter>animator\Source</Filter>
     </ClCompile>
@@ -1581,6 +1584,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\breadcrumbs.h">
+      <Filter>animator\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\demoComponent.h">
       <Filter>animator\Source</Filter>
     </ClInclude>
