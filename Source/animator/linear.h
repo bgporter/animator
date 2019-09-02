@@ -29,7 +29,7 @@ private:
    int fDuration;
    
    
-   /// Delta to add at each millisecond that passes
+   /// Delta to add at each frame that passes
    float fDelta;
    
 };

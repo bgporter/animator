@@ -9,3 +9,7 @@
 */
 
 #include "sinusoid.h"
+
+#ifdef qRunUnitTests
+#include "test/test_Sinusoid.cpp"
+#endif
