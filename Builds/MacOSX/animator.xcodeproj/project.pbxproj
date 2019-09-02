@@ -45,6 +45,10 @@
 			isa = PBXBuildFile;
 			fileRef = 38EB687C8E55B69BEE6700D2;
 		};
+		F3D711FBB10D79BB81665815 = {
+			isa = PBXBuildFile;
+			fileRef = 41C2085EE1EEB3CC06E62CB6;
+		};
 		AD9F2649E3CD91947E59471F = {
 			isa = PBXBuildFile;
 			fileRef = 7BF5439F045E9693B5963AB1;
@@ -232,11 +236,25 @@
 			path = "../../JuceLibraryCode/modules/juce_gui_extra";
 			sourceTree = "SOURCE_ROOT";
 		};
+		41C2085EE1EEB3CC06E62CB6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = sinusoid.cpp;
+			path = ../../Source/animator/sinusoid.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4536626BA8BA135A16F80353 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = demoComponent.h;
 			path = ../../Source/demoComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4A11243B219A8B380FC52517 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = sinusoid.h;
+			path = ../../Source/animator/sinusoid.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4BB1EE6F2E26349EF2E9F8E4 = {
@@ -466,6 +484,8 @@
 		DEAEF87A30228C9BDB5BE903 = {
 			isa = PBXGroup;
 			children = (
+				41C2085EE1EEB3CC06E62CB6,
+				4A11243B219A8B380FC52517,
 				7BF5439F045E9693B5963AB1,
 				EDDF1A770038317C064E2F9E,
 				F8E3C431B40F6DE4D5778661,
@@ -796,6 +816,7 @@
 			files = (
 				8524FB69C90867EC5DAAC1D0,
 				56E7BBFFB3EAEB9D19968DED,
+				F3D711FBB10D79BB81665815,
 				AD9F2649E3CD91947E59471F,
 				14D5F1B2D18C6660C77258E0,
 				8E558732725F73C9F8C5DAFB,

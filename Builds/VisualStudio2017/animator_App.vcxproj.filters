@@ -241,6 +241,9 @@
     <ClCompile Include="..\..\Source\demoComponent.cpp">
       <Filter>animator\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\animator\sinusoid.cpp">
+      <Filter>animator\Source\animator</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\animator\animatedValue.cpp">
       <Filter>animator\Source\animator</Filter>
     </ClCompile>
@@ -1595,6 +1598,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\animatorApp.h">
       <Filter>animator\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\animator\sinusoid.h">
+      <Filter>animator\Source\animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\animator\animatedValue.h">
       <Filter>animator\Source\animator</Filter>

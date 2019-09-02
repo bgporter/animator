@@ -13,6 +13,8 @@
       <FILE id="fWfr4k" name="subTest.h" compile="0" resource="0" file="Source/subTest.h"/>
       <FILE id="wrwu39" name="animatorApp.h" compile="0" resource="0" file="Source/animatorApp.h"/>
       <GROUP id="{414A9F45-5BCF-6CAE-B3BB-428C120433CF}" name="animator">
+        <FILE id="NI3qpc" name="sinusoid.cpp" compile="1" resource="0" file="Source/animator/sinusoid.cpp"/>
+        <FILE id="S9YvnY" name="sinusoid.h" compile="0" resource="0" file="Source/animator/sinusoid.h"/>
         <FILE id="Ao7lwP" name="animatedValue.cpp" compile="1" resource="0"
               file="Source/animator/animatedValue.cpp"/>
         <FILE id="HhEzmx" name="animatedValue.h" compile="0" resource="0" file="Source/animator/animatedValue.h"/>
