@@ -7,8 +7,19 @@
 
 //==============================================================================
 MainComponent::MainComponent()
+:  fParams(ID::kParameters)
+,  fStage(fParams)
 {
-    setSize(1000, 700);
+   fParams.setProperty(ID::kDuration, 50, nullptr);
+   fParams.setProperty(ID::kEaseOutToleranceX, 0.6f, nullptr);
+   fParams.setProperty(ID::kEaseOutToleranceY, 0.6f, nullptr);
+   fParams.setProperty(ID::kEaseOutSlewX, 1.2f, nullptr);
+   fParams.setProperty(ID::kEaseOutSlewY, 1.2f, nullptr);
+   fParams.setProperty(ID::kEaseInToleranceX, 0.01f, nullptr);
+   fParams.setProperty(ID::kEaseInToleranceY, 0.01f, nullptr);
+   fParams.setProperty(ID::kEaseInSlew, 0.5f, nullptr);
+   
+   setSize(1000, 700);
 }
 
 MainComponent::~MainComponent()

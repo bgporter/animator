@@ -50,8 +50,9 @@ public:
 
 
 //==============================================================================
-DemoComponent::DemoComponent()
-:  fAnimator(50)
+DemoComponent::DemoComponent(ValueTree params)
+:  fParams(params)
+,  fAnimator(50)
 ,  fNextEffectId{0}
 {
     // In your constructor, you should add any child components, and
@@ -158,15 +159,22 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    std::unique_ptr<AnimatedValue> xCurve; 
    std::unique_ptr<AnimatedValue> yCurve;
    
+   int duration = fParams.getProperty(ID::kDuration, 50);
+   
    if (EffectType::kLinear == type)
    {
-      xCurve = std::make_unique<Linear>(startX, endX, 0.5f, 50);
-      yCurve = std::make_unique<Linear>(startY, endY, 0.5f, 50);
+      xCurve = std::make_unique<Linear>(startX, endX, 0.5f, duration);
+      yCurve = std::make_unique<Linear>(startY, endY, 0.5f, duration);
    }
    else if (EffectType::kEaseOut == type)
    {
-      xCurve = std::make_unique<EaseOut>(startX, endX, 0.6f, 0.01f);
-      yCurve = std::make_unique<EaseOut>(startY, endY, 0.6f, 0.01f);
+      float xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
+      float xSlew = fParams.getProperty(ID::kEaseOutSlewX, 1.1f);
+      xCurve = std::make_unique<EaseOut>(startX, endX, xTolerance, xSlew);
+      
+      float yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
+      float ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
+      yCurve = std::make_unique<EaseOut>(startY, endY, yTolerance, ySlew);
    }
    else if (EffectType::kEaseIn == type)
    {
@@ -192,8 +200,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       effect1->SetValue(0, std::move(xCurve1));
       effect1->SetValue(1, std::move(yCurve1));
       
-      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, 0.5f, 0.1f);
-      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, 0.5f, 0.1f);
+      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, 0.5f, 1.3f);
+      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, 0.5f, 1.3f);
       auto effect2 = std::make_unique<Animation<2>>();
       effect2->SetValue(0, std::move(xCurve2));
       effect2->SetValue(1, std::move(yCurve2));

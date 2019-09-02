@@ -30,7 +30,7 @@ public:
       kVector, 
       kInOut
    };
-    DemoComponent();
+    DemoComponent(ValueTree params);
     ~DemoComponent();
 
     void paint (Graphics&) override;
@@ -44,6 +44,8 @@ public:
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoComponent)
+    
+    ValueTree fParams;
     
     Animator fAnimator;
     Breadcrumbs fBreadcrumbs;

@@ -29,6 +29,13 @@ protected:
 class EaseIn : public EasingCurve
 {
 public:
+   /**
+    * Decelerate into the end value. 
+    * @param startVal  start value 
+    * @param endVal    end value 
+    * @param tolerance Tolerance for stopping. 
+    * @param slewRate  slew rate, must be 0 < rate < 1
+    */
    EaseIn(int startVal, int endVal, float tolerance, float slewRate);
    
 private:
@@ -44,9 +51,19 @@ private:
 class EaseOut :public  EasingCurve
 {
 public:
+   /**
+    * Accelerate into the end value. 
+    * @param startVal  start val 
+    * @param endVal    end val 
+    * @param tolerance tolerance for stopping 
+    * @param slewRate  slew rate, must be > 1. 
+    */
    EaseOut(int startVal, int endVal, float tolerance, float slewRate);
    
 private:
    float GenerateNextValue() override;
+
+private:
+   float fCurrentRate; 
    
 };

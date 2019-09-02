@@ -6,6 +6,11 @@
 
 #include "animatedValue.h"
 
+/**
+ * @class Linear
+ * @brief Simple linear interpolator. 
+ */
+
 class Linear  : public AnimatedValue 
 {
 public:
