@@ -17,7 +17,6 @@ Animator::~Animator()
 
 void Animator::timerCallback() 
 {
-   const ScopedLock sl(fMutex);
    int finishedCount = 0;
    int updated = 0;
    // for (auto& animation : fAnimations)
@@ -37,7 +36,6 @@ void Animator::timerCallback()
 
 bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
 {
-   const ScopedLock sl(fMutex);
    
    char address[50];
    sprintf(address, "%p", (void*) animation.get());
@@ -57,7 +55,6 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
 
 bool Animator::CancelAnimation(int id, bool moveToEndPosition)
 {
-   const ScopedLock sl(fMutex);
    int cancelCount = 0;
    for (auto& animation: fAnimations)
    {

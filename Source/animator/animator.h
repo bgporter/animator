@@ -83,8 +83,5 @@ private:
     
     int fFrameRate;
     
-    /// protect against new effects being added while we're updating or 
-    /// cleaning up. 
-    CriticalSection fMutex;
    
 };
