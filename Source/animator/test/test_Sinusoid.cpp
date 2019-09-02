@@ -49,8 +49,26 @@ public:
    
    void runTest() override
    {
-      // !!! Add tests.
-      beginTest("!!! WRITE SOME TESTS FOR THE Sinusoid Class !!!");
+      Test("minimal sinusoid test", [=] {
+         // simple object -- should generate 1 value at each of 
+         // 0, pi/2, pi, 3pi/2, 2pi
+         auto sin = std::make_unique<Sinusoid>(0, 4, 5);
+         
+         expectWithinAbsoluteError<float>(sin->GetNextValue(), 0.f, 0.001);
+         expect(! sin->IsFinished());
+         
+         expectWithinAbsoluteError<float>(sin->GetNextValue(), 1.f, 0.001);
+         expect(! sin->IsFinished());
+         
+         expectWithinAbsoluteError<float>(sin->GetNextValue(), 0.f, 0.001);
+         expect(! sin->IsFinished());
+         
+         expectWithinAbsoluteError<float>(sin->GetNextValue(), -1.f, 0.001);
+         expect(! sin->IsFinished());
+         
+         expectWithinAbsoluteError<float>(sin->GetNextValue(), 0.f, 0.001);
+         expect(sin->IsFinished());
+      });
    }
 
 };

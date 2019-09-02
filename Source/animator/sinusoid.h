@@ -46,7 +46,7 @@ public:
          fEndVal += MathConstants<float>::twoPi;
       }
       
-      fPhaseDelta = (fEndVal - fStartVal) / fDuration;
+      fPhaseDelta = (fEndVal - fStartVal) / (fDuration - 1);
       fPhase = fStartVal;
    }
    
@@ -77,9 +77,8 @@ public:
 private:
    float GenerateNextValue() override
    {
-      float val = std::sin(fPhase);
       fPhase += fPhaseDelta;
-      return val;
+      return std::sin(fPhase);
       
    }
 private:
