@@ -33,6 +33,14 @@ public:
    void timerCallback() override;
    
    /**
+    * Convert a time in seconds to the corresponding frame count based on the 
+    * current frame rate. 
+    * @param  seconds Seconds, must be > 0
+    * @return         nearest # of frames, will be >= 1.
+    */
+   int TimeToFrames(float seconds);
+   
+   /**
     * Add a new animation to our list, which will start it going! 
     * @param  animation The animation sequence to play.  
     * @return           true if added okay. 

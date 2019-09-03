@@ -34,6 +34,16 @@ void Animator::timerCallback()
    }
 }
 
+
+
+int Animator::TimeToFrames(float seconds)
+{
+   jassert(seconds > 0);
+   
+   auto frames = static_cast<int>(0.5f + seconds * fFrameRate);
+   return std::max(frames, 1);
+}
+
 bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
 {
    
