@@ -15,7 +15,7 @@
  * offsets required for things to make sense in your use case. 
  */
 
-class Sinusoid : public AnimatedValue 
+class Sinusoid : public TimedValue 
 {
 public:
    
@@ -28,8 +28,7 @@ public:
     * @param duration   duration in frames. 
     */
    Sinusoid(float startPhase, float endPhase, int duration)
-   :  AnimatedValue(startPhase, endPhase, 0.f)
-   ,  fDuration(duration)
+   :  TimedValue(startPhase, endPhase, duration)
    {
       jassert(duration > 0);
       
@@ -69,11 +68,6 @@ public:
    }
    
    
-   bool IsFinished() override
-   {
-      return (fFrameCount >= fDuration);
-   }
-   
 private:
    float GenerateNextValue() override
    {
@@ -84,9 +78,6 @@ private:
 private:
    /// current phase accumulator. 
    float fPhase;
-   
-   /// # of frames to run for. 
-   int fDuration; 
    
    /// phase increment for each frame. 
    float fPhaseDelta;

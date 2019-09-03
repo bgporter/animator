@@ -15,7 +15,7 @@
  *        tightened using the `dampen` parameter. 
  */
 
-class Spring  : public AnimatedValue 
+class Spring  : public ToleranceValue 
 {
 public:
    /**
@@ -34,8 +34,6 @@ public:
    
 private:
    float GenerateNextValue() override;
-   
-   void DoReset() override;
    
 private:
    /// The initial acceleration for this value. 

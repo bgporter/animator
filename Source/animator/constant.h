@@ -22,7 +22,7 @@
  */
 
 
-class Constant   : public AnimatedValue 
+class Constant   : public TimedValue 
 {
 public:
    /**
@@ -32,14 +32,9 @@ public:
     */
    Constant(int value, int duration);
    
-   bool IsFinished() override;
-   
 private:
    float GenerateNextValue() override;
-   void DoReset() override;
   
 private:
-   /// keep track of how long this effect has been running. 
-   int fDuration;
    
 };

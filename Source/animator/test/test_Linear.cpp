@@ -50,7 +50,7 @@ public:
    void runTest() override
    {
       Test("simple test", [=] {
-         auto val = std::make_unique<Linear>(0, 100, 0.5f, 100);
+         auto val = std::make_unique<Linear>(0, 100, 100);
          
          expectWithinAbsoluteError<float>(val->GetNextValue(), 0.f, 0.01f);
          expect(! val->IsFinished());
@@ -60,7 +60,7 @@ public:
          
          
          float expected = 1.f;
-         int frame = 1;
+         int frame = 2;
          
          while (! val->IsFinished())
          {
@@ -74,8 +74,8 @@ public:
       });
       
       Test("Decrease value", [=] {
-         auto val = std::make_unique<Linear>(100, 0, 0.5f, 100);
-         int frame = 0;
+         auto val = std::make_unique<Linear>(100, 0, 100);
+         int frame = 1;
          float expected = 100.f;
          
          while (1)

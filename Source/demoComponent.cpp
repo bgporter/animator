@@ -166,8 +166,8 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    
    if (EffectType::kLinear == type)
    {
-      xCurve = std::make_unique<Linear>(startX, endX, 0.5f, duration);
-      yCurve = std::make_unique<Linear>(startY, endY, 0.5f, duration);
+      xCurve = std::make_unique<Linear>(startX, endX, duration);
+      yCurve = std::make_unique<Linear>(startY, endY, duration);
    }
    else if (EffectType::kEaseOut == type)
    {
@@ -260,7 +260,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
       int delay = this->fParams.getProperty(ID::kFadeDelay);
       int dur = this->fParams.getProperty(ID::kFadeDuration);
-      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, 0.01f, dur));
+      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, dur));
       // don't start fading until 50 frames have elapsed
       fade->SetDelay(delay);
       

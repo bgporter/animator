@@ -1,11 +1,5 @@
 /*
-  ==============================================================================
-
-    animatedValue.cpp
-    Created: 23 Aug 2019 12:21:19pm
-    Author:  Brett Porter
-
-  ==============================================================================
-*/
+ * Copyright (c) 2019 Brett g Porter. All Rights Reserved.
+ */
 
 #include "animatedValue.h"

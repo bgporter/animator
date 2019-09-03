@@ -6,26 +6,15 @@
    
    
 Constant::Constant(int value, int duration)
-:  AnimatedValue(value, value, 0)
-,  fDuration(duration)
+:  TimedValue(value, value, duration)
 {
    
 }
 
-bool Constant::IsFinished()
-{
-   return (fFrameCount >= fDuration);
-}
 
 float Constant::GenerateNextValue()
 {
    return fStartVal;
-}
-
-
-void Constant::DoReset()
-{
-   // fElapsedTime = 0;
 }
 
 #ifdef qRunUnitTests

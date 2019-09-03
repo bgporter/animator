@@ -5,7 +5,7 @@
 
 Spring::Spring(int startVal, int endVal, float tolerance, 
    float accel, float damping)
-:  AnimatedValue(startVal, endVal, tolerance)
+:  ToleranceValue(startVal, endVal, tolerance)
 ,  fStartAcceleration(accel)
 ,  fAcceleration(accel)
 ,  fDamping(damping)
@@ -33,12 +33,6 @@ float Spring::GenerateNextValue()
    float prev = fCurrentVal;
    fVelocity += fAcceleration;
    float next = prev + fVelocity;
-   
-   
-   if (next > fEndVal)
-   {
-      int zz = 0;
-   }
    
    // see if we have crossed over the end value
    // if so, we may need to change direction and dampen the oscillation
@@ -69,12 +63,6 @@ float Spring::GenerateNextValue()
    
 }
 
-void Spring::DoReset()
-{
-   fVelocity = 0;
-   fAcceleration = fStartAcceleration;
-}
-   
    
    
 #ifdef qRunUnitTests

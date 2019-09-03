@@ -7,7 +7,7 @@
 #include "animatedValue.h" 
 
 
-class EasingCurve : public AnimatedValue 
+class EasingCurve : public ToleranceValue 
 {
 public:
    EasingCurve(int startVal, int endVal, float tolerance, float slewRate);

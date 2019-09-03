@@ -22,10 +22,9 @@ public:
     * @param endVal    Target/end value. 
     * @param tolerance Toleerance for when we've reached the target value.
     */
-   AnimatedValue(float startVal, float endVal, float tolerance)
+   AnimatedValue(float startVal, float endVal)
    :  fStartVal(startVal)
    ,  fEndVal(endVal)
-   ,  fTolerance(tolerance)
    ,  fCurrentVal(startVal)
    ,  fFrameCount(0)
    ,  fCanceled(false)
@@ -66,21 +65,8 @@ public:
     * (or if we've been canceled...)
     * @return [description]
     */
-   virtual bool IsFinished()
-   {
-      return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
-   }
+   virtual bool IsFinished() = 0;
    
-   /**
-    * Reset the object so it can run again using the same start/end values.
-    */
-   void Reset()
-   {
-      fFrameCount = 0;
-      fCanceled = false;
-      this->DoReset();
-   }
-
 
    void Cancel(bool moveToEndPosition)
    {
@@ -97,13 +83,6 @@ private:
     */
    virtual float GenerateNextValue() = 0;
    
-   /**
-    * Override in derived classes to perform any additional reset of calculations. 
-    */
-   virtual void DoReset()
-   {
-      
-   }
    
    /**
     * Override in derived classes to perform any unusual cancellation logic. 
@@ -120,11 +99,51 @@ private:
 protected: 
    float fStartVal;
    float fEndVal;
-   float fTolerance;
    float fCurrentVal;
    
    int fFrameCount;
    bool fCanceled;
 private:
+   
+};
+
+
+class ToleranceValue : public AnimatedValue 
+{
+public:
+   ToleranceValue(float startVal, float endVal, float tolerance)
+   :  AnimatedValue(startVal, endVal)
+   ,  fTolerance(tolerance)
+   {
+      
+   }
+   
+   bool IsFinished() override
+   {
+      return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
+   }
+      
+protected: 
+   float fTolerance;
+};
+
+
+class TimedValue : public AnimatedValue 
+{
+public:
+   TimedValue(float startVal, float endVal, int duration)
+   :  AnimatedValue(startVal, endVal)
+   ,  fDuration(duration)
+   {
+      
+   }
+   
+   bool IsFinished() override 
+   {
+      return fFrameCount >= fDuration;
+   }
+   
+protected: 
+   int fDuration;
    
 };

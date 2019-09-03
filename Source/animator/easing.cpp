@@ -6,7 +6,7 @@
 
 
 EasingCurve::EasingCurve(int startVal, int endVal, float tolerance, float slewRate)
-:  AnimatedValue(startVal, endVal, tolerance) 
+:  ToleranceValue(startVal, endVal, tolerance) 
 ,  fSlewRate(slewRate)
 {
    

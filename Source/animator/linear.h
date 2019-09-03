@@ -11,7 +11,7 @@
  * @brief Simple linear interpolator. 
  */
 
-class Linear  : public AnimatedValue 
+class Linear  : public TimedValue 
 {
 public:
    /**
@@ -21,7 +21,7 @@ public:
     * @param tolerance tolerance for completion. 
     * @param duration  # of frames the effect should take. 
     */
-   Linear(float startVal, float endVal, float tolerance, int duration);
+   Linear(float startVal, float endVal, int duration);
    
    
    
@@ -29,11 +29,6 @@ private:
    float GenerateNextValue() override;
 
 private:
-   
-   /// duration of this effect in frames. 
-   int fDuration;
-   
-   
    /// Delta to add at each frame that passes
    float fDelta;
    
