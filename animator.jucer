@@ -5,6 +5,9 @@
               companyWebsite="http://bgporter.net">
   <MAINGROUP id="HYQXHl" name="animator">
     <GROUP id="{A498D611-780A-08AE-6DE7-089A2C3BDDFA}" name="Source">
+      <FILE id="dP3Kl8" name="controlPanel.cpp" compile="1" resource="0"
+            file="Source/controlPanel.cpp"/>
+      <FILE id="HaRA5f" name="controlPanel.h" compile="0" resource="0" file="Source/controlPanel.h"/>
       <FILE id="n2A26t" name="breadcrumbs.cpp" compile="1" resource="0" file="Source/breadcrumbs.cpp"/>
       <FILE id="UjRcy2" name="breadcrumbs.h" compile="0" resource="0" file="Source/breadcrumbs.h"/>
       <FILE id="fOVj4v" name="demoComponent.cpp" compile="1" resource="0"

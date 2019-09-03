@@ -4,32 +4,50 @@
 
 #include "animatorApp.h"
 
-
+#include "animator/animator.h"
 #include "demoComponent.h"
+#include "controlPanel.h"
+
 
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent   : public Component
+class MainComponent  : public Component
+                     , public ChangeListener
 {
 public:
-    //==============================================================================
-    MainComponent();
-    ~MainComponent();
+   MainComponent();
+   ~MainComponent();
 
-    //==============================================================================
-    void paint (Graphics&) override;
-    void resized() override;
+   void paint (Graphics&) override;
+   void resized() override;
+   
+   void changeListenerCallback(ChangeBroadcaster* src) override;
 
 private:
-    //==============================================================================
-    // Your private member variables go here...
-    ValueTree fParams;
+   void OpenPanel(); 
+   
+   void ClosePanel();
+private:
+   ValueTree fParams;
 
-    DemoComponent fStage;
-    
+   DemoComponent fStage;
+   ControlPanel fControls;
+   
+   Animator fPanelAnimator;
+   
+
+   enum PanelState 
+   {
+      kClosed = 0, 
+      kOpen, 
+      kOpening, 
+      kClosing
+   };
+   
+   PanelState fPanelState;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

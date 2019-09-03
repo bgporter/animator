@@ -37,6 +37,10 @@
 			isa = PBXBuildFile;
 			fileRef = 26B4DF4F9E460E34079D015B;
 		};
+		BF6720CE5D0C6C1D22B3BE93 = {
+			isa = PBXBuildFile;
+			fileRef = 022AA400F87B87D5FCC7E41C;
+		};
 		8524FB69C90867EC5DAAC1D0 = {
 			isa = PBXBuildFile;
 			fileRef = 09F49B2A15082AA81CC6B418;
@@ -124,6 +128,13 @@
 			path = ../../Source/animator/animator.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		022AA400F87B87D5FCC7E41C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = controlPanel.cpp;
+			path = ../../Source/controlPanel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		07429F43650E3B38AD856F61 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -199,6 +210,13 @@
 			lastKnownFileType = file.nib;
 			name = RecentFilesMenuTemplate.nib;
 			path = RecentFilesMenuTemplate.nib;
+			sourceTree = "SOURCE_ROOT";
+		};
+		29245A5592BE6D7A0B5167DD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = controlPanel.h;
+			path = ../../Source/controlPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		30A47C211F0446A083F9D718 = {
@@ -509,6 +527,8 @@
 		8564D09EA783AD2C0C1E2B44 = {
 			isa = PBXGroup;
 			children = (
+				022AA400F87B87D5FCC7E41C,
+				29245A5592BE6D7A0B5167DD,
 				09F49B2A15082AA81CC6B418,
 				247EAF8D5894F4D55737BD17,
 				38EB687C8E55B69BEE6700D2,
@@ -814,6 +834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF6720CE5D0C6C1D22B3BE93,
 				8524FB69C90867EC5DAAC1D0,
 				56E7BBFFB3EAEB9D19968DED,
 				F3D711FBB10D79BB81665815,

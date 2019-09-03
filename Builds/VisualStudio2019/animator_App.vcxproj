@@ -138,6 +138,7 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\controlPanel.cpp"/>
     <ClCompile Include="..\..\Source\breadcrumbs.cpp"/>
     <ClCompile Include="..\..\Source\demoComponent.cpp"/>
     <ClCompile Include="..\..\Source\animator\sinusoid.cpp"/>
@@ -1366,6 +1367,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\controlPanel.h"/>
     <ClInclude Include="..\..\Source\breadcrumbs.h"/>
     <ClInclude Include="..\..\Source\demoComponent.h"/>
     <ClInclude Include="..\..\Source\subTest.h"/>
