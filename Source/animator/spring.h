@@ -18,6 +18,16 @@
 class Spring  : public AnimatedValue 
 {
 public:
+   /**
+    * A curve that accelerates toward the end value, then oscillates toward it 
+    * on overshoot. 
+    * @param startVal  initial value 
+    * @param endVal    end value. 
+    * @param tolerance How close do we need to be to stop animating?
+    * @param accel     Velocity change on each update. 
+    * @param dampen    How much to dampen the oscillation, 0 < dampen < 1. 
+    *                  smaller values dampen the oscillation faster. 
+    */   
    Spring(int startVal, int endVal, float tolerance, float accel, float dampen);
    
    
