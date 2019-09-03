@@ -126,7 +126,7 @@ void DemoComponent::mouseDown(const MouseEvent& e)
       }
       else if (e.mods.isCommandDown())
       {
-         type = EffectType::kVector;
+         type = EffectType::kSpring;
       }
       
       this->CreateDemo(e.getPosition(), type);
@@ -181,30 +181,51 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    }
    else if (EffectType::kEaseIn == type)
    {
-      xCurve = std::make_unique<EaseIn>(startX, endX, 0.6f, 0.1f);
-      yCurve = std::make_unique<EaseIn>(startY, endY, 0.6f, 0.1f);
+      float xTolerance = fParams.getProperty(ID::kEaseInToleranceX, 0.1f);
+      float xSlew = fParams.getProperty(ID::kEaseInSlewX, 1.1f);
+      xCurve = std::make_unique<EaseIn>(startX, endX, xTolerance, xSlew);
+      
+      float yTolerance = fParams.getProperty(ID::kEaseInToleranceY, 0.1f);
+      float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
+      yCurve = std::make_unique<EaseIn>(startY, endY, yTolerance, ySlew);
    }
-   else if (EffectType::kVector == type)
+   else if (EffectType::kSpring == type)
    {
       auto xAccel = std::abs(endX - startX) / 50.f;
       auto yAccel = std::abs(endY - startY) / 50.f;
-      xCurve = std::make_unique<Spring>(startX, endX, 0.5f, xAccel, 0.3f);
-      yCurve = std::make_unique<Spring>(startY, endY, 0.5f, yAccel, 0.5f);
+      
+      float tolerance = fParams.getProperty(ID::kSpringToleranceX);
+      float damping = fParams.getProperty(ID::kSpringDampingX);
+      xCurve = std::make_unique<Spring>(startX, endX, tolerance, xAccel, damping);
+      
+      tolerance = fParams.getProperty(ID::kSpringToleranceY);
+      damping = fParams.getProperty(ID::kSpringDampingY);
+      yCurve = std::make_unique<Spring>(startY, endY, tolerance, yAccel, damping);
    }
    else if (EffectType::kInOut == type)
    {
       auto midX = (startX + endX) / 2;
       auto midY = (startY + endY) / 2;
       
+      float xTolerance = fParams.getProperty(ID::kEaseInToleranceX, 0.1f);
+      float xSlew = fParams.getProperty(ID::kEaseInSlewX, 1.1f);
+      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, xTolerance, xSlew);
       
-      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, 5.f, 0.1f);
-      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, 5.f, 0.1f);
+      float yTolerance = fParams.getProperty(ID::kEaseInToleranceY, 0.1f);
+      float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
+      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, yTolerance, ySlew);
+      
       auto effect1 = std::make_unique<Animation<2>>();
       effect1->SetValue(0, std::move(xCurve1));
       effect1->SetValue(1, std::move(yCurve1));
       
-      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, 0.5f, 1.3f);
-      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, 0.5f, 1.3f);
+      xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
+      xSlew = fParams.getProperty(ID::kEaseOutSlewX, 1.1f);
+      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, xTolerance, xSlew);
+      
+      yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
+      ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
+      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, yTolerance, ySlew);
       auto effect2 = std::make_unique<Animation<2>>();
       effect2->SetValue(0, std::move(xCurve2));
       effect2->SetValue(1, std::move(yCurve2));
@@ -237,9 +258,11 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       float currentSat = box->GetSaturation();
       
       auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
-      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, 0.01f, 200));
+      int delay = this->fParams.getProperty(ID::kFadeDelay);
+      int dur = this->fParams.getProperty(ID::kFadeDuration);
+      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, 0.01f, dur));
       // don't start fading until 50 frames have elapsed
-      fade->SetDelay(50);
+      fade->SetDelay(delay);
       
       fade->OnUpdate([=] (int id, const Animation<1>::ValueList& val) {
          // every update, change the saturation value of the color. 
@@ -250,15 +273,10 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
          // ...and when the fade animation is complete, delete the box from the 
          //demo component. 
          DBG("Completing # " << id);
-#if 1
          fBoxList.erase(std::remove_if(fBoxList.begin(), fBoxList.end(),
           [&] (const std::unique_ptr<DemoBox>& b){
              return (b.get() == box);
          }));
-#else 
-         this->removeChildComponent(box);
-         delete box;
-#endif
          
       });
       

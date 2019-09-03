@@ -10,7 +10,7 @@ MainComponent::MainComponent()
 :  fParams(ID::kParameters)
 ,  fStage(fParams)
 {
-   fParams.setProperty(ID::kBreadcrumbs, false, nullptr);
+   fParams.setProperty(ID::kBreadcrumbs, true, nullptr);
    fParams.setProperty(ID::kDuration, 50, nullptr);
    fParams.setProperty(ID::kEaseOutToleranceX, 0.6f, nullptr);
    fParams.setProperty(ID::kEaseOutToleranceY, 0.6f, nullptr);
@@ -18,7 +18,17 @@ MainComponent::MainComponent()
    fParams.setProperty(ID::kEaseOutSlewY, 1.2f, nullptr);
    fParams.setProperty(ID::kEaseInToleranceX, 0.01f, nullptr);
    fParams.setProperty(ID::kEaseInToleranceY, 0.01f, nullptr);
-   fParams.setProperty(ID::kEaseInSlew, 0.5f, nullptr);
+   fParams.setProperty(ID::kEaseInSlewX, 0.5f, nullptr);
+   fParams.setProperty(ID::kEaseInSlewY, 0.5f, nullptr);
+   
+   
+   fParams.setProperty(ID::kSpringDampingX, 0.5f, nullptr);
+   fParams.setProperty(ID::kSpringDampingY, 0.5f, nullptr);
+   fParams.setProperty(ID::kSpringToleranceX, 0.5f, nullptr);
+   fParams.setProperty(ID::kSpringToleranceY, 0.5f, nullptr);
+   
+   fParams.setProperty(ID::kFadeDelay, 50, nullptr);
+   fParams.setProperty(ID::kFadeDuration, 150, nullptr);
    
    setSize(1000, 700);
 }

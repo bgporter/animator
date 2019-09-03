@@ -27,7 +27,7 @@ public:
       kLinear = 0,
       kEaseIn,
       kEaseOut,
-      kVector, 
+      kSpring, 
       kInOut
    };
     DemoComponent(ValueTree params);

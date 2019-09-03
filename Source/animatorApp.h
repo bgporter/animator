@@ -16,11 +16,23 @@ namespace ID
    const Identifier kParameters{"params"};
    const Identifier kBreadcrumbs{"breadcrumbs"};
    const Identifier kDuration{"dur"};
+   
    const Identifier kEaseOutToleranceX{"eotx"};
    const Identifier kEaseOutToleranceY{"eoty"};
    const Identifier kEaseOutSlewX{"eoslewx"};
    const Identifier kEaseOutSlewY{"eoslewy"};
+   
    const Identifier kEaseInToleranceX{"eitx"};
    const Identifier kEaseInToleranceY{"eity"};
-   const Identifier kEaseInSlew{"eislew"};
+   const Identifier kEaseInSlewX{"eislewx"};
+   const Identifier kEaseInSlewY{"eislewy"};
+
+   const Identifier kSpringToleranceX{"springToleranceX"};
+   const Identifier kSpringDampingX{"springDampingX"};
+   const Identifier kSpringToleranceY{"springToleranceY"};
+   const Identifier kSpringDampingY{"springDampingY"};
+   
+   
+   const Identifier kFadeDelay{"fadeDelay"};
+   const Identifier kFadeDuration{"fadeDur"};
 }
