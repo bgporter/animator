@@ -33,6 +33,6 @@ namespace ID
    const Identifier kSpringDampingY{"springDampingY"};
    
    
-   const Identifier kFadeDelay{"fadeDelay"};
-   const Identifier kFadeDuration{"fadeDur"};
+   const Identifier kFadeDelay{"fadeDelay"};    // int 
+   const Identifier kFadeDuration{"fadeDur"};   // int 
 }
