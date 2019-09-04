@@ -19,7 +19,7 @@ MainComponent::MainComponent()
 // ,  fControls(fParams)
 ,  fPanelState(PanelState::kOpen)
 {
-   fParams.setProperty(ID::kBreadcrumbs, false, nullptr);
+   fParams.setProperty(ID::kBreadcrumbs, true, nullptr);
    fParams.setProperty(ID::kDuration, 50, nullptr);
    fParams.setProperty(ID::kEaseOutToleranceX, 0.6f, nullptr);
    fParams.setProperty(ID::kEaseOutToleranceY, 0.6f, nullptr);

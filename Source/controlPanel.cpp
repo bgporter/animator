@@ -149,6 +149,8 @@ ControlWell::ControlWell(ValueTree params)
 :  fTree(params)
 {
    AddControl(std::make_unique<VtCheck>(fTree,ID::kBreadcrumbs, "Show Breadcrumbs"));
+   AddControl(std::make_unique<VtLabel>(true, "Linear"));
+   AddControl(std::make_unique<VtLabel>(false, "Effect Duration"));
    AddControl(std::make_unique<VtSlider>(fTree, 10, 50*5, true, ID::kDuration));
    
    AddControl(std::make_unique<VtLabel>(true, "Ease In"));
