@@ -5,6 +5,27 @@
               companyWebsite="http://bgporter.net">
   <MAINGROUP id="HYQXHl" name="animator">
     <GROUP id="{A498D611-780A-08AE-6DE7-089A2C3BDDFA}" name="Source">
+      <GROUP id="{620B8762-E3AF-16CD-E60D-35A018BE1149}" name="friz">
+        <FILE id="PpTTHO" name="animatedValue.cpp" compile="1" resource="0"
+              file="Source/friz/animatedValue.cpp"/>
+        <FILE id="qTWX1l" name="animatedValue.h" compile="0" resource="0" file="Source/friz/animatedValue.h"/>
+        <FILE id="XAfriO" name="animation.cpp" compile="1" resource="0" file="Source/friz/animation.cpp"/>
+        <FILE id="JoQCZq" name="animation.h" compile="0" resource="0" file="Source/friz/animation.h"/>
+        <FILE id="N3yNDW" name="animator.cpp" compile="1" resource="0" file="Source/friz/animator.cpp"/>
+        <FILE id="vk2JmS" name="animator.h" compile="0" resource="0" file="Source/friz/animator.h"/>
+        <FILE id="G00QzG" name="constant.cpp" compile="1" resource="0" file="Source/friz/constant.cpp"/>
+        <FILE id="ZYg2x7" name="constant.h" compile="0" resource="0" file="Source/friz/constant.h"/>
+        <FILE id="Obb3Dv" name="easing.cpp" compile="1" resource="0" file="Source/friz/easing.cpp"/>
+        <FILE id="nBCHiO" name="easing.h" compile="0" resource="0" file="Source/friz/easing.h"/>
+        <FILE id="kKwMxd" name="linear.cpp" compile="1" resource="0" file="Source/friz/linear.cpp"/>
+        <FILE id="fC97d6" name="linear.h" compile="0" resource="0" file="Source/friz/linear.h"/>
+        <FILE id="yyDS9g" name="sequence.cpp" compile="1" resource="0" file="Source/friz/sequence.cpp"/>
+        <FILE id="dzI6ly" name="sequence.h" compile="0" resource="0" file="Source/friz/sequence.h"/>
+        <FILE id="ADdeTd" name="sinusoid.cpp" compile="1" resource="0" file="Source/friz/sinusoid.cpp"/>
+        <FILE id="nDW0Y4" name="sinusoid.h" compile="0" resource="0" file="Source/friz/sinusoid.h"/>
+        <FILE id="OaYbiV" name="spring.cpp" compile="1" resource="0" file="Source/friz/spring.cpp"/>
+        <FILE id="ndKkqy" name="spring.h" compile="0" resource="0" file="Source/friz/spring.h"/>
+      </GROUP>
       <FILE id="dP3Kl8" name="controlPanel.cpp" compile="1" resource="0"
             file="Source/controlPanel.cpp"/>
       <FILE id="HaRA5f" name="controlPanel.h" compile="0" resource="0" file="Source/controlPanel.h"/>
@@ -15,27 +36,6 @@
       <FILE id="WMdGVx" name="demoComponent.h" compile="0" resource="0" file="Source/demoComponent.h"/>
       <FILE id="fWfr4k" name="subTest.h" compile="0" resource="0" file="Source/subTest.h"/>
       <FILE id="wrwu39" name="animatorApp.h" compile="0" resource="0" file="Source/animatorApp.h"/>
-      <GROUP id="{414A9F45-5BCF-6CAE-B3BB-428C120433CF}" name="animator">
-        <FILE id="NI3qpc" name="sinusoid.cpp" compile="1" resource="0" file="Source/animator/sinusoid.cpp"/>
-        <FILE id="S9YvnY" name="sinusoid.h" compile="0" resource="0" file="Source/animator/sinusoid.h"/>
-        <FILE id="Ao7lwP" name="animatedValue.cpp" compile="1" resource="0"
-              file="Source/animator/animatedValue.cpp"/>
-        <FILE id="HhEzmx" name="animatedValue.h" compile="0" resource="0" file="Source/animator/animatedValue.h"/>
-        <FILE id="Y7MCDz" name="animation.cpp" compile="1" resource="0" file="Source/animator/animation.cpp"/>
-        <FILE id="Yb5bLP" name="animation.h" compile="0" resource="0" file="Source/animator/animation.h"/>
-        <FILE id="V1hB0q" name="animator.cpp" compile="1" resource="0" file="Source/animator/animator.cpp"/>
-        <FILE id="n6RZga" name="animator.h" compile="0" resource="0" file="Source/animator/animator.h"/>
-        <FILE id="j8J8U6" name="constant.cpp" compile="1" resource="0" file="Source/animator/constant.cpp"/>
-        <FILE id="qJIfSm" name="constant.h" compile="0" resource="0" file="Source/animator/constant.h"/>
-        <FILE id="zJIprT" name="linear.cpp" compile="1" resource="0" file="Source/animator/linear.cpp"/>
-        <FILE id="hBiFL9" name="linear.h" compile="0" resource="0" file="Source/animator/linear.h"/>
-        <FILE id="lHKSCS" name="sequence.cpp" compile="1" resource="0" file="Source/animator/sequence.cpp"/>
-        <FILE id="vDD3B4" name="sequence.h" compile="0" resource="0" file="Source/animator/sequence.h"/>
-        <FILE id="PyuRCK" name="easing.cpp" compile="1" resource="0" file="Source/animator/easing.cpp"/>
-        <FILE id="OL1aBh" name="easing.h" compile="0" resource="0" file="Source/animator/easing.h"/>
-        <FILE id="lc7Trx" name="spring.cpp" compile="1" resource="0" file="Source/animator/spring.cpp"/>
-        <FILE id="hqTLy0" name="spring.h" compile="0" resource="0" file="Source/animator/spring.h"/>
-      </GROUP>
       <FILE id="rwQYM5" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="iYgyZN" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>

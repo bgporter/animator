@@ -138,18 +138,18 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\friz\animatedValue.cpp"/>
+    <ClCompile Include="..\..\Source\friz\animation.cpp"/>
+    <ClCompile Include="..\..\Source\friz\animator.cpp"/>
+    <ClCompile Include="..\..\Source\friz\constant.cpp"/>
+    <ClCompile Include="..\..\Source\friz\easing.cpp"/>
+    <ClCompile Include="..\..\Source\friz\linear.cpp"/>
+    <ClCompile Include="..\..\Source\friz\sequence.cpp"/>
+    <ClCompile Include="..\..\Source\friz\sinusoid.cpp"/>
+    <ClCompile Include="..\..\Source\friz\spring.cpp"/>
     <ClCompile Include="..\..\Source\controlPanel.cpp"/>
     <ClCompile Include="..\..\Source\breadcrumbs.cpp"/>
     <ClCompile Include="..\..\Source\demoComponent.cpp"/>
-    <ClCompile Include="..\..\Source\animator\sinusoid.cpp"/>
-    <ClCompile Include="..\..\Source\animator\animatedValue.cpp"/>
-    <ClCompile Include="..\..\Source\animator\animation.cpp"/>
-    <ClCompile Include="..\..\Source\animator\animator.cpp"/>
-    <ClCompile Include="..\..\Source\animator\constant.cpp"/>
-    <ClCompile Include="..\..\Source\animator\linear.cpp"/>
-    <ClCompile Include="..\..\Source\animator\sequence.cpp"/>
-    <ClCompile Include="..\..\Source\animator\easing.cpp"/>
-    <ClCompile Include="..\..\Source\animator\spring.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.cpp">
@@ -1367,20 +1367,20 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\friz\animatedValue.h"/>
+    <ClInclude Include="..\..\Source\friz\animation.h"/>
+    <ClInclude Include="..\..\Source\friz\animator.h"/>
+    <ClInclude Include="..\..\Source\friz\constant.h"/>
+    <ClInclude Include="..\..\Source\friz\easing.h"/>
+    <ClInclude Include="..\..\Source\friz\linear.h"/>
+    <ClInclude Include="..\..\Source\friz\sequence.h"/>
+    <ClInclude Include="..\..\Source\friz\sinusoid.h"/>
+    <ClInclude Include="..\..\Source\friz\spring.h"/>
     <ClInclude Include="..\..\Source\controlPanel.h"/>
     <ClInclude Include="..\..\Source\breadcrumbs.h"/>
     <ClInclude Include="..\..\Source\demoComponent.h"/>
     <ClInclude Include="..\..\Source\subTest.h"/>
     <ClInclude Include="..\..\Source\animatorApp.h"/>
-    <ClInclude Include="..\..\Source\animator\sinusoid.h"/>
-    <ClInclude Include="..\..\Source\animator\animatedValue.h"/>
-    <ClInclude Include="..\..\Source\animator\animation.h"/>
-    <ClInclude Include="..\..\Source\animator\animator.h"/>
-    <ClInclude Include="..\..\Source\animator\constant.h"/>
-    <ClInclude Include="..\..\Source\animator\linear.h"/>
-    <ClInclude Include="..\..\Source\animator\sequence.h"/>
-    <ClInclude Include="..\..\Source\animator\easing.h"/>
-    <ClInclude Include="..\..\Source\animator\spring.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_Array.h"/>

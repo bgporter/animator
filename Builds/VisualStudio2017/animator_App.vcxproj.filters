@@ -2,8 +2,8 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="animator\Source\animator">
-      <UniqueIdentifier>{C4B927BD-8AB2-FEA9-D5EE-B5898D390F5F}</UniqueIdentifier>
+    <Filter Include="animator\Source\friz">
+      <UniqueIdentifier>{39C719FC-824D-22F8-9DC8-59C1FDB181BE}</UniqueIdentifier>
     </Filter>
     <Filter Include="animator\Source">
       <UniqueIdentifier>{2D6E53D5-FE30-02D0-FC7D-1B4AF58E8305}</UniqueIdentifier>
@@ -235,6 +235,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\friz\animatedValue.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\animation.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\animator.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\constant.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\easing.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\linear.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\sequence.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\sinusoid.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\friz\spring.cpp">
+      <Filter>animator\Source\friz</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\controlPanel.cpp">
       <Filter>animator\Source</Filter>
     </ClCompile>
@@ -243,33 +270,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\demoComponent.cpp">
       <Filter>animator\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\sinusoid.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\animatedValue.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\animation.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\animator.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\constant.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\linear.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\sequence.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\easing.cpp">
-      <Filter>animator\Source\animator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\animator\spring.cpp">
-      <Filter>animator\Source\animator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>animator\Source</Filter>
@@ -1590,6 +1590,33 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\friz\animatedValue.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\animation.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\animator.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\constant.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\easing.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\linear.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\sequence.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\sinusoid.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\spring.h">
+      <Filter>animator\Source\friz</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\controlPanel.h">
       <Filter>animator\Source</Filter>
     </ClInclude>
@@ -1604,33 +1631,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\animatorApp.h">
       <Filter>animator\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\sinusoid.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\animatedValue.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\animation.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\animator.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\constant.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\linear.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\sequence.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\easing.h">
-      <Filter>animator\Source\animator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\animator\spring.h">
-      <Filter>animator\Source\animator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>animator\Source</Filter>

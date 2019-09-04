@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include "animator/animator.h"
+#include "friz/animator.h"
 
 #include "breadcrumbs.h"
 
