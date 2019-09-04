@@ -34,7 +34,7 @@ private:
    ValueTree fParams;
 
    DemoComponent fStage;
-   ControlPanel fControls;
+   std::unique_ptr<ControlPanel> fControls;
    
    Animator fPanelAnimator;
    

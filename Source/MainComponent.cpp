@@ -16,7 +16,7 @@ namespace
 MainComponent::MainComponent()
 :  fParams(ID::kParameters)
 ,  fStage(fParams)
-,  fControls(fParams)
+// ,  fControls(fParams)
 ,  fPanelState(PanelState::kOpen)
 {
    fParams.setProperty(ID::kBreadcrumbs, false, nullptr);
@@ -39,15 +39,23 @@ MainComponent::MainComponent()
    fParams.setProperty(ID::kFadeDelay, 50, nullptr);
    fParams.setProperty(ID::kFadeDuration, 150, nullptr);
    
+   DBG(fParams.toXmlString());
+   
+   
+   
    this->addAndMakeVisible(fStage);
-   this->addAndMakeVisible(fControls);
-   fControls.addChangeListener(this);
+   
+   fControls.reset(new ControlPanel(fParams));
+   
+   this->addAndMakeVisible(fControls.get());
+   fControls->addChangeListener(this);
    setSize(1000, 700);
 }
 
 MainComponent::~MainComponent()
 {
-   fControls.removeChangeListener(this);
+   fControls->removeChangeListener(this);
+   fControls = nullptr;
 }
 
 //==============================================================================
@@ -71,7 +79,7 @@ void MainComponent::resized()
       int showing = (PanelState::kClosed == fPanelState) ? kClosedPanelWidth : panelWidth;
       
       int xPos = bounds.getWidth() - showing;
-      fControls.setBounds(xPos, 0, bounds.getWidth(), bounds.getHeight());
+      fControls->setBounds(xPos, 0, kOpenPanelWidth, bounds.getHeight());
    }
     
 }
@@ -81,7 +89,7 @@ void MainComponent::resized()
 
 void MainComponent::changeListenerCallback(ChangeBroadcaster* src)
 {
-   if (src == &fControls)
+   if (src == fControls.get())
    {
       // user clicked on panel -- open or close it. 
       if (PanelState::kOpen == fPanelState)
@@ -104,7 +112,7 @@ void MainComponent::OpenPanel()
    jassert(PanelState::kClosed == fPanelState);
    int width = this->getWidth();
    
-   int startX = fControls.getX();
+   int startX = fControls->getX();
    int endX = width - kOpenPanelWidth;
    
    float slew = 0.4;
@@ -114,7 +122,7 @@ void MainComponent::OpenPanel()
    animation->SetValue(0, std::move(curve));
    
    animation->OnUpdate([=] (int id, const Animation<1>::ValueList& val){
-      fControls.setTopLeftPosition(val[0], 0);
+      fControls->setTopLeftPosition(val[0], 0);
    });
    
    animation->OnCompletion([=] (int id) {
@@ -130,7 +138,7 @@ void MainComponent::ClosePanel()
    jassert(PanelState::kOpen == fPanelState);
    int width = this->getWidth();
    
-   int startX = fControls.getX();
+   int startX = fControls->getX();
    int endX = width - kClosedPanelWidth;
    
    float accel = 1.4f;
@@ -141,7 +149,7 @@ void MainComponent::ClosePanel()
    animation->SetValue(0, std::move(curve));
    
    animation->OnUpdate([=] (int id, const Animation<1>::ValueList& val){
-      fControls.setTopLeftPosition(val[0], 0);
+      fControls->setTopLeftPosition(val[0], 0);
    });
    
    animation->OnCompletion([=] (int id) {
