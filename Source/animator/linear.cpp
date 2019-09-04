@@ -4,6 +4,8 @@
 #include "linear.h"
 
 
+namespace friz 
+{
 
 Linear::Linear(float startVal, float endVal, int duration)
 :  TimedValue(startVal, endVal, duration) 
@@ -27,3 +29,7 @@ float Linear::GenerateNextValue()
 #ifdef qRunUnitTests
 #include "test/test_Linear.cpp"
 #endif
+
+
+
+} // namespace friz

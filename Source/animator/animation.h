@@ -8,6 +8,8 @@
 
 #include "animatedValue.h"
 
+namespace friz 
+{
 
 /**
  * @class AnimationType 
@@ -254,3 +256,6 @@ private:
    std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
 
 };
+
+
+} // namespace friz

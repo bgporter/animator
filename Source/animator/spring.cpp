@@ -3,6 +3,8 @@
  */
 #include "spring.h"
 
+namespace friz 
+{
 Spring::Spring(int startVal, int endVal, float tolerance, 
    float accel, float damping)
 :  ToleranceValue(startVal, endVal, tolerance)
@@ -68,3 +70,6 @@ float Spring::GenerateNextValue()
 #ifdef qRunUnitTests
 #include "test/test_Spring.cpp"
 #endif
+
+
+} // namespace friz

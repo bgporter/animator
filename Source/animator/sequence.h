@@ -6,6 +6,8 @@
 
 #include "animation.h"
 
+namespace friz 
+{
 /**
  * @class Sequence 
  *
@@ -114,3 +116,6 @@ private:
    
    int fCurrentEffect;
 };
+
+
+} // namespace friz

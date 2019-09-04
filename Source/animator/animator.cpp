@@ -4,6 +4,9 @@
 #include "animator.h"
 
 
+namespace friz 
+{
+   
 Animator::Animator(int frameRate)
 :  fFrameRate(frameRate)
 {
@@ -136,3 +139,6 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
 #ifdef qRunUnitTests
 #include "test/test_Animator.cpp"
 #endif
+
+
+} // namespace friz

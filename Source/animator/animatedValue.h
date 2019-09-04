@@ -7,6 +7,9 @@
 #include "../animatorApp.h"
 
 
+namespace friz 
+{
+
 /**
  * @class AmimatedValue
  * @brief Abstract base class for objects that can generate a useful series
@@ -147,3 +150,5 @@ protected:
    int fDuration;
    
 };
+
+} // namespace friz

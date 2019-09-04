@@ -10,6 +10,12 @@
 
 #include "sinusoid.h"
 
+
+namespace friz 
+{
 #ifdef qRunUnitTests
 #include "test/test_Sinusoid.cpp"
 #endif
+
+
+} // namespace friz

@@ -6,6 +6,8 @@
 
 #include "animatedValue.h" 
 
+namespace friz 
+{
 
 /**
  * @class Spring
@@ -48,3 +50,6 @@ private:
    /// current velocity, updated with acceleration every frame. 
    float fVelocity;
 };
+
+
+} // namespace friz

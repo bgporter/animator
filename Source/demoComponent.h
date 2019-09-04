@@ -47,7 +47,7 @@ private:
     
     ValueTree fParams;
     
-    Animator fAnimator;
+    friz::Animator fAnimator;
     Breadcrumbs fBreadcrumbs;
     
     std::vector<std::unique_ptr<DemoBox>> fBoxList;

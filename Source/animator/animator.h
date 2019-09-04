@@ -13,6 +13,8 @@
 #include "spring.h"
 #include "sequence.h"
 
+namespace friz 
+{
 /**
  * @class Animator 
  * @brief A class that can own `Animation` objects and execute them at a regular 
@@ -103,3 +105,6 @@ private:
     
    
 };
+
+
+} // namespace friz

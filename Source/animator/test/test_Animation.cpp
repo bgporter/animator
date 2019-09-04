@@ -1,8 +1,15 @@
 
 
 // include some animated value classes for testing...
+
+} // close the friz namespace for a second. 
 #include "../constant.h"
 
+
+// and re-open it. 
+namespace friz 
+{
+   
 class Test_Animation : public SubTest
 {
 public:

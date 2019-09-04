@@ -6,6 +6,8 @@
 
 #include "animatedValue.h"
 
+namespace friz 
+{
 /**
  * @class Linear
  * @brief Simple linear interpolator. 
@@ -33,3 +35,6 @@ private:
    float fDelta;
    
 };
+
+
+} // namespace friz

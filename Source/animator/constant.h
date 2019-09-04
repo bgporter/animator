@@ -7,6 +7,8 @@
 
 #include "animatedValue.h"
 
+namespace friz 
+{
 /**
  * @class Constant
  * @brief A class that generates a single constant value for its duration. 
@@ -38,3 +40,7 @@ private:
 private:
    
 };
+
+} // namespace friz
+
+

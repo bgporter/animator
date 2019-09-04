@@ -3,7 +3,12 @@
  */
 
 #include "animation.h"
+namespace friz 
+{
 
 #ifdef qRunUnitTests
 #include "test/test_Animation.cpp"
 #endif
+
+
+} // namespace friz

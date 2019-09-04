@@ -4,6 +4,8 @@
 
 #include "easing.h"
 
+namespace friz 
+{
 
 EasingCurve::EasingCurve(int startVal, int endVal, float tolerance, float slewRate)
 :  ToleranceValue(startVal, endVal, tolerance) 
@@ -48,3 +50,6 @@ float EaseOut::GenerateNextValue()
 #ifdef qRunUnitTests
 #include "test/test_Easing.cpp"
 #endif
+
+
+} // namespace friz

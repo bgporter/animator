@@ -6,6 +6,8 @@
 
 #include "animatedValue.h"
 
+namespace friz 
+{
 /**
  * @class Sinusoid
  * @brief Sine/Cosine wave generator. 
@@ -82,3 +84,6 @@ private:
    /// phase increment for each frame. 
    float fPhaseDelta;
 };
+
+
+} // namespace friz

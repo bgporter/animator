@@ -36,7 +36,7 @@ private:
    DemoComponent fStage;
    std::unique_ptr<ControlPanel> fControls;
    
-   Animator fPanelAnimator;
+   friz::Animator fPanelAnimator;
    
 
    enum PanelState 

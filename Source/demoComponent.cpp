@@ -156,38 +156,38 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    int startY = startPoint.y;
    int endY = r.nextInt({0, this->getHeight() - box->getHeight()});
    
-   auto movement = std::make_unique<Animation<2>>(++fNextEffectId);
+   auto movement = std::make_unique<friz::Animation<2>>(++fNextEffectId);
    
    
-   std::unique_ptr<AnimatedValue> xCurve; 
-   std::unique_ptr<AnimatedValue> yCurve;
+   std::unique_ptr<friz::AnimatedValue> xCurve; 
+   std::unique_ptr<friz::AnimatedValue> yCurve;
    
    int duration = fParams.getProperty(ID::kDuration, 50);
    
    if (EffectType::kLinear == type)
    {
-      xCurve = std::make_unique<Linear>(startX, endX, duration);
-      yCurve = std::make_unique<Linear>(startY, endY, duration);
+      xCurve = std::make_unique<friz::Linear>(startX, endX, duration);
+      yCurve = std::make_unique<friz::Linear>(startY, endY, duration);
    }
    else if (EffectType::kEaseOut == type)
    {
       float xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
       float xSlew = fParams.getProperty(ID::kEaseOutSlewX, 1.1f);
-      xCurve = std::make_unique<EaseOut>(startX, endX, xTolerance, xSlew);
+      xCurve = std::make_unique<friz::EaseOut>(startX, endX, xTolerance, xSlew);
       
       float yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
       float ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
-      yCurve = std::make_unique<EaseOut>(startY, endY, yTolerance, ySlew);
+      yCurve = std::make_unique<friz::EaseOut>(startY, endY, yTolerance, ySlew);
    }
    else if (EffectType::kEaseIn == type)
    {
       float xTolerance = fParams.getProperty(ID::kEaseInToleranceX, 0.1f);
       float xSlew = fParams.getProperty(ID::kEaseInSlewX, 1.1f);
-      xCurve = std::make_unique<EaseIn>(startX, endX, xTolerance, xSlew);
+      xCurve = std::make_unique<friz::EaseIn>(startX, endX, xTolerance, xSlew);
       
       float yTolerance = fParams.getProperty(ID::kEaseInToleranceY, 0.1f);
       float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
-      yCurve = std::make_unique<EaseIn>(startY, endY, yTolerance, ySlew);
+      yCurve = std::make_unique<friz::EaseIn>(startY, endY, yTolerance, ySlew);
    }
    else if (EffectType::kSpring == type)
    {
@@ -196,11 +196,11 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       
       float tolerance = fParams.getProperty(ID::kSpringToleranceX);
       float damping = fParams.getProperty(ID::kSpringDampingX);
-      xCurve = std::make_unique<Spring>(startX, endX, tolerance, xAccel, damping);
+      xCurve = std::make_unique<friz::Spring>(startX, endX, tolerance, xAccel, damping);
       
       tolerance = fParams.getProperty(ID::kSpringToleranceY);
       damping = fParams.getProperty(ID::kSpringDampingY);
-      yCurve = std::make_unique<Spring>(startY, endY, tolerance, yAccel, damping);
+      yCurve = std::make_unique<friz::Spring>(startY, endY, tolerance, yAccel, damping);
    }
    else if (EffectType::kInOut == type)
    {
@@ -209,28 +209,28 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       
       float xTolerance = fParams.getProperty(ID::kEaseInToleranceX, 0.1f);
       float xSlew = fParams.getProperty(ID::kEaseInSlewX, 1.1f);
-      auto xCurve1 = std::make_unique<EaseIn>(startX, midX, xTolerance, xSlew);
+      auto xCurve1 = std::make_unique<friz::EaseIn>(startX, midX, xTolerance, xSlew);
       
       float yTolerance = fParams.getProperty(ID::kEaseInToleranceY, 0.1f);
       float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
-      auto yCurve1 = std::make_unique<EaseIn>(startY, midY, yTolerance, ySlew);
+      auto yCurve1 = std::make_unique<friz::EaseIn>(startY, midY, yTolerance, ySlew);
       
-      auto effect1 = std::make_unique<Animation<2>>();
+      auto effect1 = std::make_unique<friz::Animation<2>>();
       effect1->SetValue(0, std::move(xCurve1));
       effect1->SetValue(1, std::move(yCurve1));
       
       xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
       xSlew = fParams.getProperty(ID::kEaseOutSlewX, 1.1f);
-      auto xCurve2 = std::make_unique<EaseOut>(midX, endX, xTolerance, xSlew);
+      auto xCurve2 = std::make_unique<friz::EaseOut>(midX, endX, xTolerance, xSlew);
       
       yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
       ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
-      auto yCurve2 = std::make_unique<EaseOut>(midY, endY, yTolerance, ySlew);
-      auto effect2 = std::make_unique<Animation<2>>();
+      auto yCurve2 = std::make_unique<friz::EaseOut>(midY, endY, yTolerance, ySlew);
+      auto effect2 = std::make_unique<friz::Animation<2>>();
       effect2->SetValue(0, std::move(xCurve2));
       effect2->SetValue(1, std::move(yCurve2));
       
-      auto sequence = std::make_unique<Sequence<2>>(++fNextEffectId);
+      auto sequence = std::make_unique<friz::Sequence<2>>(++fNextEffectId);
       sequence->AddAnimation(std::move(effect1));
       sequence->AddAnimation(std::move(effect2));
       
@@ -246,7 +246,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    }
    
    // On each update: move this box to the next position on the (x,y) curve.
-   movement->OnUpdate([=] (int id, const Animation<2>::ValueList& val) {
+   movement->OnUpdate([=] (int id, const friz::Animation<2>::ValueList& val) {
       box->setTopLeftPosition(val[0], val[1]);
       fBreadcrumbs.AddPoint(val[0], val[1]);
    });
@@ -257,14 +257,14 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    movement->OnCompletion([=] (int id){
       float currentSat = box->GetSaturation();
       
-      auto fade = std::make_unique<Animation<1>>(++fNextEffectId); 
+      auto fade = std::make_unique<friz::Animation<1>>(++fNextEffectId); 
       int delay = this->fParams.getProperty(ID::kFadeDelay);
       int dur = this->fParams.getProperty(ID::kFadeDuration);
-      fade->SetValue(0, std::make_unique<Linear>(currentSat, 0.f, dur));
+      fade->SetValue(0, std::make_unique<friz::Linear>(currentSat, 0.f, dur));
       // don't start fading until 50 frames have elapsed
       fade->SetDelay(delay);
       
-      fade->OnUpdate([=] (int id, const Animation<1>::ValueList& val) {
+      fade->OnUpdate([=] (int id, const friz::Animation<1>::ValueList& val) {
          // every update, change the saturation value of the color. 
          box->SetSaturation(val[0]);
       });

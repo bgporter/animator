@@ -4,6 +4,8 @@
 #include "constant.h"
    
    
+namespace friz 
+{
    
 Constant::Constant(int value, int duration)
 :  TimedValue(value, value, duration)
@@ -20,3 +22,6 @@ float Constant::GenerateNextValue()
 #ifdef qRunUnitTests
 #include "test/test_Constant.cpp"
 #endif
+
+
+} // namespace friz

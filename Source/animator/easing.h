@@ -7,6 +7,8 @@
 #include "animatedValue.h" 
 
 
+namespace friz 
+{
 class EasingCurve : public ToleranceValue 
 {
 public:
@@ -67,3 +69,6 @@ private:
    float fCurrentRate; 
    
 };
+
+
+} // namespace friz
