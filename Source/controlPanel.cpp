@@ -150,11 +150,11 @@ ControlWell::ControlWell(ValueTree params)
 :  fTree(params)
 {
    AddControl(std::make_unique<VtCheck>(fTree,ID::kBreadcrumbs, "Show Breadcrumbs"));
-   AddControl(std::make_unique<VtLabel>(true, "Linear"));
+   AddControl(std::make_unique<VtLabel>(true, "Linear - [click]"));
    AddControl(std::make_unique<VtLabel>(false, "Effect Duration"));
    AddControl(std::make_unique<VtSlider>(fTree, 10, 50*5, true, ID::kDuration));
    
-   AddControl(std::make_unique<VtLabel>(true, "Ease In"));
+   AddControl(std::make_unique<VtLabel>(true, "Ease In - [alt+click]"));
    AddControl(std::make_unique<VtLabel>(false, "X Tolerance"));
    AddControl(std::make_unique<VtSlider>(fTree, 0.01f, 5.f, false, ID::kEaseInToleranceX));
    AddControl(std::make_unique<VtLabel>(false, "X Slew"));
@@ -164,7 +164,7 @@ ControlWell::ControlWell(ValueTree params)
    AddControl(std::make_unique<VtLabel>(false, "Y Slew"));
    AddControl(std::make_unique<VtSlider>(fTree, 0.01f, 0.99f, false, ID::kEaseInSlewY));
    
-   AddControl(std::make_unique<VtLabel>(true, "Ease Out"));
+   AddControl(std::make_unique<VtLabel>(true, "Ease Out - [shift+click]"));
    AddControl(std::make_unique<VtLabel>(false, "X Tolerance"));
    AddControl(std::make_unique<VtSlider>(fTree, 0.01f, 5.f, false, ID::kEaseOutToleranceX));
    AddControl(std::make_unique<VtLabel>(false, "X Slew"));
@@ -174,7 +174,11 @@ ControlWell::ControlWell(ValueTree params)
    AddControl(std::make_unique<VtLabel>(false, "Y Slew"));
    AddControl(std::make_unique<VtSlider>(fTree, 1.01f, 1.99f, false, ID::kEaseOutSlewY));
       
-   AddControl(std::make_unique<VtLabel>(true, "Spring"));
+#if JUCE_MAC
+   AddControl(std::make_unique<VtLabel>(true, "Spring - [cmd+click]"));
+#else
+   AddControl(std::make_unique<VtLabel>(true, "Spring - [ctrl+click]"));
+#endif   
    AddControl(std::make_unique<VtLabel>(false, "X Tolerance"));
    AddControl(std::make_unique<VtSlider>(fTree, 0.01f, 5.f, false, ID::kSpringToleranceX));
    AddControl(std::make_unique<VtLabel>(false, "X Damping"));
