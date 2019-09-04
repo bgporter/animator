@@ -61,6 +61,7 @@ VtSlider::VtSlider(ValueTree tree, float min, float max, bool isInt, Identifier 
    this->addAndMakeVisible(fSlider.get());
    fSlider->setRange(min, max, isInt ? 1 : 0);
    fSlider->setSliderStyle(Slider::LinearHorizontal);
+   fSlider->setNumDecimalPlacesToDisplay(3);
    fSlider->setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
    fSlider->addListener(this);
 
