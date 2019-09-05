@@ -37,6 +37,10 @@
 			isa = PBXBuildFile;
 			fileRef = 26B4DF4F9E460E34079D015B;
 		};
+		9AB2241E7416580FC8BC344B = {
+			isa = PBXBuildFile;
+			fileRef = 1C9D1C76B981C8C80D17158A;
+		};
 		5D986600FA0398D7EB997F6A = {
 			isa = PBXBuildFile;
 			fileRef = 662810BC9C9C2E6BE5F3136A;
@@ -92,6 +96,10 @@
 		B8DBC653B214B4D173D38297 = {
 			isa = PBXBuildFile;
 			fileRef = 240E4503C3966755A99108BD;
+		};
+		B984083B7CB8176AA4107018 = {
+			isa = PBXBuildFile;
+			fileRef = E871C818373D65FD1A75E167;
 		};
 		71BFA7C1B048FD696017ACE1 = {
 			isa = PBXBuildFile;
@@ -175,6 +183,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = sequence.h;
 			path = ../../Source/friz/sequence.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		1C9D1C76B981C8C80D17158A = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.icns;
+			name = Icon.icns;
+			path = Icon.icns;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1D7B5220932459CE8721B401 = {
@@ -366,6 +381,13 @@
 			path = ../../Source/friz/constant.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		88927B4ECFAEBC81305EF250 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BinaryData.h;
+			path = ../../JuceLibraryCode/BinaryData.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		8C63EAA908F1692804B4E48B = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -492,12 +514,34 @@
 			path = ../../Source/MainComponent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E871C818373D65FD1A75E167 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BinaryData.cpp;
+			path = ../../JuceLibraryCode/BinaryData.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F9926DAF59BE613498E378A0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = animator.h;
 			path = ../../Source/friz/animator.h;
 			sourceTree = "SOURCE_ROOT";
+		};
+		FDCCF519EF092441E1F221C5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = animator.png;
+			path = ../../Source/assets/animator.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		58FF4A0E5A181311FF4D0C29 = {
+			isa = PBXGroup;
+			children = (
+				FDCCF519EF092441E1F221C5,
+			);
+			name = assets;
+			sourceTree = "<group>";
 		};
 		51BEE56383528CDB23320277 = {
 			isa = PBXGroup;
@@ -527,6 +571,7 @@
 		8564D09EA783AD2C0C1E2B44 = {
 			isa = PBXGroup;
 			children = (
+				58FF4A0E5A181311FF4D0C29,
 				51BEE56383528CDB23320277,
 				022AA400F87B87D5FCC7E41C,
 				29245A5592BE6D7A0B5167DD,
@@ -569,6 +614,8 @@
 			isa = PBXGroup;
 			children = (
 				4BB1EE6F2E26349EF2E9F8E4,
+				E871C818373D65FD1A75E167,
+				88927B4ECFAEBC81305EF250,
 				2156405C9C5B17C8F5C3079A,
 				9CBCC63355F8E32C0E672267,
 				A2E56F039D8C8EE43A455B93,
@@ -586,6 +633,7 @@
 			children = (
 				ACC86B63245C6B40D1BD45FF,
 				26B4DF4F9E460E34079D015B,
+				1C9D1C76B981C8C80D17158A,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -827,6 +875,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AA2D7A551C67114768D558E,
+				9AB2241E7416580FC8BC344B,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,6 +897,7 @@
 				56E7BBFFB3EAEB9D19968DED,
 				93C3A228B793259CAC1A4DF6,
 				B8DBC653B214B4D173D38297,
+				B984083B7CB8176AA4107018,
 				71BFA7C1B048FD696017ACE1,
 				23C4B0943BE9992968D27707,
 				DAACFFC5DAC15DADE3F134D5,
