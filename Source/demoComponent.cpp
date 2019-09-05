@@ -215,9 +215,12 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
       auto yCurve1 = std::make_unique<friz::EaseIn>(startY, midY, yTolerance, ySlew);
       
-      auto effect1 = std::make_unique<friz::Animation<2>>();
-      effect1->SetValue(0, std::move(xCurve1));
-      effect1->SetValue(1, std::move(yCurve1));
+      auto effect1 = std::make_unique<friz::Animation<2>>(
+         friz::Animation<2>::SourceList{
+            std::move(xCurve1),
+            std::move(yCurve1)
+         }
+      );
       
       xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
       xSlew = fParams.getProperty(ID::kEaseOutSlewX, 1.1f);
@@ -226,10 +229,13 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
       ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
       auto yCurve2 = std::make_unique<friz::EaseOut>(midY, endY, yTolerance, ySlew);
-      auto effect2 = std::make_unique<friz::Animation<2>>();
-      effect2->SetValue(0, std::move(xCurve2));
-      effect2->SetValue(1, std::move(yCurve2));
-      
+      auto effect2 = std::make_unique<friz::Animation<2>>(
+         friz::Animation<2>::SourceList{
+            std::move(xCurve2),
+            std::move(yCurve2)
+         }
+      );
+      // 
       auto sequence = std::make_unique<friz::Sequence<2>>(++fNextEffectId);
       sequence->AddAnimation(std::move(effect1));
       sequence->AddAnimation(std::move(effect2));
@@ -257,11 +263,15 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    movement->OnCompletion([=] (int id){
       float currentSat = box->GetSaturation();
       
-      auto fade = std::make_unique<friz::Animation<1>>(++fNextEffectId); 
       int delay = this->fParams.getProperty(ID::kFadeDelay);
       int dur = this->fParams.getProperty(ID::kFadeDuration);
-      fade->SetValue(0, std::make_unique<friz::Linear>(currentSat, 0.f, dur));
-      // don't start fading until 50 frames have elapsed
+      
+      auto fade = std::make_unique<friz::Animation<1>>(
+         friz::Animation<1>::SourceList{
+             std::make_unique<friz::Linear>(currentSat, 0.f, dur)
+         }, ++fNextEffectId);
+      
+      // don't start fading until `delay` frames have elapsed
       fade->SetDelay(delay);
       
       fade->OnUpdate([=] (int id, const friz::Animation<1>::ValueList& val) {
@@ -273,11 +283,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
          // ...and when the fade animation is complete, delete the box from the 
          //demo component. 
          DBG("Completing # " << id);
-         fBoxList.erase(std::remove_if(fBoxList.begin(), fBoxList.end(),
-          [&] (const std::unique_ptr<DemoBox>& b){
-             return (b.get() == box);
-         }));
-         
+         this->DeleteBox(box);
       });
       
       fAnimator.AddAnimation(std::move(fade));
@@ -287,5 +293,14 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
 
 
    fBoxList.emplace_back(box);
+   
+}
+
+void DemoComponent::DeleteBox(DemoBox* box) 
+{
+   fBoxList.erase(std::remove_if(fBoxList.begin(), fBoxList.end(),
+    [&] (const std::unique_ptr<DemoBox>& b){
+       return (b.get() == box);
+   }));
    
 }

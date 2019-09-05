@@ -43,6 +43,9 @@ public:
     void Clear(); 
 
 private:
+   void DeleteBox(DemoBox* box);
+
+private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoComponent)
     
     ValueTree fParams;

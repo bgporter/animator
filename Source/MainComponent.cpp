@@ -117,9 +117,12 @@ void MainComponent::OpenPanel()
    
    float slew = 0.4;
    
-   auto curve = std::make_unique<friz::EaseIn>(startX, endX, 0.5, slew);
-   auto animation = std::make_unique<friz::Animation<1>>();
-   animation->SetValue(0, std::move(curve));
+   // auto curve = std::make_unique<friz::EaseIn>(startX, endX, 0.5, slew);
+   auto animation = std::make_unique<friz::Animation<1>>(
+      friz::Animation<1>::SourceList{
+         std::make_unique<friz::EaseIn>(startX, endX, 0.5, slew)
+      }
+   );
    
    animation->OnUpdate([=] (int id, const friz::Animation<1>::ValueList& val){
       fControls->setTopLeftPosition(val[0], 0);
@@ -145,8 +148,8 @@ void MainComponent::ClosePanel()
    float dampen = 0.4f;
    
    auto curve = std::make_unique<friz::Spring>(startX, endX, 0.5, accel, dampen);
-   auto animation = std::make_unique<friz::Animation<1>>();
-   animation->SetValue(0, std::move(curve));
+   auto animation = std::make_unique<friz::Animation<1>>(
+      friz::Animation<1>::SourceList{std::move(curve)}, 0);
    
    animation->OnUpdate([=] (int id, const friz::Animation<1>::ValueList& val){
       fControls->setTopLeftPosition(val[0], 0);

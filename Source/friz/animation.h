@@ -105,6 +105,7 @@ class Animation  : public AnimationType
 public:
    
    using ValueList = std::array<float, valueCount>;
+   using SourceList = std::array<std::unique_ptr<AnimatedValue>, valueCount>;
    using UpdateFn = std::function<void(int, const ValueList&)>;
    using CompletionFn = std::function<void(int)>;
    
@@ -124,6 +125,15 @@ public:
       
    }
    
+   Animation(SourceList&& sources, int id=0)
+   :  AnimationType(id)
+   ,  fFinished(false)
+   ,  fSources(std::move(sources))
+   {
+      
+      
+   }
+   
 
    /**
     * Set the AnimatedValue object to use for one of this animation's slots. 
@@ -135,7 +145,7 @@ public:
    {
       if (index < valueCount)
       {
-         fValues[index] = std::move(value);
+         fSources[index] = std::move(value);
          return true;
       }
       
@@ -180,7 +190,7 @@ public:
       
       for (int i = 0; i < valueCount; ++i)
       {
-         auto& val = fValues[i];
+         auto& val = fSources[i];
          jassert(val);
          if (val)
          {
@@ -212,7 +222,7 @@ public:
    {
       for (int i = 0; i < valueCount; ++i)
       {
-         auto& val = fValues[i];
+         auto& val = fSources[i];
          jassert(val);
          if (val)
          {
@@ -253,7 +263,8 @@ private:
    bool fFinished; 
    
    /// The array of animated value objects. 
-   std::array<std::unique_ptr<AnimatedValue>, valueCount> fValues;
+   // std::array<std::unique_ptr<AnimatedValue>, valueCount> fSources;
+   SourceList fSources;
 
 };
 
