@@ -214,12 +214,12 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       float yTolerance = fParams.getProperty(ID::kEaseInToleranceY, 0.1f);
       float ySlew = fParams.getProperty(ID::kEaseInSlewY, 1.1f);
       auto yCurve1 = std::make_unique<friz::EaseIn>(startY, midY, yTolerance, ySlew);
+   
+      // maybe a cleaner way to write this? 
+      using fx2 = friz::Animation<2>::SourceList;
       
       auto effect1 = std::make_unique<friz::Animation<2>>(
-         friz::Animation<2>::SourceList{
-            std::move(xCurve1),
-            std::move(yCurve1)
-         }
+         fx2{ std::move(xCurve1), std::move(yCurve1) }
       );
       
       xTolerance = fParams.getProperty(ID::kEaseOutToleranceX, 0.1f);
