@@ -55,6 +55,11 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    
    
    DBG("AddAnimation # " << animation->GetId() << " @ " << String(address)); 
+   
+   // In debug builds, verify that the animation has valid AnimatedValue 
+   // objects before accepting it in the animator. 
+   jassert(animation->IsReady());
+   
    fAnimations.push_back(std::move(animation));
    
    if (! this->isTimerRunning())

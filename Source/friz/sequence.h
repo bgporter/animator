@@ -33,6 +33,18 @@ public:
       return (fCurrentEffect >= fSequence.size());
    }
    
+   bool IsReady() const override 
+   {
+      for (const auto& effect: fSequence)
+      {
+         if ((nullptr == effect) || (! effect->IsReady()) )
+         {
+            return false;
+         }
+      }
+      return true;
+   }
+   
    int Update() override 
    {
       auto effect = this->GetEffect(fCurrentEffect);

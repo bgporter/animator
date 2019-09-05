@@ -69,8 +69,11 @@ public:
          
          auto control = std::make_unique<Animation<2>>();
          
+         expect(! control->IsReady());
          control->SetValue(0, std::make_unique<Constant>(100, 2));
+         expect(! control->IsReady());
          control->SetValue(1, std::make_unique<Constant>(200, 3));
+         expect(control->IsReady());
          
          control->OnUpdate([&] (int id, const Animation<2>::ValueList& val) {
             val0 = val[0];

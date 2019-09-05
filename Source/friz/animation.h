@@ -38,6 +38,7 @@ public:
    }
    
    virtual ~AnimationType() = default;
+   
    /**
     * @return ID value for this Animation. 
     */
@@ -46,6 +47,10 @@ public:
       return fId;
    }
    
+   /**
+    * Set a number of frames to delay before starting to execute this animation. 
+    * @param delay # of delay frames. 
+    */
    void SetDelay(int delay) 
    {
       if (delay >= 0)
@@ -56,7 +61,7 @@ public:
    
    /**
     * Before generating values, see if we should be delaying. 
-    * @return True to wait before generating effect values. 
+    * @return False to wait before generating effect values. 
     */
    bool DelayElapsed() 
    {
@@ -75,6 +80,8 @@ public:
    virtual void Cancel(bool moveToEndPosition) = 0;
    
    virtual bool IsFinished() = 0;
+   
+   virtual bool IsReady() const = 0;
    
 private:
    /// optional ID value for this animation. 
@@ -249,6 +256,18 @@ public:
    bool IsFinished() override 
    {
        return fFinished;
+   }
+   
+   bool IsReady() const override
+   {
+      for (auto& src: fSources)
+      {
+         if (nullptr == src.get())
+         {
+            return false;
+         }
+      }
+      return true;
    }
 protected: 
    /// function to call on each frame. Pass in std::array of new values, 
