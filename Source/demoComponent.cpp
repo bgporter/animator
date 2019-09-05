@@ -229,6 +229,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       yTolerance = fParams.getProperty(ID::kEaseOutToleranceY, 0.1f);
       ySlew = fParams.getProperty(ID::kEaseOutSlewY, 1.1f);
       auto yCurve2 = std::make_unique<friz::EaseOut>(midY, endY, yTolerance, ySlew);
+      // compare to the above that uses the alias `fx2`
       auto effect2 = std::make_unique<friz::Animation<2>>(
          friz::Animation<2>::SourceList{
             std::move(xCurve2),
