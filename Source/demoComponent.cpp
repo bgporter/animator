@@ -245,17 +245,19 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       
    }
    
+   const int kXpos{0};
+   const int kYpos{1};
 
    if (EffectType::kInOut != type)
    {
-      movement->SetValue(0, std::move(xCurve));
-      movement->SetValue(1, std::move(yCurve));
+      movement->SetValue(kXpos, std::move(xCurve));
+      movement->SetValue(kYpos, std::move(yCurve));
    }
    
    // On each update: move this box to the next position on the (x,y) curve.
    movement->OnUpdate([=] (int id, const friz::Animation<2>::ValueList& val) {
-      box->setTopLeftPosition(val[0], val[1]);
-      fBreadcrumbs.AddPoint(val[0], val[1]);
+      box->setTopLeftPosition(val[kXpos], val[kYpos]);
+      fBreadcrumbs.AddPoint(val[kXpos], val[kYpos]);
    });
    
    
