@@ -5,14 +5,26 @@
     <Filter Include="animator\Source\assets">
       <UniqueIdentifier>{88C4386D-97F8-3863-0B1C-4DC9843D6F6B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="animator\Source\friz">
-      <UniqueIdentifier>{39C719FC-824D-22F8-9DC8-59C1FDB181BE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="animator\Source">
       <UniqueIdentifier>{2D6E53D5-FE30-02D0-FC7D-1B4AF58E8305}</UniqueIdentifier>
     </Filter>
     <Filter Include="animator">
       <UniqueIdentifier>{6CF71EFF-DE57-7461-9571-CEE667EFA8B4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\friz\control\test">
+      <UniqueIdentifier>{677F8FB9-3A7A-D340-CE57-1D391C422011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\friz\control">
+      <UniqueIdentifier>{6710A248-B045-32DF-5C7F-201FAAC0B0DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\friz\curves\test">
+      <UniqueIdentifier>{42ADF5FF-8312-CDE6-6FF4-B913CB784A6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\friz\curves">
+      <UniqueIdentifier>{7CE3814D-3C31-2D11-6210-48785647CD18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\friz">
+      <UniqueIdentifier>{26C4C2F4-FF42-7810-670F-A700EEB98561}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_core\containers">
       <UniqueIdentifier>{42F7BE9D-3C8A-AE26-289B-8F355C068036}</UniqueIdentifier>
@@ -238,33 +250,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\friz\animatedValue.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\animation.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\animator.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\constant.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\easing.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\linear.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\sequence.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\sinusoid.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\friz\spring.cpp">
-      <Filter>animator\Source\friz</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\controlPanel.cpp">
       <Filter>animator\Source</Filter>
     </ClCompile>
@@ -279,6 +264,57 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>animator\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\test\test_Animation.cpp">
+      <Filter>JUCE Modules\friz\control\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\test\test_Animator.cpp">
+      <Filter>JUCE Modules\friz\control\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\animation.cpp">
+      <Filter>JUCE Modules\friz\control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\animator.cpp">
+      <Filter>JUCE Modules\friz\control</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Constant.cpp">
+      <Filter>JUCE Modules\friz\curves\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Easing.cpp">
+      <Filter>JUCE Modules\friz\curves\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Linear.cpp">
+      <Filter>JUCE Modules\friz\curves\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Sinusoid.cpp">
+      <Filter>JUCE Modules\friz\curves\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Spring.cpp">
+      <Filter>JUCE Modules\friz\curves\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\animatedValue.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\constant.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\easing.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\linear.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sinusoid.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\spring.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\friz.cpp">
+      <Filter>JUCE Modules\friz</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <Filter>JUCE Modules\juce_core\containers</Filter>
@@ -1573,6 +1609,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_friz.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -1596,33 +1635,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\friz\animatedValue.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\animation.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\animator.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\constant.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\easing.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\linear.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\sequence.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\sinusoid.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\friz\spring.h">
-      <Filter>animator\Source\friz</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\controlPanel.h">
       <Filter>animator\Source</Filter>
     </ClInclude>
@@ -1640,6 +1652,39 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>animator\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\control\animation.h">
+      <Filter>JUCE Modules\friz\control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\control\animator.h">
+      <Filter>JUCE Modules\friz\control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\animatedValue.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\constant.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\easing.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\linear.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sinusoid.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\spring.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\friz.h">
+      <Filter>JUCE Modules\friz</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\friz\friz.h">
+      <Filter>JUCE Modules\friz</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h">
       <Filter>JUCE Modules\juce_core\containers</Filter>

@@ -8,27 +8,7 @@
       <GROUP id="{ACC5E2FF-11BB-0C22-BE7B-64F4BE6710C1}" name="assets">
         <FILE id="asgEDH" name="animator.png" compile="0" resource="1" file="Source/assets/animator.png"/>
       </GROUP>
-      <GROUP id="{620B8762-E3AF-16CD-E60D-35A018BE1149}" name="friz">
-        <FILE id="PpTTHO" name="animatedValue.cpp" compile="1" resource="0"
-              file="Source/friz/animatedValue.cpp"/>
-        <FILE id="qTWX1l" name="animatedValue.h" compile="0" resource="0" file="Source/friz/animatedValue.h"/>
-        <FILE id="XAfriO" name="animation.cpp" compile="1" resource="0" file="Source/friz/animation.cpp"/>
-        <FILE id="JoQCZq" name="animation.h" compile="0" resource="0" file="Source/friz/animation.h"/>
-        <FILE id="N3yNDW" name="animator.cpp" compile="1" resource="0" file="Source/friz/animator.cpp"/>
-        <FILE id="vk2JmS" name="animator.h" compile="0" resource="0" file="Source/friz/animator.h"/>
-        <FILE id="G00QzG" name="constant.cpp" compile="1" resource="0" file="Source/friz/constant.cpp"/>
-        <FILE id="ZYg2x7" name="constant.h" compile="0" resource="0" file="Source/friz/constant.h"/>
-        <FILE id="Obb3Dv" name="easing.cpp" compile="1" resource="0" file="Source/friz/easing.cpp"/>
-        <FILE id="nBCHiO" name="easing.h" compile="0" resource="0" file="Source/friz/easing.h"/>
-        <FILE id="kKwMxd" name="linear.cpp" compile="1" resource="0" file="Source/friz/linear.cpp"/>
-        <FILE id="fC97d6" name="linear.h" compile="0" resource="0" file="Source/friz/linear.h"/>
-        <FILE id="yyDS9g" name="sequence.cpp" compile="1" resource="0" file="Source/friz/sequence.cpp"/>
-        <FILE id="dzI6ly" name="sequence.h" compile="0" resource="0" file="Source/friz/sequence.h"/>
-        <FILE id="ADdeTd" name="sinusoid.cpp" compile="1" resource="0" file="Source/friz/sinusoid.cpp"/>
-        <FILE id="nDW0Y4" name="sinusoid.h" compile="0" resource="0" file="Source/friz/sinusoid.h"/>
-        <FILE id="OaYbiV" name="spring.cpp" compile="1" resource="0" file="Source/friz/spring.cpp"/>
-        <FILE id="ndKkqy" name="spring.h" compile="0" resource="0" file="Source/friz/spring.h"/>
-      </GROUP>
+      <GROUP id="{620B8762-E3AF-16CD-E60D-35A018BE1149}" name="friz"/>
       <FILE id="dP3Kl8" name="controlPanel.cpp" compile="1" resource="0"
             file="Source/controlPanel.cpp"/>
       <FILE id="HaRA5f" name="controlPanel.h" compile="0" resource="0" file="Source/controlPanel.h"/>
@@ -59,6 +39,7 @@
         <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+        <MODULEPATH id="friz" path="Source"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2019 targetFolder="Builds/VisualStudio2019" smallIcon="asgEDH" bigIcon="asgEDH">
@@ -74,6 +55,7 @@
         <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+        <MODULEPATH id="friz" path="Source"/>
       </MODULEPATHS>
     </VS2019>
     <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="asgEDH" bigIcon="asgEDH">
@@ -89,10 +71,12 @@
         <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+        <MODULEPATH id="friz" path="Source"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
   <MODULES>
+    <MODULE id="friz" showAllCode="1" useLocalCopy="1" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="1" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="1" useGlobalPath="1"/>

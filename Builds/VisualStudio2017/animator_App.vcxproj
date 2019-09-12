@@ -138,20 +138,62 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\friz\animatedValue.cpp"/>
-    <ClCompile Include="..\..\Source\friz\animation.cpp"/>
-    <ClCompile Include="..\..\Source\friz\animator.cpp"/>
-    <ClCompile Include="..\..\Source\friz\constant.cpp"/>
-    <ClCompile Include="..\..\Source\friz\easing.cpp"/>
-    <ClCompile Include="..\..\Source\friz\linear.cpp"/>
-    <ClCompile Include="..\..\Source\friz\sequence.cpp"/>
-    <ClCompile Include="..\..\Source\friz\sinusoid.cpp"/>
-    <ClCompile Include="..\..\Source\friz\spring.cpp"/>
     <ClCompile Include="..\..\Source\controlPanel.cpp"/>
     <ClCompile Include="..\..\Source\breadcrumbs.cpp"/>
     <ClCompile Include="..\..\Source\demoComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\test\test_Animation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\test\test_Animator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\animation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\control\animator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Constant.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Easing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Linear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Sinusoid.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\test\test_Spring.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\animatedValue.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\constant.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\easing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\linear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sinusoid.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\spring.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\friz.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1359,6 +1401,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_friz.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_data_structures.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_events.cpp"/>
@@ -1368,21 +1411,23 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\friz\animatedValue.h"/>
-    <ClInclude Include="..\..\Source\friz\animation.h"/>
-    <ClInclude Include="..\..\Source\friz\animator.h"/>
-    <ClInclude Include="..\..\Source\friz\constant.h"/>
-    <ClInclude Include="..\..\Source\friz\easing.h"/>
-    <ClInclude Include="..\..\Source\friz\linear.h"/>
-    <ClInclude Include="..\..\Source\friz\sequence.h"/>
-    <ClInclude Include="..\..\Source\friz\sinusoid.h"/>
-    <ClInclude Include="..\..\Source\friz\spring.h"/>
     <ClInclude Include="..\..\Source\controlPanel.h"/>
     <ClInclude Include="..\..\Source\breadcrumbs.h"/>
     <ClInclude Include="..\..\Source\demoComponent.h"/>
     <ClInclude Include="..\..\Source\subTest.h"/>
     <ClInclude Include="..\..\Source\animatorApp.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\control\animation.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\control\animator.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\animatedValue.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\constant.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\easing.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\linear.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sinusoid.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\spring.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\friz.h"/>
+    <ClInclude Include="..\..\Source\friz\friz.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_Array.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_ArrayAllocationBase.h"/>
