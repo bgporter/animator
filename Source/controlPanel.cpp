@@ -202,6 +202,9 @@ ControlWell::ControlWell(ValueTree params)
    combo->AddSelection(friz::Parametric::kEaseInCubic, "Cubic (ease in)");
    combo->AddSelection(friz::Parametric::kEaseOutCubic, "Cubic (ease out)");
    combo->AddSelection(friz::Parametric::kEaseInOutCubic, "Cubic (in/out)");
+   combo->AddSelection(friz::Parametric::kEaseInQuartic, "Quartic (ease in)");
+   combo->AddSelection(friz::Parametric::kEaseOutQuartic, "Quartic (ease out)");
+   combo->AddSelection(friz::Parametric::kEaseInOutQuartic, "Quartic (in/out)");
 
    combo->Update();  // set the combo box to the current selection.
    AddControl(std::move(combo));

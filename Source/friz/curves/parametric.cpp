@@ -49,31 +49,50 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
                      1 - std::pow(-2 * x + 2, 2) / 2;  };
       }
       break;
+
       case kEaseInCubic: 
       {
          curve = [](float x){ return x * x * x;};
       }
       break;
+
       case kEaseOutCubic:
       {
          curve = [](float x) { return 1 - std::pow(1-x, 3);};
-
       }
       break;
-       {
+      
+      case kEaseInOutCubic: 
+      {
          curve = [](float x) { 
             return   (x < 0.5f) ? 
                      4 * x * x * x :
                      1 - std::pow(-2 * x + 2, 3) / 2;  };
       }
       break;
-     case kEaseInOutCubic: 
-      case kEaseInQuart: 
-      case kEaseOutQuart:
-      case kEaseInOutQuart:
-      case kEaseInQuint:
-      case kEaseOutQuint: 
-      case kEaseInOutQuint:
+
+      case kEaseInQuartic: 
+      {
+         curve = [](float x){ return x * x * x * x;};
+      }
+      break;
+
+      case kEaseOutQuartic:
+      {
+         curve = [](float x) { return 1 - std::pow(1-x, 4);};
+      }
+      break;
+      case kEaseInOutQuartic:
+      {
+         curve = [](float x) { 
+            return   (x < 0.5f) ? 
+                     8 * x * x * x * x :
+                     1 - std::pow(-2 * x + 2, 4) / 2;  };
+      }
+      break;
+      case kEaseInQuintic:
+      case kEaseOutQuintic: 
+      case kEaseInOutQuintic:
       case kEaseInExpo:
       case kEaseOutExpo:
       case kEaseInOutExpo:
