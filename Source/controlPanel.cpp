@@ -196,6 +196,9 @@ ControlWell::ControlWell(ValueTree params)
    combo->AddSelection(friz::Parametric::kEaseInSine, "Sine (ease in)");
    combo->AddSelection(friz::Parametric::kEaseOutSine, "Sine (ease out)");
    combo->AddSelection(friz::Parametric::kEaseInOutSine, "Sine (in/out)");
+   combo->AddSelection(friz::Parametric::kEaseInQuad, "Quad (ease in)");
+   combo->AddSelection(friz::Parametric::kEaseOutQuad, "Quad (ease out)");
+   combo->AddSelection(friz::Parametric::kEaseInOutQuad, "Quad (in/out)");
 
    combo->Update();  // set the combo box to the current selection.
    AddControl(std::move(combo));

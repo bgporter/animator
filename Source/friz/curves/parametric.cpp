@@ -32,8 +32,23 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
       }
       break;
       case kEaseInQuad:
+      {
+         curve = [](float x){ return x * x;};
+      }
+      break;
       case kEaseOutQuad: 
+      {
+         curve = [](float x) { return 1 - (1-x) * (1-x); };
+      }
+      break;
       case kEaseInOutQuad:
+      {
+         curve = [](float x) { 
+            return   (x < 0.5f) ? 
+                     2 * x * x  :
+                     1 - std::pow(-2 * x + 2, 2) / 2;  };
+      }
+      break;
       case kEaseInCubic: 
       case kEaseOutCubic:
       case kEaseInOutCubic: 
