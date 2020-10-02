@@ -12,7 +12,9 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
 {
    CurveFn curve; 
 
-   const float kPi = juce::MathConstants<float>::pi;
+   const float kPi{juce::MathConstants<float>::pi};
+   const float kZeroIsh{0.001f}; // compare if we're close enough to zero. 
+   const float kOneIsh{0.999f};  // compare if we're close enough to one. 
 
    switch (type) 
    {
@@ -91,14 +93,82 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
       }
       break;
       case kEaseInQuintic:
+      {
+         curve = [](float x){ return x * x * x * x * x;};
+      }
+      break;
+
       case kEaseOutQuintic: 
+      {
+         curve = [](float x) { return 1 - std::pow(1-x, 5);};
+      }
+      break;
+
       case kEaseInOutQuintic:
+      {
+         curve = [](float x) { 
+            return   (x < 0.5f) ? 
+                     16 * x * x * x * x * x :
+                     1 - std::powf(-2 * x + 2, 5) / 2;  };
+      }
+      break;
       case kEaseInExpo:
+      {
+         curve = [=](float x){ return (x < kZeroIsh) ? 0.f : std::powf(2, 10 * x - 10);};
+      }
+      break;
+
       case kEaseOutExpo:
+      {
+         curve = [=](float x){ return (x > kOneIsh) ? 1.f : 1 - std::powf(2, -10 * x); };
+      }
+      break;
+
       case kEaseInOutExpo:
+      {
+         curve = [=](float x)
+         {
+            if (x < kZeroIsh)
+            {
+               return 0.f;
+            }
+            else if (x > kOneIsh)
+            {
+               return 1.f;
+            }
+            else if (x < 0.5f)
+            {
+               return std::powf(2, 20 * x - 10) / 2;  
+            }
+            return (2 - std::powf(2, -20 * x + 10)) / 2;
+         };
+      }
+      break;
       case kEaseInCirc:
+      {
+         curve = [](float x) { return 1 - std::sqrt(1 - std::pow(x, 2)); };
+      }
+      break;
+
       case kEaseOutCirc:
+      {
+         curve = [](float x) { return std::sqrt(1 - std::pow(x-1, 2)); };
+      }
+      break;
+
       case kEaseInOutCirc:
+      {
+         curve = [] (float x) 
+         {
+            if (x < 0.5f)
+            {
+               return (1 - std::sqrt(1 - std::pow(2 * x, 2))) / 2;
+            }
+            return 0.5f * std::sqrt(1 - std::pow(-2 * x + 2, 2)) + 1;
+         };
+      }
+      break;
+
       case kEaseInBack:
       case kEaseOutBack:
       case kEaseInOutBack:
@@ -136,7 +206,7 @@ void Parametric::SetCurve(CurveFn curve)
 
 float Parametric::GenerateNextValue() 
 {
-   float progress = (1.f * fFrameCount) / (fDuration - 1);
+   float progress = (1.f * fFrameCount) / (fDuration);
    float curvePoint = fCurve(progress) * fDistance;
 
    if (fEndVal > fStartVal)
