@@ -42,6 +42,28 @@ private:
    
 };
 
+class VtComboBox : public Component 
+                 , public ComboBox::Listener 
+{
+public:
+
+   VtComboBox(ValueTree tree, Identifier param);
+
+   void resized() override; 
+
+   void comboBoxChanged(ComboBox*) override; 
+
+   void AddSelection(int itemId, StringRef label);
+
+   void Update(); 
+
+
+private:
+   std::unique_ptr<ComboBox> fCombo; 
+   ValueTree fTree; 
+   Identifier fParam;
+};
+
 
 class ControlWell : public Component 
 {

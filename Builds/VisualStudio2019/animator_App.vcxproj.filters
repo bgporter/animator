@@ -310,6 +310,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\linear.cpp">
       <Filter>JUCE Modules\friz\curves</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\parametric.cpp">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.cpp">
       <Filter>JUCE Modules\friz\curves</Filter>
     </ClCompile>
@@ -1708,6 +1711,9 @@
       <Filter>JUCE Modules\friz\curves</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\linear.h">
+      <Filter>JUCE Modules\friz\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\parametric.h">
       <Filter>JUCE Modules\friz\curves</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.h">

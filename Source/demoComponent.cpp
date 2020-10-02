@@ -107,7 +107,7 @@ void DemoComponent::mouseDown(const MouseEvent& e)
    }
    else 
    {
-      EffectType type = EffectType::kLinear;
+      EffectType type = EffectType::kParametric;
       
       if (e.mods.isShiftDown())
       {
@@ -168,6 +168,14 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
    {
       xCurve = std::make_unique<friz::Linear>(startX, endX, duration);
       yCurve = std::make_unique<friz::Linear>(startY, endY, duration);
+   }
+   else if (EffectType::kParametric == type)
+   {
+      int curveType = fParams.getProperty(ID::kCurve, friz::Parametric::CurveType::kLinear);
+      xCurve = std::make_unique<friz::Parametric>(friz::Parametric::CurveType(curveType), 
+         startX, endX, duration);
+      yCurve = std::make_unique<friz::Parametric>(friz::Parametric::CurveType(curveType), 
+         startY, endY, duration);
    }
    else if (EffectType::kEaseOut == type)
    {

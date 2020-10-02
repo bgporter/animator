@@ -23,6 +23,7 @@ public:
    enum class EffectType 
    {
       kLinear = 0,
+      kParametric,
       kEaseIn,
       kEaseOut,
       kSpring, 

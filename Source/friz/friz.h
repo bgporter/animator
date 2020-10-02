@@ -29,6 +29,7 @@ END_JUCE_MODULE_DECLARATION
 #include "curves/constant.h"
 #include "curves/easing.h"
 #include "curves/linear.h"
+#include "curves/parametric.h"
 #include "curves/sequence.h"
 #include "curves/sinusoid.h"
 #include "curves/spring.h"

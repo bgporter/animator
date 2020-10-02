@@ -182,6 +182,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\linear.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\parametric.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1456,6 +1459,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\constant.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\easing.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\linear.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\parametric.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sequence.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\sinusoid.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\friz\curves\spring.h"/>

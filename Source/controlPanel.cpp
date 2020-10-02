@@ -115,6 +115,43 @@ void VtCheck::buttonClicked(Button* b)
    fTree.setProperty(fParam, fButton->getToggleState(), nullptr);
 }
 
+VtComboBox::VtComboBox(ValueTree tree, Identifier param) 
+:  fTree(tree)
+,  fParam(param)
+{
+   fCombo = std::make_unique<ComboBox>(param.toString());
+   this->addAndMakeVisible(fCombo.get());
+   fCombo->addListener(this);
+   this->setSize(190, 24);
+}
+
+void VtComboBox::resized() 
+{
+   fCombo->setBounds(this->getLocalBounds());
+}
+
+void VtComboBox::comboBoxChanged(ComboBox*) 
+{
+   auto selected = fCombo->getSelectedItemIndex();
+   if (selected >= 0)
+   {
+      fTree.setProperty(fParam, selected, nullptr);
+   }   
+}
+
+void VtComboBox::AddSelection(int itemId, StringRef label) 
+{
+   fCombo->addItem(label, itemId+1);
+}
+
+void VtComboBox::Update() 
+{
+   int index = fTree.getProperty(fParam);
+   fCombo->setSelectedId(index+1, NotificationType::dontSendNotification);
+}
+
+
+
 class VtLabel : public Component 
 {
 public:
@@ -150,7 +187,19 @@ ControlWell::ControlWell(ValueTree params)
 :  fTree(params)
 {
    AddControl(std::make_unique<VtCheck>(fTree,ID::kBreadcrumbs, "Show Breadcrumbs"));
-   AddControl(std::make_unique<VtLabel>(true, "Linear - [click]"));
+   AddControl(std::make_unique<VtLabel>(true, "Parametric - [click]"));
+   AddControl(std::make_unique<VtLabel>(false, "Curve"));
+
+   auto combo{std::make_unique<VtComboBox>(fTree, ID::kCurve)};
+   combo->AddSelection(friz::Parametric::kLinear, "Linear");
+
+   combo->AddSelection(friz::Parametric::kEaseInSine, "Sine (ease in)");
+   combo->AddSelection(friz::Parametric::kEaseOutSine, "Sine (ease out)");
+   combo->AddSelection(friz::Parametric::kEaseInOutSine, "Sine (in/out)");
+
+   combo->Update();  // set the combo box to the current selection.
+   AddControl(std::move(combo));
+
    AddControl(std::make_unique<VtLabel>(false, "Effect Duration"));
    AddControl(std::make_unique<VtSlider>(fTree, 10, 50*5, true, ID::kDuration));
    
