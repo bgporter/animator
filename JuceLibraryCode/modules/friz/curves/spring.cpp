@@ -14,7 +14,7 @@ Spring::Spring(int startVal, int endVal, float tolerance,
 ,  fVelocity(0)
 {
    // the damping factor must be between 0..1. 
-   jassert(isPositiveAndBelow(damping, 1.f));
+   jassert(juce::isPositiveAndBelow(damping, 1.f));
    if (endVal < startVal)
    {
       fAcceleration *= -1;
@@ -54,7 +54,7 @@ float Spring::GenerateNextValue()
          // point we'll stop.
          fAcceleration = -1 * fAcceleration * fDamping;
          // fVelocity = 0.f;
-         fVelocity *= -fDamping;
+         fVelocity *= -fDamping; 
           
       }
    }

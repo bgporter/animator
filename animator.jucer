@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="jEFUJz" name="animator" projectType="guiapp" jucerVersion="5.4.3"
-              companyName="bgporter" companyCopyright="Copyright (c) 2019 Brett g Porter"
-              companyWebsite="http://bgporter.net">
+<JUCERPROJECT id="jEFUJz" name="animator" projectType="guiapp" companyName="bgporter"
+              companyCopyright="Copyright (c) 2019 Brett g Porter" companyWebsite="http://bgporter.net"
+              jucerFormatVersion="1">
   <MAINGROUP id="HYQXHl" name="animator">
     <GROUP id="{A498D611-780A-08AE-6DE7-089A2C3BDDFA}" name="Source">
       <GROUP id="{ACC5E2FF-11BB-0C22-BE7B-64F4BE6710C1}" name="assets">

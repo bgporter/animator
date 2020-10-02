@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -23,7 +23,7 @@
 namespace juce
 {
 
-inline static bool isValidXmlNameStartCharacter (juce_wchar character) noexcept
+static bool isValidXmlNameStartCharacter (juce_wchar character) noexcept
 {
     return character == ':'
         || character == '_'
@@ -43,7 +43,7 @@ inline static bool isValidXmlNameStartCharacter (juce_wchar character) noexcept
         || (character >= 0x10000 && character <= 0xeffff);
 }
 
-inline static bool isValidXmlNameBodyCharacter (juce_wchar character) noexcept
+static bool isValidXmlNameBodyCharacter (juce_wchar character) noexcept
 {
     return isValidXmlNameStartCharacter (character)
         || character == '-'
@@ -188,10 +188,10 @@ namespace XmlOutputFunctions
         template <int tableIndex>
         struct Byte
         {
-            enum { v = Bit<tableIndex * 8 + 0>::v | Bit<tableIndex * 8 + 1>::v
-                     | Bit<tableIndex * 8 + 2>::v | Bit<tableIndex * 8 + 3>::v
-                     | Bit<tableIndex * 8 + 4>::v | Bit<tableIndex * 8 + 5>::v
-                     | Bit<tableIndex * 8 + 6>::v | Bit<tableIndex * 8 + 7>::v };
+            enum { v = (int) Bit<tableIndex * 8 + 0>::v | (int) Bit<tableIndex * 8 + 1>::v
+                     | (int) Bit<tableIndex * 8 + 2>::v | (int) Bit<tableIndex * 8 + 3>::v
+                     | (int) Bit<tableIndex * 8 + 4>::v | (int) Bit<tableIndex * 8 + 5>::v
+                     | (int) Bit<tableIndex * 8 + 6>::v | (int) Bit<tableIndex * 8 + 7>::v };
         };
 
         static bool isLegal (uint32 c) noexcept
@@ -237,7 +237,7 @@ namespace XmlOutputFunctions
                             outputStream << (char) character;
                             break;
                         }
-                        // Note: Deliberate fall-through here!
+                        JUCE_FALLTHROUGH
                     default:
                         outputStream << "&#" << ((int) character) << ';';
                         break;

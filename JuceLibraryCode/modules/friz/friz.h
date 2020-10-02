@@ -20,6 +20,8 @@ END_JUCE_MODULE_DECLARATION
 
  */
 
+#include <juce_core/juce_core.h>
+#include <juce_events/juce_events.h>
 
 #include "control/animation.h"
 #include "control/animator.h"

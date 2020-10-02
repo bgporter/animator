@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -203,6 +203,7 @@ File File::getSpecialLocation (const SpecialLocationType type)
                 if (juce_argv != nullptr && juce_argc > 0)
                     return File::getCurrentWorkingDirectory().getChildFile (String (juce_argv[0]));
                 // deliberate fall-through...
+                JUCE_FALLTHROUGH
 
             case currentExecutableFile:
                 return juce_getExecutableFile();
@@ -415,10 +416,7 @@ bool JUCE_CALLTYPE Process::openDocument (const String& fileName, const String& 
         NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
 
         if (parameters.isEmpty())
-            // NB: the length check here is because of strange failures involving long filenames,
-            // probably due to filesystem name length limitations..
-            return (fileName.length() < 1024 && [workspace openFile: juceStringToNS (fileName)])
-                    || [workspace openURL: filenameAsURL];
+            return [workspace openURL: filenameAsURL];
 
         const File file (fileName);
 

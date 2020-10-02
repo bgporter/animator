@@ -12,8 +12,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-#include "friz/animator.h"
-
 #include "breadcrumbs.h"
 
 

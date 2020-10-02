@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -67,25 +66,18 @@ struct TextAtom
 class TextEditor::UniformTextSection
 {
 public:
-    UniformTextSection (const String& text, const Font& f, Colour col, juce_wchar passwordChar)
-        : font (f), colour (col)
+    UniformTextSection (const String& text, const Font& f, Colour col, juce_wchar passwordCharToUse)
+        : font (f), colour (col), passwordChar (passwordCharToUse)
     {
-        initialiseAtoms (text, passwordChar);
+        initialiseAtoms (text);
     }
 
     UniformTextSection (const UniformTextSection&) = default;
-
-    // VS2013 can't default move constructors
-    UniformTextSection (UniformTextSection&& other)
-        : font (std::move (other.font)),
-          colour (other.colour),
-          atoms (std::move (other.atoms))
-    {
-    }
+    UniformTextSection (UniformTextSection&&) = default;
 
     UniformTextSection& operator= (const UniformTextSection&) = delete;
 
-    void append (UniformTextSection& other, const juce_wchar passwordChar)
+    void append (UniformTextSection& other)
     {
         if (! other.atoms.isEmpty())
         {
@@ -119,9 +111,9 @@ public:
         }
     }
 
-    UniformTextSection* split (int indexToBreakAt, juce_wchar passwordChar)
+    UniformTextSection* split (int indexToBreakAt)
     {
-        auto* section2 = new UniformTextSection (String(), font, colour, passwordChar);
+        auto* section2 = new UniformTextSection ({}, font, colour, passwordChar);
         int index = 0;
 
         for (int i = 0; i < atoms.size(); ++i)
@@ -203,11 +195,12 @@ public:
         return total;
     }
 
-    void setFont (const Font& newFont, const juce_wchar passwordChar)
+    void setFont (const Font& newFont, const juce_wchar passwordCharToUse)
     {
-        if (font != newFont)
+        if (font != newFont || passwordChar != passwordCharToUse)
         {
             font = newFont;
+            passwordChar = passwordCharToUse;
 
             for (auto& atom : atoms)
                 atom.width = newFont.getStringWidthFloat (atom.getText (passwordChar));
@@ -218,9 +211,10 @@ public:
     Font font;
     Colour colour;
     Array<TextAtom> atoms;
+    juce_wchar passwordChar;
 
 private:
-    void initialiseAtoms (const String& textToParse, const juce_wchar passwordChar)
+    void initialiseAtoms (const String& textToParse)
     {
         auto text = textToParse.getCharPointer();
 
@@ -553,7 +547,7 @@ struct TextEditor::Iterator
 
         Graphics::ScopedSaveState state (g);
         g.reduceClipRegion ({ startX, baselineY, endX - startX, 1 });
-        g.fillCheckerBoard ({ (float) endX, baselineY + 1.0f }, 3.0f, 1.0f, colour, Colours::transparentBlack);
+        g.fillCheckerBoard ({ (float) endX, (float) baselineY + 1.0f }, 3.0f, 1.0f, colour, Colours::transparentBlack);
     }
 
     void drawSelectedText (Graphics& g, Range<int> selected, Colour selectedTextColour) const
@@ -1590,9 +1584,9 @@ void TextEditor::drawContent (Graphics& g)
             Iterator i2 (i);
             RectangleList<float> selectionArea;
 
-            while (i2.next() && i2.lineY < clip.getBottom())
+            while (i2.next() && i2.lineY < (float) clip.getBottom())
             {
-                if (i2.lineY + i2.lineHeight >= clip.getY()
+                if (i2.lineY + i2.lineHeight >= (float) clip.getY()
                     && selection.intersects ({ i2.indexInText, i2.indexInText + i2.atom->numChars }))
                 {
                     i2.addSelection (selectionArea, selection);
@@ -1607,9 +1601,9 @@ void TextEditor::drawContent (Graphics& g)
 
         const UniformTextSection* lastSection = nullptr;
 
-        while (i.next() && i.lineY < clip.getBottom())
+        while (i.next() && i.lineY < (float) clip.getBottom())
         {
-            if (i.lineY + i.lineHeight >= clip.getY())
+            if (i.lineY + i.lineHeight >= (float) clip.getY())
             {
                 if (selection.intersects ({ i.indexInText, i.indexInText + i.atom->numChars }))
                 {
@@ -1627,9 +1621,9 @@ void TextEditor::drawContent (Graphics& g)
         {
             Iterator i2 (*this);
 
-            while (i2.next() && i2.lineY < clip.getBottom())
+            while (i2.next() && i2.lineY < (float) clip.getBottom())
             {
-                if (i2.lineY + i2.lineHeight >= clip.getY()
+                if (i2.lineY + i2.lineHeight >= (float) clip.getY()
                       && underlinedSection.intersects ({ i2.indexInText, i2.indexInText + i2.atom->numChars }))
                 {
                     i2.drawUnderline (g, underlinedSection, findColour (textColourId));
@@ -1889,7 +1883,7 @@ bool TextEditor::pageUp (bool selecting)
         return moveCaretToStartOfLine (selecting);
 
     auto caretPos = getCaretRectangleFloat();
-    return moveCaretWithTransaction (indexAtPosition (caretPos.getX(), caretPos.getY() - viewport->getViewHeight()), selecting);
+    return moveCaretWithTransaction (indexAtPosition (caretPos.getX(), caretPos.getY() - (float) viewport->getViewHeight()), selecting);
 }
 
 bool TextEditor::pageDown (bool selecting)
@@ -1898,7 +1892,7 @@ bool TextEditor::pageDown (bool selecting)
         return moveCaretToEndOfLine (selecting);
 
     auto caretPos = getCaretRectangleFloat();
-    return moveCaretWithTransaction (indexAtPosition (caretPos.getX(), caretPos.getBottom() + viewport->getViewHeight()), selecting);
+    return moveCaretWithTransaction (indexAtPosition (caretPos.getX(), caretPos.getBottom() + (float) viewport->getViewHeight()), selecting);
 }
 
 void TextEditor::scrollByLines (int deltaLines)
@@ -2518,7 +2512,7 @@ void TextEditor::splitSection (const int sectionIndex, const int charToSplitAt)
     jassert (sections[sectionIndex] != nullptr);
 
     sections.insert (sectionIndex + 1,
-                     sections.getUnchecked (sectionIndex)->split (charToSplitAt, passwordCharacter));
+                     sections.getUnchecked (sectionIndex)->split (charToSplitAt));
 }
 
 void TextEditor::coalesceSimilarSections()
@@ -2531,7 +2525,7 @@ void TextEditor::coalesceSimilarSections()
         if (s1->font == s2->font
              && s1->colour == s2->colour)
         {
-            s1->append (*s2, passwordCharacter);
+            s1->append (*s2);
             sections.remove (i + 1);
             --i;
         }

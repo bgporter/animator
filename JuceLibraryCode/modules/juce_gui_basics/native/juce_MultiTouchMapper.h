@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -24,12 +23,7 @@
   ==============================================================================
 */
 
-#if JUCE_CLANG
- #if __has_warning("-Wzero-as-null-pointer-constant")
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
- #endif
-#endif
+JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wzero-as-null-pointer-constant")
 
 namespace juce
 {
@@ -93,18 +87,8 @@ private:
 
         TouchInfo (const TouchInfo&) = default;
         TouchInfo& operator= (const TouchInfo&) = default;
-
-        // VS2013 can't default move constructors
-        TouchInfo (TouchInfo&& other) noexcept  : touchId (other.touchId), owner (other.owner) {}
-
-        // VS2013 can't default move assignments
-        TouchInfo& operator= (TouchInfo&& other) noexcept
-        {
-            touchId = other.touchId;
-            owner = other.owner;
-
-            return *this;
-        }
+        TouchInfo (TouchInfo&&) noexcept = default;
+        TouchInfo& operator= (TouchInfo&&) noexcept = default;
 
         IDType touchId;
         ComponentPeer* owner;
@@ -120,8 +104,4 @@ private:
 
 } // namespace juce
 
-#if JUCE_CLANG
- #if __has_warning("-Wzero-as-null-pointer-constant")
-  #pragma clang diagnostic pop
- #endif
-#endif
+JUCE_END_IGNORE_WARNINGS_GCC_LIKE

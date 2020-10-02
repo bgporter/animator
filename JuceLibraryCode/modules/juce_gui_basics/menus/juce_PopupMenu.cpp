@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -80,7 +79,10 @@ struct ItemComponent  : public Component
             customComp = *new HeaderItemComponent (item.text);
 
         if (customComp != nullptr)
+        {
+            setItem (*customComp, &item);
             addAndMakeVisible (*customComp);
+        }
 
         parent.addAndMakeVisible (this);
 
@@ -96,6 +98,9 @@ struct ItemComponent  : public Component
 
     ~ItemComponent() override
     {
+        if (customComp != nullptr)
+            setItem (*customComp, nullptr);
+
         removeChildComponent (customComp.get());
     }
 
@@ -223,9 +228,9 @@ struct MenuWindow  : public Component
         setOpaque (lf.findColour (PopupMenu::backgroundColourId).isOpaque()
                      || ! Desktop::canUseSemiTransparentWindows());
 
-        for (size_t i = 0; i < menu.items.size(); ++i)
+        for (int i = 0; i < menu.items.size(); ++i)
         {
-            auto& item = menu.items[i];
+            auto& item = menu.items.getReference (i);
 
             if (i + 1 < menu.items.size() || ! item.isSeparator)
                 items.add (new ItemComponent (item, options.getStandardItemHeight(), *this));
@@ -409,7 +414,7 @@ struct MenuWindow  : public Component
             if (showSubMenuFor (currentChild))
             {
                 if (isSubMenuVisible())
-                    activeSubMenu->selectNextItem (1);
+                    activeSubMenu->selectNextItem (0);
             }
             else if (componentAttachedTo != nullptr)
             {
@@ -458,7 +463,7 @@ struct MenuWindow  : public Component
 
                 if (componentAttachedTo->reallyContains (mousePos, true))
                 {
-                    postCommandMessage (PopupMenuSettings::dismissCommandId); // dismiss asynchrounously
+                    postCommandMessage (PopupMenuSettings::dismissCommandId); // dismiss asynchronously
                     return;
                 }
             }
@@ -604,7 +609,7 @@ struct MenuWindow  : public Component
         if (relativeTo != nullptr)
             targetPoint = relativeTo->localPointToGlobal (targetPoint);
 
-        auto parentArea = Desktop::getInstance().getDisplays().findDisplayForPoint (targetPoint)
+        auto parentArea = Desktop::getInstance().getDisplays().findDisplayForPoint (targetPoint * scaleFactor)
                               #if JUCE_MAC || JUCE_ANDROID
                                .userArea;
                               #else
@@ -1172,7 +1177,7 @@ private:
         else
         {
             oldGlobalPos += Point<int> (2, 0);
-            subX += itemScreenBounds.getWidth();
+            subX += (float) itemScreenBounds.getWidth();
         }
 
         Path areaTowardsSubMenu;
@@ -1237,7 +1242,7 @@ private:
 //==============================================================================
 struct NormalComponentWrapper : public PopupMenu::CustomComponent
 {
-    NormalComponentWrapper (Component* comp, int w, int h, bool triggerMenuItemAutomaticallyWhenClicked)
+    NormalComponentWrapper (Component& comp, int w, int h, bool triggerMenuItemAutomaticallyWhenClicked)
         : PopupMenu::CustomComponent (triggerMenuItemAutomaticallyWhenClicked),
           width (w), height (h)
     {
@@ -1264,10 +1269,6 @@ struct NormalComponentWrapper : public PopupMenu::CustomComponent
 };
 
 //==============================================================================
-PopupMenu::PopupMenu()
-{
-}
-
 PopupMenu::PopupMenu (const PopupMenu& other)
     : items (other.items),
       lookAndFeel (other.lookAndFeel)
@@ -1309,47 +1310,8 @@ void PopupMenu::clear()
 PopupMenu::Item::Item() = default;
 PopupMenu::Item::Item (String t) : text (std::move (t)), itemID (-1) {}
 
-#if JUCE_MSVC && _MSC_VER < 1900 // tedious VC2013 workaround
-PopupMenu::Item::Item (Item&& other)
-  : text (std::move (other.text)),
-    itemID (other.itemID),
-    action (std::move (other.action)),
-    subMenu (std::move (other.subMenu)),
-    image (std::move (other.image)),
-    customComponent (std::move (other.customComponent)),
-    customCallback (std::move (other.customCallback)),
-    commandManager (other.commandManager),
-    shortcutKeyDescription (std::move (other.shortcutKeyDescription)),
-    colour (other.colour),
-    isEnabled (other.isEnabled),
-    isTicked (other.isTicked),
-    isSeparator (other.isSeparator),
-    isSectionHeader (other.isSectionHeader)
-{
-}
-
-PopupMenu::Item& PopupMenu::Item::operator= (Item&& other)
-{
-    text = std::move (other.text);
-    itemID = other.itemID;
-    action = std::move (other.action);
-    subMenu = std::move (other.subMenu);
-    image = std::move (other.image);
-    customComponent = std::move (other.customComponent);
-    customCallback = std::move (other.customCallback);
-    commandManager = other.commandManager;
-    shortcutKeyDescription = std::move (other.shortcutKeyDescription);
-    colour = other.colour;
-    isEnabled = other.isEnabled;
-    isTicked = other.isTicked;
-    isSeparator = other.isSeparator;
-    isSectionHeader = other.isSectionHeader;
-    return *this;
-}
-#else
 PopupMenu::Item::Item (Item&&) = default;
 PopupMenu::Item& PopupMenu::Item::operator= (Item&&) = default;
-#endif
 
 PopupMenu::Item::Item (const Item& other)
   : text (other.text),
@@ -1388,43 +1350,48 @@ PopupMenu::Item& PopupMenu::Item::operator= (const Item& other)
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setTicked (bool shouldBeTicked) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setTicked (bool shouldBeTicked) & noexcept
 {
     isTicked = shouldBeTicked;
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setEnabled (bool shouldBeEnabled) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setEnabled (bool shouldBeEnabled) & noexcept
 {
     isEnabled = shouldBeEnabled;
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setAction (std::function<void()> newAction) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setAction (std::function<void()> newAction) & noexcept
 {
     action = std::move (newAction);
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setID (int newID) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setID (int newID) & noexcept
 {
     itemID = newID;
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setColour (Colour newColour) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setColour (Colour newColour) & noexcept
 {
     colour = newColour;
     return *this;
 }
 
-PopupMenu::Item& PopupMenu::Item::setCustomComponent (ReferenceCountedObjectPtr<CustomComponent> comp) JUCE_REF_QUALIFIER noexcept
+PopupMenu::Item& PopupMenu::Item::setCustomComponent (ReferenceCountedObjectPtr<CustomComponent> comp) & noexcept
 {
     customComponent = comp;
     return *this;
 }
 
-#if ! (JUCE_MSVC && _MSC_VER < 1900) // Gah.. no ref-qualifiers in VC2013...
+PopupMenu::Item& PopupMenu::Item::setImage (std::unique_ptr<Drawable> newImage) & noexcept
+{
+    image = std::move (newImage);
+    return *this;
+}
+
 PopupMenu::Item&& PopupMenu::Item::setTicked (bool shouldBeTicked) && noexcept
 {
     isTicked = shouldBeTicked;
@@ -1460,7 +1427,12 @@ PopupMenu::Item&& PopupMenu::Item::setCustomComponent (ReferenceCountedObjectPtr
     customComponent = comp;
     return std::move (*this);
 }
-#endif
+
+PopupMenu::Item&& PopupMenu::Item::setImage (std::unique_ptr<Drawable> newImage) && noexcept
+{
+    image = std::move (newImage);
+    return std::move (*this);
+}
 
 void PopupMenu::addItem (Item newItem)
 {
@@ -1470,7 +1442,7 @@ void PopupMenu::addItem (Item newItem)
               || newItem.isSeparator || newItem.isSectionHeader
               || newItem.subMenu != nullptr);
 
-    items.push_back (std::move (newItem));
+    items.add (std::move (newItem));
 }
 
 void PopupMenu::addItem (String itemText, std::function<void()> action)
@@ -1571,22 +1543,26 @@ void PopupMenu::addColouredItem (int itemResultID, String itemText, Colour itemT
     addItem (std::move (i));
 }
 
-void PopupMenu::addCustomItem (int itemResultID, CustomComponent* cc, const PopupMenu* subMenu)
+void PopupMenu::addCustomItem (int itemResultID,
+                               std::unique_ptr<CustomComponent> cc,
+                               std::unique_ptr<const PopupMenu> subMenu)
 {
     Item i;
     i.itemID = itemResultID;
-    i.customComponent = cc;
-    i.subMenu.reset (createCopyIfNotNull (subMenu));
+    i.customComponent = cc.release();
+    i.subMenu.reset (createCopyIfNotNull (subMenu.get()));
     addItem (std::move (i));
 }
 
-void PopupMenu::addCustomItem (int itemResultID, Component* customComponent, int idealWidth, int idealHeight,
-                               bool triggerMenuItemAutomaticallyWhenClicked, const PopupMenu* subMenu)
+void PopupMenu::addCustomItem (int itemResultID,
+                               Component& customComponent,
+                               int idealWidth, int idealHeight,
+                               bool triggerMenuItemAutomaticallyWhenClicked,
+                               std::unique_ptr<const PopupMenu> subMenu)
 {
-    addCustomItem (itemResultID,
-                   new HelperClasses::NormalComponentWrapper (customComponent, idealWidth, idealHeight,
-                                                              triggerMenuItemAutomaticallyWhenClicked),
-                   subMenu);
+    auto comp = std::make_unique<HelperClasses::NormalComponentWrapper> (customComponent, idealWidth, idealHeight,
+                                                                         triggerMenuItemAutomaticallyWhenClicked);
+    addCustomItem (itemResultID, std::move (comp), std::move (subMenu));
 }
 
 void PopupMenu::addSubMenu (String subMenuName, PopupMenu subMenu, bool isActive)
@@ -1615,7 +1591,7 @@ void PopupMenu::addSubMenu (String subMenuName, PopupMenu subMenu, bool isActive
 
 void PopupMenu::addSeparator()
 {
-    if (items.size() > 0 && ! items.back().isSeparator)
+    if (items.size() > 0 && ! items.getLast().isSeparator)
     {
         Item i;
         i.isSeparator = true;
@@ -1626,6 +1602,7 @@ void PopupMenu::addSeparator()
 void PopupMenu::addSectionHeader (String title)
 {
     Item i (std::move (title));
+    i.itemID = 0;
     i.isSectionHeader = true;
     addItem (std::move (i));
 }
@@ -1719,11 +1696,11 @@ PopupMenu::Options PopupMenu::Options::withPreferredPopupDirection (PopupDirecti
 Component* PopupMenu::createWindow (const Options& options,
                                     ApplicationCommandManager** managerOfChosenCommand) const
 {
-    return items.empty() ? nullptr
-                         : new HelperClasses::MenuWindow (*this, nullptr, options,
-                                                          ! options.getTargetScreenArea().isEmpty(),
-                                                          ModifierKeys::currentModifiers.isAnyMouseButtonDown(),
-                                                          managerOfChosenCommand);
+    return items.isEmpty() ? nullptr
+                           : new HelperClasses::MenuWindow (*this, nullptr, options,
+                                                            ! options.getTargetScreenArea().isEmpty(),
+                                                            ModifierKeys::currentModifiers.isAnyMouseButtonDown(),
+                                                            managerOfChosenCommand);
 }
 
 //==============================================================================
@@ -1819,7 +1796,7 @@ void PopupMenu::showMenuAsync (const Options& options, ModalComponentManager::Ca
     showWithOptionalCallback (options, userCallback, false);
 }
 
-void PopupMenu::showMenuAsync (const Options& options, std::function<void(int)> userCallback)
+void PopupMenu::showMenuAsync (const Options& options, std::function<void (int)> userCallback)
 {
     showWithOptionalCallback (options, ModalCallbackFunction::create (userCallback), false);
 }
@@ -1929,6 +1906,12 @@ void PopupMenu::setLookAndFeel (LookAndFeel* const newLookAndFeel)
     lookAndFeel = newLookAndFeel;
 }
 
+void PopupMenu::setItem (CustomComponent& c, const Item* itemToUse)
+{
+    c.item = itemToUse;
+    c.repaint();
+}
+
 //==============================================================================
 PopupMenu::CustomComponent::CustomComponent (bool autoTrigger)
     : triggeredAutomatically (autoTrigger)
@@ -1985,7 +1968,7 @@ bool PopupMenu::MenuItemIterator::next()
     if (index.size() == 0 || menus.getLast()->items.size() == 0)
         return false;
 
-    currentItem = const_cast<PopupMenu::Item*> (&(menus.getLast()->items[(size_t) index.getLast()]));
+    currentItem = const_cast<PopupMenu::Item*> (&(menus.getLast()->items.getReference (index.getLast())));
 
     if (searchRecursively && currentItem->subMenu != nullptr)
     {

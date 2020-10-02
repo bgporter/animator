@@ -4,14 +4,14 @@
 
 #pragma once
 
-#include "../animatorApp.h"
+// #include "../animatorApp.h"
 
 #include "animation.h"
-#include "constant.h"
-#include "linear.h"
-#include "easing.h"
-#include "spring.h"
-#include "sequence.h"
+#include "../curves/constant.h"
+#include "../curves/linear.h"
+#include "../curves/easing.h"
+#include "../curves/spring.h"
+#include "../curves/sequence.h"
 
 namespace friz 
 {
@@ -25,7 +25,7 @@ namespace friz
  */
 
 
-class Animator : public Timer
+class Animator : public juce::Timer
 {
 public:
    Animator(int frameRate = 30);

@@ -3,10 +3,10 @@
  */
 #pragma once
 
-#include "../animatorApp.h"
+// #include "../animatorApp.h"
 #include <array>
 
-#include "animatedValue.h"
+#include "../curves/animatedValue.h"
 
 namespace friz 
 {

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "animation.h"
+#include "../control/animation.h"
 
 namespace friz 
 {
@@ -112,7 +112,7 @@ private:
     */
    Animation<valueCount>* GetEffect(int index)
    {
-      if (isPositiveAndBelow(index, fSequence.size()))
+      if (juce::isPositiveAndBelow(index, fSequence.size()))
       {
          return fSequence[index].get();
       }

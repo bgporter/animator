@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -82,7 +81,7 @@ class JUCE_API  PopupMenu
 public:
     //==============================================================================
     /** Creates an empty popup menu. */
-    PopupMenu();
+    PopupMenu() = default;
 
     /** Creates a copy of another menu. */
     PopupMenu (const PopupMenu&);
@@ -181,19 +180,20 @@ public:
         bool isSectionHeader = false;
 
         /** Sets the isTicked flag (and returns a reference to this item to allow chaining). */
-        Item& setTicked (bool shouldBeTicked = true) JUCE_REF_QUALIFIER noexcept;
+        Item& setTicked (bool shouldBeTicked = true) & noexcept;
         /** Sets the isEnabled flag (and returns a reference to this item to allow chaining). */
-        Item& setEnabled (bool shouldBeEnabled) JUCE_REF_QUALIFIER noexcept;
+        Item& setEnabled (bool shouldBeEnabled) & noexcept;
         /** Sets the action property (and returns a reference to this item to allow chaining). */
-        Item& setAction (std::function<void()> action) JUCE_REF_QUALIFIER noexcept;
+        Item& setAction (std::function<void()> action) & noexcept;
         /** Sets the itemID property (and returns a reference to this item to allow chaining). */
-        Item& setID (int newID) JUCE_REF_QUALIFIER noexcept;
+        Item& setID (int newID) & noexcept;
         /** Sets the colour property (and returns a reference to this item to allow chaining). */
-        Item& setColour (Colour) JUCE_REF_QUALIFIER noexcept;
+        Item& setColour (Colour) & noexcept;
         /** Sets the customComponent property (and returns a reference to this item to allow chaining). */
-        Item& setCustomComponent (ReferenceCountedObjectPtr<CustomComponent> customComponent) JUCE_REF_QUALIFIER noexcept;
+        Item& setCustomComponent (ReferenceCountedObjectPtr<CustomComponent> customComponent) & noexcept;
+        /** Sets the image property (and returns a reference to this item to allow chaining). */
+        Item& setImage (std::unique_ptr<Drawable>) & noexcept;
 
-       #if ! (JUCE_MSVC && _MSC_VER < 1900) // Gah.. no ref-qualifiers in VC2013...
         /** Sets the isTicked flag (and returns a reference to this item to allow chaining). */
         Item&& setTicked (bool shouldBeTicked = true) && noexcept;
         /** Sets the isEnabled flag (and returns a reference to this item to allow chaining). */
@@ -206,7 +206,8 @@ public:
         Item&& setColour (Colour) && noexcept;
         /** Sets the customComponent property (and returns a reference to this item to allow chaining). */
         Item&& setCustomComponent (ReferenceCountedObjectPtr<CustomComponent> customComponent) && noexcept;
-       #endif
+        /** Sets the image property (and returns a reference to this item to allow chaining). */
+        Item&& setImage (std::unique_ptr<Drawable>) && noexcept;
     };
 
     /** Adds an item to the menu.
@@ -325,22 +326,21 @@ public:
 
     /** Appends a custom menu item.
 
-        This will add a user-defined component to use as a menu item. The component
-        passed in will be deleted by this menu when it's no longer needed.
+        This will add a user-defined component to use as a menu item.
 
         Note that native macOS menus do not support custom components.
 
         @see CustomComponent
     */
     void addCustomItem (int itemResultID,
-                        CustomComponent* customComponent,
-                        const PopupMenu* optionalSubMenu = nullptr);
+                        std::unique_ptr<CustomComponent> customComponent,
+                        std::unique_ptr<const PopupMenu> optionalSubMenu = nullptr);
 
     /** Appends a custom menu item that can't be used to trigger a result.
 
         This will add a user-defined component to use as a menu item.
-        It's the caller's responsibility to delete the component that is passed-in
-        when it's no longer needed after the menu has been hidden.
+        The caller must ensure that the passed-in component stays alive
+        until after the menu has been hidden.
 
         If triggerMenuItemAutomaticallyWhenClicked is true, the menu itself will handle
         detection of a mouse-click on your component, and use that to trigger the
@@ -350,11 +350,11 @@ public:
         Note that native macOS menus do support custom components.
     */
     void addCustomItem (int itemResultID,
-                        Component* customComponent,
+                        Component& customComponent,
                         int idealWidth,
                         int idealHeight,
                         bool triggerMenuItemAutomaticallyWhenClicked,
-                        const PopupMenu* optionalSubMenu = nullptr);
+                        std::unique_ptr<const PopupMenu> optionalSubMenu = nullptr);
 
     /** Appends a sub-menu.
 
@@ -398,7 +398,7 @@ public:
 
     /** Appends a separator to the menu, to help break it up into sections.
         The menu class is smart enough not to display separators at the top or bottom
-        of the menu, and it will replace mutliple adjacent separators with a single
+        of the menu, and it will replace multiple adjacent separators with a single
         one, so your code can be quite free and easy about adding these, and it'll
         always look ok.
     */
@@ -571,7 +571,7 @@ public:
 
     /** Runs the menu asynchronously, with a user-provided callback that will receive the result. */
     void showMenuAsync (const Options& options,
-                        std::function<void(int)> callback);
+                        std::function<void (int)> callback);
 
     //==============================================================================
     /** Closes any menus that are currently open.
@@ -702,6 +702,13 @@ public:
         */
         bool isItemHighlighted() const noexcept                 { return isHighlighted; }
 
+        /** Returns a pointer to the Item that holds this custom component, if this
+            component is currently held by an Item.
+            You can query the Item for information that you might want to use
+            in your paint() method, such as the item's enabled and ticked states.
+        */
+        const PopupMenu::Item* getItem() const noexcept         { return item; }
+
         /** @internal */
         bool isTriggeredAutomatically() const noexcept          { return triggeredAutomatically; }
         /** @internal */
@@ -710,6 +717,9 @@ public:
     private:
         //==============================================================================
         bool isHighlighted = false, triggeredAutomatically;
+        const PopupMenu::Item* item = nullptr;
+
+        friend PopupMenu;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CustomComponent)
     };
@@ -809,11 +819,13 @@ private:
     friend struct HelperClasses;
     friend class MenuBarComponent;
 
-    std::vector<Item> items;
+    Array<Item> items;
     WeakReference<LookAndFeel> lookAndFeel;
 
     Component* createWindow (const Options&, ApplicationCommandManager**) const;
     int showWithOptionalCallback (const Options&, ModalComponentManager::Callback*, bool);
+
+    static void setItem (CustomComponent&, const Item*);
 
    #if JUCE_CATCH_DEPRECATED_CODE_MISUSE
     // These methods have new implementations now - see its new definition

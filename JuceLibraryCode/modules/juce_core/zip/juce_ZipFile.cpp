@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -46,10 +46,10 @@ struct ZipFile::ZipEntryHolder
         entry.uncompressedSize = (int64) readUnalignedLittleEndianInt (buffer + 24);
         streamOffset           = (int64) readUnalignedLittleEndianInt (buffer + 42);
 
-        auto externalFileAttributes = (int32) readUnalignedLittleEndianInt (buffer + 38);
-        auto fileType   = (externalFileAttributes >> 28) & 0xf;
-
+        entry.externalFileAttributes = readUnalignedLittleEndianInt (buffer + 38);
+        auto fileType = (entry.externalFileAttributes >> 28) & 0xf;
         entry.isSymbolicLink = (fileType == 0xA);
+
         entry.filename = String::fromUTF8 (buffer + 46, fileNameLen);
     }
 
@@ -541,7 +541,7 @@ private:
     {
         if (stream == nullptr)
         {
-            stream.reset (file.createInputStream());
+            stream = file.createInputStream();
 
             if (stream == nullptr)
                 return false;
@@ -577,7 +577,7 @@ private:
         target.writeInt ((int) checksum);
         target.writeInt ((int) (uint32) compressedSize);
         target.writeInt ((int) (uint32) uncompressedSize);
-        target.writeShort ((short) storedPathname.toUTF8().sizeInBytes() - 1);
+        target.writeShort (static_cast<short> (storedPathname.toUTF8().sizeInBytes() - 1));
         target.writeShort (0); // extra field length
     }
 

@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "../animatorApp.h"
+// #include "../animatorApp.h"
+#include <cmath>
 
 
 namespace friz 

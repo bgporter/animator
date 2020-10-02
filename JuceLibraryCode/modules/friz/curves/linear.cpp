@@ -21,9 +21,9 @@ float Linear::GenerateNextValue()
    auto calculated = fCurrentVal + fDelta;
    if (fStartVal < fEndVal)
    {
-      return jmin(calculated, fEndVal);
+      return juce::jmin(calculated, fEndVal);
    }
-   return jmax(calculated, fEndVal);
+   return juce::jmax(calculated, fEndVal);
 }
 
 #ifdef qRunUnitTests

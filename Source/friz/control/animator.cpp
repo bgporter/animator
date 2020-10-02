@@ -54,7 +54,7 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    sprintf(address, "%p", (void*) animation.get());
    
    
-   DBG("AddAnimation # " << animation->GetId() << " @ " << String(address)); 
+   DBG("AddAnimation # " << animation->GetId() << " @ " << juce::String(address)); 
    
    // In debug builds, verify that the animation has valid AnimatedValue 
    // objects before accepting it in the animator. 

@@ -38,13 +38,13 @@ public:
       // generate a single cycle 
       if (std::abs(fEndVal - fStartVal) < 0.01f)
       {
-         fEndVal = fStartVal + MathConstants<float>::twoPi;
+         fEndVal = fStartVal + juce::MathConstants<float>::twoPi;
       }
       
       // if the end phase is less than start, adjust. 
       while (fEndVal < fStartVal)
       {
-         fEndVal += MathConstants<float>::twoPi;
+         fEndVal += juce::MathConstants<float>::twoPi;
       }
       
       fPhaseDelta = (fEndVal - fStartVal) / (fDuration - 1);
@@ -63,8 +63,8 @@ public:
    
    
    Sinusoid(int startQuad, int endQuad, int duration)
-   : Sinusoid(startQuad*MathConstants<float>::halfPi, 
-              endQuad * MathConstants<float>::halfPi, duration)
+   : Sinusoid(startQuad*juce::MathConstants<float>::halfPi, 
+              endQuad * juce::MathConstants<float>::halfPi, duration)
    {
       
    }

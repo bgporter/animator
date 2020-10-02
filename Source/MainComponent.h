@@ -4,7 +4,6 @@
 
 #include "animatorApp.h"
 
-#include "friz/animator.h"
 #include "demoComponent.h"
 #include "controlPanel.h"
 
