@@ -3,6 +3,42 @@
 //
 
 #include "parametric.h"
+
+
+namespace 
+{
+   constexpr float kN1{7.5625};
+   constexpr float kD1{2.75};
+   float EaseOutBounce(float x)
+   {
+      if (x < (1 / kD1))
+      {
+         return kN1 * x * x;
+      }
+      else if (x < (2 / kD1))
+      {
+         x-= (1.5 / kD1);
+         return kN1 * x * x + 0.75f;
+
+      }
+      else if (x < (2.5/kD1))
+      {
+         x -= (2.25/kD1);
+         return kN1 * x * x + 0.9375f;
+      }
+      else 
+      {
+         x -= (2.65 / kD1);
+         return kN1 * x * x + 0.984375f;
+      }
+   }
+
+   float EaseInBounce(float x)
+   {
+      return 1 - EaseOutBounce(1-x);
+   }
+}
+
 namespace friz
 {
 
@@ -15,11 +51,12 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
    constexpr float kPi{juce::MathConstants<float>::pi};
    constexpr float kZeroIsh{0.001f}; // compare if we're close enough to zero. 
    constexpr float kOneIsh{0.999f};  // compare if we're close enough to one. 
-   constexpr float kC1{1.70158};     // from the literature; controls overshoot. 
-   constexpr float kC2{kC1 * 1.525}; // from the literature
-   constexpr float kC3{kC1+1};       // from the literature
-   constexpr float kC4{2 * kPi / 3}; // from the literature
-   constexpr float kC5{2 * kPi / 4.5}; // from the literature
+   // from the literature, naming from those sources. 
+   constexpr float kC1{1.70158}; 
+   constexpr float kC2{kC1 * 1.525}; 
+   constexpr float kC3{kC1+1};    
+   constexpr float kC4{2 * kPi / 3}; 
+   constexpr float kC5{2 * kPi / 4.5}; 
 
    switch (type) 
    {
@@ -265,8 +302,28 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
       break;
 
       case kEaseInBounce: 
+      {
+         curve = EaseInBounce;
+      }
+      break;
       case kEaseOutBounce: 
+      {
+         curve = EaseOutBounce;
+      }
+      break;
       case kEaseInOutBounce:
+      {
+         curve = [](float x)
+         {
+            if (x < 0.5f)
+            {
+               return 0.5f * (1 - EaseOutBounce(1 - 2 * x));
+            }
+            return 0.5f * (1 + EaseOutBounce(2 * x - 1));
+         };
+
+      }
+      break;
 
       case kLinear:
       // fall through

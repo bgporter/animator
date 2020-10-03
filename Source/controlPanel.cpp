@@ -122,6 +122,7 @@ VtComboBox::VtComboBox(ValueTree tree, Identifier param)
    fCombo = std::make_unique<ComboBox>(param.toString());
    this->addAndMakeVisible(fCombo.get());
    fCombo->addListener(this);
+   fCombo->setColour(ComboBox::backgroundColourId, juce::Colour(0x00000000));
    this->setSize(190, 24);
 }
 
@@ -192,7 +193,6 @@ ControlWell::ControlWell(ValueTree params)
 
    auto combo{std::make_unique<VtComboBox>(fTree, ID::kCurve)};
    combo->AddSelection(friz::Parametric::kLinear, "Linear");
-
    combo->AddSelection(friz::Parametric::kEaseInSine, "Sine (ease in)");
    combo->AddSelection(friz::Parametric::kEaseOutSine, "Sine (ease out)");
    combo->AddSelection(friz::Parametric::kEaseInOutSine, "Sine (in/out)");
@@ -220,7 +220,9 @@ ControlWell::ControlWell(ValueTree params)
    combo->AddSelection(friz::Parametric::kEaseInElastic, "Elastic (ease in)");
    combo->AddSelection(friz::Parametric::kEaseOutElastic, "Elastic (ease out)");
    combo->AddSelection(friz::Parametric::kEaseInOutElastic, "Elastic (in/out)");
-
+   combo->AddSelection(friz::Parametric::kEaseInBounce, "Bounce (ease in)");
+   combo->AddSelection(friz::Parametric::kEaseOutBounce, "Bounce (ease out)");
+   combo->AddSelection(friz::Parametric::kEaseInOutBounce, "Bounce (in/out)");
    combo->Update();  // set the combo box to the current selection.
    AddControl(std::move(combo));
 

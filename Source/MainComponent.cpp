@@ -49,7 +49,7 @@ MainComponent::MainComponent()
    
    this->addAndMakeVisible(fControls.get());
    fControls->addChangeListener(this);
-   setSize(1000, 700);
+   setSize(1000, 740);
 }
 
 MainComponent::~MainComponent()
