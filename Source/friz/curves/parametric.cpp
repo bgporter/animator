@@ -12,9 +12,14 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
 {
    CurveFn curve; 
 
-   const float kPi{juce::MathConstants<float>::pi};
-   const float kZeroIsh{0.001f}; // compare if we're close enough to zero. 
-   const float kOneIsh{0.999f};  // compare if we're close enough to one. 
+   constexpr float kPi{juce::MathConstants<float>::pi};
+   constexpr float kZeroIsh{0.001f}; // compare if we're close enough to zero. 
+   constexpr float kOneIsh{0.999f};  // compare if we're close enough to one. 
+   constexpr float kC1{1.70158};     // from the literature; controls overshoot. 
+   constexpr float kC2{kC1 * 1.525}; // from the literature
+   constexpr float kC3{kC1+1};       // from the literature
+   constexpr float kC4{2 * kPi / 3}; // from the literature
+   constexpr float kC5{2 * kPi / 4.5}; // from the literature
 
    switch (type) 
    {
@@ -170,11 +175,95 @@ Parametric::Parametric(CurveType type, float startVal, float endVal, int duratio
       break;
 
       case kEaseInBack:
+      {
+         curve = [=](float x) { return (kC3 * x * x * x) - (kC1 * x * x);};
+      }
+      break;
+
       case kEaseOutBack:
+      {
+         curve = [=](float x) { return 1 + kC3 * std::powf(x-1, 3) + kC1 * std::powf(x-1, 2);};
+      }
+      break;
+      
       case kEaseInOutBack:
+      {
+         curve = [=](float x)
+         {
+            if (x < 0.5f)
+            {
+               return 0.5f * (std::powf(2*x, 2) * ((kC2 + 1) * 2 * x - kC2));
+            }
+            return 0.5f * (std::powf(2*x-2, 2) * ((kC2 + 1) * (x*2-2) + kC2) + 2);
+         };
+
+      }
+      break;
+
       case kEaseInElastic:
+      {
+         curve = [=](float x) -> float
+         {
+            if (x < kZeroIsh)
+            {
+               return 0.f;
+            }
+            else if (x > kOneIsh)
+            {
+               return 1.f;
+            }
+            else 
+            {
+               return -std::powf(2, 10*x-10) * std::sin((x * 10 - 10.75) * kC4);
+            }
+         };
+      }
+      break;
       case kEaseOutElastic:
+      {
+         curve = [=](float x) -> float
+         {
+            if (x < kZeroIsh)
+            {
+               return 0.f;
+            }
+            else if (x > kOneIsh)
+            {
+               return 1.f;
+            }
+            else 
+            {
+               return std::powf(2, -10*x) * std::sin((x*10 - 0.75) * kC4) + 1;
+            }
+         };
+      }
+      break;
+
       case kEaseInOutElastic:
+      {
+         curve = [=](float x) -> float
+         {
+            if (x < kZeroIsh)
+            {
+               return 0.f;
+            }
+            else if (x > kOneIsh)
+            {
+               return 1.f;
+            }
+            else if (x < 0.5f)
+            {
+               return 0.5f * -(std::powf(2, 20*x - 10) * std::sin((20*x-11.125) * kC5));
+            }
+            else 
+            {
+               return 0.5f * (std::powf(2, -20 * x + 10) * std::sin(20*x-11.125)) + 1;
+            }
+         };
+
+      };
+      break;
+
       case kEaseInBounce: 
       case kEaseOutBounce: 
       case kEaseInOutBounce:
