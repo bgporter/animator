@@ -37,6 +37,7 @@ Base class for a set of animation curve types that can be instantiated with a st
 
 * **Constant**&mdash;emits a stream consisting of the same constant value
 * **Linear**&mdash;interpolates linearly between start and end over a set number of frames 
+* **Parametric**&mdash;provides a set of commonly used easing curves as seen e.g. at https://easings.net
 * **EaseIn**&mdash;accelerates quickly away from startVal, decelerates as it approaches endVal
 * **EaseOut**&mdash;accelerates slowly away from startVal, accelerates into endVal 
 * **Spring**&mdash;accelerates away from startVal. If it overshoots the endVal, will simulate the oscillation of a dampened spring around the endVal until within tolerance. 
@@ -53,3 +54,39 @@ The included demonstration application performs simple animations that
 The control panel on the right can be hidden and shown by clicking on its gray border (and is itself animated). All of the animation parameters can be tweaked and played with using the sliders in the control panel. 
 
 Additionally, a 'show breadcrumbs' checkbox controls the display of a point on the screen indicating the position of the last square on each frame of the animation&mdash;very helpful for visualizing how each of the curves actually behaves. 
+
+## Release History
+
+October 2, 2020: Added the new `Parametric` animated value, which supports the following common easing curves:
+
+ -  Linear
+ -  Sine (ease in)
+ -  Sine (ease out)
+ -  Sine (in/out)
+ -  Quad (ease in)
+ -  Quad (ease out)
+ -  Quad (in/out)
+ -  Cubic (ease in)
+ -  Cubic (ease out)
+ -  Cubic (in/out)
+ -  Quartic (ease in)
+ -  Quartic (ease out)
+ -  Quartic (in/out)
+ -  Quintic (ease in)
+ -  Quintic (ease out)
+ -  Quintic (in/out)
+ -  Exponential (ease in)
+ -  Exponential (ease out)
+ -  Exponential (in/out)
+ -  Circular (ease in)
+ -  Circular (ease out)
+ -  Circular (in/out)
+ -  Back (ease in)
+ -  Back (ease out)
+ -  Back (in/out)
+ -  Elastic (ease in)
+ -  Elastic (ease out)
+ -  Elastic (in/out)
+ -  Bounce (ease in)
+ -  Bounce (ease out)
+ -  Bounce (in/out)
