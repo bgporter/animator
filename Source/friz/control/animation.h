@@ -131,7 +131,13 @@ public:
    {
       
    }
-   
+
+   /**
+    * @brief Construct a new Animation object, given a list of value sources. 
+    * 
+    * @param sources List of animated value objects. 
+    * @param id 
+    */
    Animation(SourceList&& sources, int id=0)
    :  AnimationType(id)
    ,  fFinished(false)
