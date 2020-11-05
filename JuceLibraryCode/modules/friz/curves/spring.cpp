@@ -5,7 +5,7 @@
 
 namespace friz 
 {
-Spring::Spring(int startVal, int endVal, float tolerance, 
+Spring::Spring(float startVal, float endVal, float tolerance, 
    float accel, float damping)
 :  ToleranceValue(startVal, endVal, tolerance)
 ,  fStartAcceleration(accel)

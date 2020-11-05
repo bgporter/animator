@@ -30,7 +30,7 @@ public:
     * @param dampen    How much to dampen the oscillation, 0 < dampen < 1. 
     *                  smaller values dampen the oscillation faster. 
     */   
-   Spring(int startVal, int endVal, float tolerance, float accel, float dampen);
+   Spring(float startVal, float endVal, float tolerance, float accel, float dampen);
    
    
    
