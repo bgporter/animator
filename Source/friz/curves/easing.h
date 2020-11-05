@@ -12,7 +12,7 @@ namespace friz
 class EasingCurve : public ToleranceValue 
 {
 public:
-   EasingCurve(int startVal, int endVal, float tolerance, float slewRate);
+   EasingCurve(float startVal, float endVal, float tolerance, float slewRate);
    
 protected:
    float fSlewRate;
@@ -38,7 +38,7 @@ public:
     * @param tolerance Tolerance for stopping. 
     * @param slewRate  slew rate, must be 0 < rate < 1
     */
-   EaseIn(int startVal, int endVal, float tolerance, float slewRate);
+   EaseIn(float startVal, float endVal, float tolerance, float slewRate);
    
 private:
    float GenerateNextValue() override;
@@ -60,7 +60,7 @@ public:
     * @param tolerance tolerance for stopping 
     * @param slewRate  slew rate, must be > 1. 
     */
-   EaseOut(int startVal, int endVal, float tolerance, float slewRate);
+   EaseOut(float startVal, float endVal, float tolerance, float slewRate);
    
 private:
    float GenerateNextValue() override;

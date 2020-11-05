@@ -57,7 +57,13 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 ## Release History
 
-October 2, 2020: Added the new `Parametric` animated value, which supports the following common easing curves:
+1.2.0: November 4, 2020
+
+Corrected bug where the EaseIn, EaseOut, and Spring curve classes
+all used integer parameters in their constructors for the 
+startValue and endValue. 
+
+1.1.0: October 2, 2020: Added the new `Parametric` animated value, which supports the following common easing curves:
 
  -  Linear
  -  Sine (ease in)
