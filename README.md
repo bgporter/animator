@@ -57,13 +57,23 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 ## Release History
 
-1.2.0: November 4, 2020
+
+### 1.3.0 November 6, 2020
+
+Restructured the Animation::Update() logic.
+
+Originally, on each frame, we got the next value from each of the value sources in the animation, and if all of them are in a state of completion, after call the OnUpdate() function, we'd immediately call the OnCompletion() function. 
+
+I've rewritten this so that the OnCompletion function is not called until the **next** frame's Update() call -- I encountered code where calling the completion function too soon after the update function created weird behavior because model code was being updated in the completion callback before the message loop had a chance to process the value set in the preceding Update call. 
+
+
+### 1.2.0: November 4, 2020
 
 Corrected bug where the EaseIn, EaseOut, and Spring curve classes
 all used integer parameters in their constructors for the 
 startValue and endValue. 
 
-1.1.0: October 2, 2020: Added the new `Parametric` animated value, which supports the following common easing curves:
+### 1.1.0: October 2, 2020: Added the new `Parametric` animated value, which supports the following common easing curves:
 
  -  Linear
  -  Sine (ease in)

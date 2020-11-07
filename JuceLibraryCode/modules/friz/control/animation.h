@@ -200,6 +200,16 @@ public:
       {
          return kProcessing;
       }
+
+      if (fFinished)
+      {
+         if (fCompleteFn)
+         {
+            fCompleteFn(this->GetId());
+         }
+
+         return kFinished;
+      }
       
       for (int i = 0; i < valueCount; ++i)
       {
@@ -220,12 +230,7 @@ public:
       
       if (completeCount == valueCount)
       {
-         if (fCompleteFn)
-         {
-            fCompleteFn(this->GetId());
-         }
          fFinished = true;
-         return kFinished;
       }
       
       return kProcessing;
