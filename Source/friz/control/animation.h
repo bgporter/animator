@@ -179,7 +179,7 @@ public:
    {
       if (index < valueCount)
       {
-         return fSources[index];
+         return fSources[index].get();
       }
       jassert(false);
       return nullptr;
