@@ -15,6 +15,8 @@ doxygen/docs/
 ## Build generated
 build/
 DerivedData/
+Builds/
+.DS_Store
 
 ## Various settings
 *.pbxuser
