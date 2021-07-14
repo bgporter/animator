@@ -54,7 +54,7 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    sprintf(address, "%p", (void*) animation.get());
    
    
-   DBG("AddAnimation # " << animation->GetId() << " @ " << juce::String(address)); 
+   // DBG("AddAnimation # " << animation->GetId() << " @ " << juce::String(address)); 
    
    // In debug builds, verify that the animation has valid AnimatedValue 
    // objects before accepting it in the animator. 
@@ -64,7 +64,7 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    
    if (! this->isTimerRunning())
    {
-      DBG("startng timer");
+      // DBG("startng timer");
       this->startTimerHz(fFrameRate);
    }
    return true;
@@ -107,7 +107,7 @@ void Animator::Cleanup()
    
    if (0 == fAnimations.size())
    {
-      DBG("stopping timer");
+      // DBG("stopping timer");
       this->stopTimer();
    }
 }
