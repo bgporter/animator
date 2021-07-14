@@ -120,7 +120,17 @@ public:
    
    bool IsFinished() override
    {
+#if 1
+      bool finished{fCanceled};
+      if ((! finished) && (std::fabs(fCurrentVal - fEndVal) < fTolerance))
+      {
+         fCurrentVal = fEndVal;
+         finished = true;
+      }
+      return finished;
+#else 
       return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
+#endif
    }
       
 protected: 
