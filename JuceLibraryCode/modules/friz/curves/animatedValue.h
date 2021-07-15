@@ -4,8 +4,6 @@
 
 #pragma once
 
-// #include "../animatorApp.h"
-
 
 namespace friz
 {
@@ -141,16 +139,16 @@ public:
     */
    float SnapToTolerance(float val) override
    {
-      if (this->ValueIsWithinTolerance())
+      if (this->ValueIsWithinTolerance(val))
       {
          return fEndVal;
       }
       return val;
    }
 
-   bool ValueIsWithinTolerance() const 
+   bool ValueIsWithinTolerance(float val) const 
    {
-      return (std::fabs(fCurrentVal - fEndVal) < fTolerance);
+      return (std::fabs(val - fEndVal) < fTolerance);
    }
 
    bool IsFinished() override
@@ -159,7 +157,7 @@ public:
       // we are finished in either of these cases: 
       // 1. user/code canceled us
       // 2. current value is within tolerance of the end value. 
-      return (this->ValueIsWithinTolerance() || fCanceled);
+      return (this->ValueIsWithinTolerance(fCurrentVal) || fCanceled);
 #else 
       return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
 #endif
