@@ -52,7 +52,7 @@ public:
          }
          else 
          {
-            fCurrentVal = this->GenerateNextValue();
+            fCurrentVal = this->SnapToTolerance(this->GenerateNextValue());
          }
       }
       
@@ -78,10 +78,18 @@ public:
 private:
    
    /**
-    * Implemented in base classes to generate the next value in the sequence. 
+    * Implemented in derived classes to generate the next value in the sequence. 
     * @return      next value.
     */
    virtual float GenerateNextValue() = 0;
+
+   /**
+    * @brief Some derived classes should snap to the end value when within 
+    *        some tolerance of it. Default implementation does nothing. 
+    * 
+    * @return (possibly modified) value 
+    */
+   virtual float SnapToTolerance(float val) { return val; }
    
    
    /**
@@ -117,17 +125,38 @@ public:
    {
       
    }
-   
+
+
+   /**
+    * @brief If the current value is within tolerance of the end value, 
+    *        snap the current value to the end value and return true
+    *        to indicate that we did this. This prevents us from stopping 
+    *        shy of the actual desired end value. 
+    * 
+    * @return true 
+    * @return false 
+    */
+   float SnapToTolerance(float val) override
+   {
+      if (this->ValueIsWithinTolerance())
+      {
+         return fEndVal;
+      }
+      return val;
+   }
+
+   bool ValueIsWithinTolerance() const 
+   {
+      return (std::fabs(fCurrentVal - fEndVal) < fTolerance);
+   }
+
    bool IsFinished() override
    {
 #if 1
-      bool finished{fCanceled};
-      if ((! finished) && (std::fabs(fCurrentVal - fEndVal) < fTolerance))
-      {
-         fCurrentVal = fEndVal;
-         finished = true;
-      }
-      return finished;
+      // we are finished in either of these cases: 
+      // 1. user/code canceled us
+      // 2. current value is within tolerance of the end value. 
+      return (this->ValueIsWithinTolerance() || fCanceled);
 #else 
       return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
 #endif

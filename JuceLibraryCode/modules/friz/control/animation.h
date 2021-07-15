@@ -82,6 +82,8 @@ public:
    virtual bool IsFinished() = 0;
    
    virtual bool IsReady() const = 0;
+
+   virtual AnimatedValue* GetValue(size_t index) = 0;
    
 private:
    /// optional ID value for this animation. 
@@ -166,6 +168,23 @@ public:
       return false;
    }
    
+   /**
+    * @brief Retrieve a pointer to one of this animation's value 
+    *        sources. This should probably not be used very much, if ever. 
+    * 
+    * @param index 
+    * @return AnimatedValue* 
+    */
+   AnimatedValue* GetValue(size_t index)  override 
+   {
+      if (index < valueCount)
+      {
+         return fSources[index].get();
+      }
+      jassert(false);
+      return nullptr;
+   }
+
    /**
     * Set the function that will be called with an array of animation values 
     * once per frame. 

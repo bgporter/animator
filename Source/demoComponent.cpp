@@ -293,7 +293,7 @@ void DemoComponent::CreateDemo(Point<int> startPoint, EffectType type)
       fade->OnCompletion([=] (int id){
          // ...and when the fade animation is complete, delete the box from the 
          //demo component. 
-         DBG("Completing # " << id);
+         // DBG("Completing # " << id);
          this->DeleteBox(box);
       });
       

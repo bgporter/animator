@@ -4,11 +4,12 @@
 
 #pragma once
 
-#include "../animatorApp.h"
 
+namespace friz
+{
 
 /**
- * @class AmimatedValue
+ * @class AnimatedValue
  * @brief Abstract base class for objects that can generate a useful series
  *        of values to drive UI animations. 
  */
@@ -186,3 +187,5 @@ protected:
    int fDuration;
    
 };
+
+}
