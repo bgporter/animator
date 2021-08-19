@@ -26,7 +26,7 @@ void Animator::timerCallback()
    for (int i = 0; i < fAnimations.size(); ++i)
    {
       auto animation = fAnimations[i].get();
-      assert(animation);
+      jassert(animation);
       finishedCount += animation->Update();
       ++updated;
    }
