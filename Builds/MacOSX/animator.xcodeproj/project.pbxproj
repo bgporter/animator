@@ -237,7 +237,7 @@
 		81E0CD54A65EAA27AEDB1AC5 = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "bgporter";
 				TargetAttributes = {
 					3D8C6361165E3D145CE30F35 = {

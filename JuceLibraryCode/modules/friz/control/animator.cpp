@@ -157,8 +157,10 @@ bool Animator::UpdateTarget(int id, float newTarget)
     int updateCount{0};
     for (auto* animation : animations)
     {
-        ani
+        animation->UpdateTarget(newTarget);
+        ++updateCount;
     }
+    return (updateCount > 0);
 }
 
 
