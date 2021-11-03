@@ -23,7 +23,7 @@ void Animator::timerCallback()
    int finishedCount = 0;
    int updated = 0;
    // for (auto& animation : fAnimations)
-   juce::ScopedLock(fMutex);
+   juce::ScopedLock lock(fMutex);
    for (int i = 0; i < fAnimations.size(); ++i)
    {
       auto animation = fAnimations[i].get();
