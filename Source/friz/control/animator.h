@@ -86,7 +86,21 @@ public:
     */
    int GetAnimations(int id, std::vector<AnimationType*>& animations);
    
-   
+
+    /**
+     * @brief Pass a new ending value to the animation at `id`, if it is 
+     *        still in progress. Not all animated value classes support 
+     *        this operation, so it may silently fail.
+     * 
+     * @param id 
+     * @param valIndex index of the value within the animation.
+     * @param newTarget 
+     * @return true     If the animation exists; this doesn't indicate that 
+     *                  we actually succeeded.
+     * @return false 
+     */
+    bool UpdateTarget(int id, int valIndex, float newTarget);
+
 private:
    /**
     * Remove any animations that are complete or canceled from the list. 
@@ -102,7 +116,10 @@ private:
     std::vector<std::unique_ptr<AnimationType>> fAnimations;
     
     int fFrameRate;
-    
+
+    /// protect code that might contain data races if updates come 
+    /// from a different thread. 
+    juce::CriticalSection fMutex;
    
 };
 

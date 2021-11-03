@@ -22,12 +22,11 @@ void Animator::timerCallback()
 {
    int finishedCount = 0;
    int updated = 0;
-
-   juce::ScopedLock lock(fMutex);
+   // for (auto& animation : fAnimations)
    for (int i = 0; i < fAnimations.size(); ++i)
    {
       auto animation = fAnimations[i].get();
-      assert(animation);
+      jassert(animation);
       finishedCount += animation->Update();
       ++updated;
    }
@@ -61,15 +60,12 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    // objects before accepting it in the animator. 
    jassert(animation->IsReady());
    
-   {
-       juce::ScopedLock lock(fMutex);
-       fAnimations.push_back(std::move(animation));
-   }
+   fAnimations.push_back(std::move(animation));
    
    if (! this->isTimerRunning())
    {
-        // DBG("startng timer");
-        this->startTimerHz(fFrameRate);
+      // DBG("startng timer");
+      this->startTimerHz(fFrameRate);
    }
    return true;
    
@@ -102,22 +98,18 @@ bool Animator::CancelAllAnimations(bool moveToEndPosition)
 
 void Animator::Cleanup()
 {
-
-    {
-        juce::ScopedLock lock(fMutex);
-        fAnimations.erase(std::remove_if(fAnimations.begin(), fAnimations.end(), 
-            [&] (const std::unique_ptr<AnimationType>& c) -> bool 
-            {
-                return c->IsFinished();
-            }
-            ), fAnimations.end());
-    }
-    
-    if (0 == fAnimations.size())
-    {
-        // DBG("stopping timer");
-        this->stopTimer();
-    }
+   fAnimations.erase(std::remove_if(fAnimations.begin(), fAnimations.end(), 
+      [&] (const std::unique_ptr<AnimationType>& c) -> bool 
+      {
+         return c->IsFinished();
+      }
+      ), fAnimations.end());
+   
+   if (0 == fAnimations.size())
+   {
+      // DBG("stopping timer");
+      this->stopTimer();
+   }
 }
 
 
@@ -149,21 +141,26 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
    return foundCount;
 }
 
-bool Animator::UpdateTarget(int id, float newTarget)
+bool Animator::UpdateTarget(int id, int valueIndex, float newTarget) 
 {
     juce::ScopedLock lock(fMutex);
-    std::vector<AnimationType*> animations;
-    this->GetAnimations(id, animations);
-    int updateCount{0};
-    for (auto* animation : animations)
+
+    std::vector<AnimationType*> animations; 
+
+    if (this->GetAnimations(id, animations) > 0)
     {
-        animation->UpdateTarget(newTarget);
-        ++updateCount;
-    }
-    return (updateCount > 0);
+        for (auto* animation : animations)
+        {
+            auto* value {animation->GetValue(valueIndex)};
+            if (value)
+            {
+                value->UpdateTarget(newTarget);
+            }
+        }
+        return true;
+    }    
+    return false;
 }
-
-
 
 #ifdef qRunUnitTests
 #include "test/test_Animator.cpp"

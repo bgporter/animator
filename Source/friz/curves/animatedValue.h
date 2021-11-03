@@ -67,6 +67,15 @@ public:
     * @return [description]
     */
    virtual bool IsFinished() = 0;
+
+    /**
+     * @brief Attempt to change the end value of an animation that's currently in process. 
+     * 
+     * @param newValue 
+     * @return true If the value type supports this and the operation succeeded.
+     * @return false 
+     */
+    virtual bool UpdateTarget(float newValue) { return false; }
    
 
    void Cancel(bool moveToEndPosition)

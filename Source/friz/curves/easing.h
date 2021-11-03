@@ -46,6 +46,32 @@ private:
 };
 
 /**
+ * @brief An animated value whose end value can be changed while the animation 
+ *        is in progress.
+ */
+class SmoothedValue : public EaseIn 
+{
+public:
+    SmoothedValue(float startVal, float endVal, float tolerance, float slewRate)
+    : EaseIn(startVal, endVal, tolerance, slewRate)
+    {
+        
+    }
+
+    /**
+     * @brief Update the target value while the animation is running. 
+     * 
+     * @param newTarget 
+     */
+    bool UpdateTarget(float newTarget) override
+    {
+        fEndVal = newTarget;
+        return true;
+    }
+};
+
+
+/**
  * @class EaseOut 
  *
  * @brief A slew-based acceleration. starts slowly & accelerates. 

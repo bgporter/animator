@@ -23,6 +23,7 @@ void Animator::timerCallback()
    int finishedCount = 0;
    int updated = 0;
    // for (auto& animation : fAnimations)
+   juce::ScopedLock(fMutex);
    for (int i = 0; i < fAnimations.size(); ++i)
    {
       auto animation = fAnimations[i].get();
@@ -59,8 +60,11 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    // In debug builds, verify that the animation has valid AnimatedValue 
    // objects before accepting it in the animator. 
    jassert(animation->IsReady());
-   
-   fAnimations.push_back(std::move(animation));
+
+    {
+        juce::ScopedLock lock(fMutex);
+        fAnimations.push_back(std::move(animation));
+    } 
    
    if (! this->isTimerRunning())
    {
@@ -74,6 +78,7 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
 bool Animator::CancelAnimation(int id, bool moveToEndPosition)
 {
    int cancelCount = 0;
+   juce::ScopedLock lock(fMutex);
    for (auto& animation: fAnimations)
    {
       if ((id < 0) || (animation->GetId() == id))
@@ -98,6 +103,7 @@ bool Animator::CancelAllAnimations(bool moveToEndPosition)
 
 void Animator::Cleanup()
 {
+   juce::ScopedLock lock(fMutex);
    fAnimations.erase(std::remove_if(fAnimations.begin(), fAnimations.end(), 
       [&] (const std::unique_ptr<AnimationType>& c) -> bool 
       {
@@ -115,6 +121,7 @@ void Animator::Cleanup()
 
 AnimationType* Animator::GetAnimation(int id)
 {
+   juce::ScopedLock lock(fMutex);
    for (auto& animation: fAnimations)
    {
       if (id == animation->GetId())
@@ -130,6 +137,7 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
 {
    int foundCount{0};
    
+   juce::ScopedLock lock(fMutex);
    for (auto& animation: fAnimations)
    {
       if (id == animation->GetId())
@@ -139,6 +147,27 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
       }
    }
    return foundCount;
+}
+
+bool Animator::UpdateTarget(int id, int valueIndex, float newTarget) 
+{
+    juce::ScopedLock(fMutex);
+
+    std::vector<AnimationType*> animations; 
+
+    if (this->GetAnimations(id, animations) > 0)
+    {
+        for (auto* animation : animations)
+        {
+            auto* value {animation->GetValue(valueIndex)};
+            if (value)
+            {
+                animation->UpdateTarget(newTarget);
+            }
+        }
+        return true;
+    }    
+    return false;
 }
 
 #ifdef qRunUnitTests
