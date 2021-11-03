@@ -67,6 +67,19 @@ public:
     * @return [description]
     */
    virtual bool IsFinished() = 0;
+
+   /**
+    * @brief Possibly used in derived classes (see @SmootherValue) to change 
+    *        the end value while the animation is in progress. 
+    * 
+    *        Base class version does nothing. 
+    * 
+    * @param newTarget 
+    */
+   virtual void UpdateTarget(float newTarget)
+   {
+
+   }
    
 
    void Cancel(bool moveToEndPosition)

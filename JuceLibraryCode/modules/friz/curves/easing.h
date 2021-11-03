@@ -45,6 +45,26 @@ private:
    
 };
 
+class SmoothedValue : public EaseIn 
+{
+    SmoothedValue(float startVal, float endVal, float tolerance, float slewRate)
+    :   EaseIn(startVal, endVal, tolerance, slewRate)
+    {
+        
+    }
+
+    /**
+     * @brief Update the target value while the animation is running. 
+     * 
+     * @param newTarget 
+     */
+    void UpdateTarget(float newTarget) override
+    {
+        fEndVal = newTarget;
+    }    
+};
+
+
 /**
  * @class EaseOut 
  *

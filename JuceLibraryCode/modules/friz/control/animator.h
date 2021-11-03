@@ -85,6 +85,19 @@ public:
     * @return            number of effects found. 
     */
    int GetAnimations(int id, std::vector<AnimationType*>& animations);
+
+    /**
+     * @brief Attempt to update the end value of an in-progress animation. 
+     * 
+     * @param id    ID of the animation to update; if there are more than 
+     *              1 animation with the same ID, all will be updated. 
+     * @param newTarget 
+     * @return true if the animation exists (not all animatedValue classes 
+     *              implement the method, so does NOT indicate that the 
+     *              target was actually changed!)
+     * @return false 
+     */
+    bool UpdateTarget(int id, float newTarget);
    
    
 private:
@@ -102,6 +115,9 @@ private:
     std::vector<std::unique_ptr<AnimationType>> fAnimations;
     
     int fFrameRate;
+
+    /// protect places where we may have thread interactions! 
+    juce::CriticalSection fMutex;
     
    
 };

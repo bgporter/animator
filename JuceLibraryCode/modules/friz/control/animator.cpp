@@ -22,7 +22,8 @@ void Animator::timerCallback()
 {
    int finishedCount = 0;
    int updated = 0;
-   // for (auto& animation : fAnimations)
+
+   juce::ScopedLock lock(fMutex);
    for (int i = 0; i < fAnimations.size(); ++i)
    {
       auto animation = fAnimations[i].get();
@@ -60,12 +61,15 @@ bool Animator::AddAnimation(std::unique_ptr<AnimationType> animation)
    // objects before accepting it in the animator. 
    jassert(animation->IsReady());
    
-   fAnimations.push_back(std::move(animation));
+   {
+       juce::ScopedLock lock(fMutex);
+       fAnimations.push_back(std::move(animation));
+   }
    
    if (! this->isTimerRunning())
    {
-      // DBG("startng timer");
-      this->startTimerHz(fFrameRate);
+        // DBG("startng timer");
+        this->startTimerHz(fFrameRate);
    }
    return true;
    
@@ -98,18 +102,22 @@ bool Animator::CancelAllAnimations(bool moveToEndPosition)
 
 void Animator::Cleanup()
 {
-   fAnimations.erase(std::remove_if(fAnimations.begin(), fAnimations.end(), 
-      [&] (const std::unique_ptr<AnimationType>& c) -> bool 
-      {
-         return c->IsFinished();
-      }
-      ), fAnimations.end());
-   
-   if (0 == fAnimations.size())
-   {
-      // DBG("stopping timer");
-      this->stopTimer();
-   }
+
+    {
+        juce::ScopedLock lock(fMutex);
+        fAnimations.erase(std::remove_if(fAnimations.begin(), fAnimations.end(), 
+            [&] (const std::unique_ptr<AnimationType>& c) -> bool 
+            {
+                return c->IsFinished();
+            }
+            ), fAnimations.end());
+    }
+    
+    if (0 == fAnimations.size())
+    {
+        // DBG("stopping timer");
+        this->stopTimer();
+    }
 }
 
 
@@ -140,6 +148,20 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
    }
    return foundCount;
 }
+
+bool Animator::UpdateTarget(int id, float newTarget)
+{
+    juce::ScopedLock lock(fMutex);
+    std::vector<AnimationType*> animations;
+    this->GetAnimations(id, animations);
+    int updateCount{0};
+    for (auto* animation : animations)
+    {
+        ani
+    }
+}
+
+
 
 #ifdef qRunUnitTests
 #include "test/test_Animator.cpp"
