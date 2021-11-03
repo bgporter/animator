@@ -57,6 +57,16 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 ## Release History
 
+### 1.4.0 November 3, 2021
+
+* Add mutex protection around animator functions that handle the list of running 
+  animations. Working on a project where animations are launched, modified from 
+  MIDI callback data, and exposed data races. 
+* Add `AnimatedValue::UpdateTarget()` virtual method to allow changing 
+  an animated value's end state while the animation is in progress. Default
+  implementation does nothing. 
+* Add `SmoothedValue` class that accepts new end values while the animation is 
+  running.  
 
 ### 1.3.0 November 6, 2020
 
