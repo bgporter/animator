@@ -162,7 +162,7 @@ bool Animator::UpdateTarget(int id, int valueIndex, float newTarget)
             auto* value {animation->GetValue(valueIndex)};
             if (value)
             {
-                animation->UpdateTarget(newTarget);
+                value->UpdateTarget(newTarget);
             }
         }
         return true;
