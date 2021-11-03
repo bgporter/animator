@@ -151,7 +151,7 @@ int Animator::GetAnimations(int id, std::vector<AnimationType*>& animations)
 
 bool Animator::UpdateTarget(int id, int valueIndex, float newTarget) 
 {
-    juce::ScopedLock(fMutex);
+    juce::ScopedLock lock(fMutex);
 
     std::vector<AnimationType*> animations; 
 
