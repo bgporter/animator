@@ -75,8 +75,8 @@ public:
      * @return true If the value type supports this and the operation succeeded.
      * @return false 
      */
-    virtual bool UpdateTarget(float newValue) { return false; }
-   
+    virtual bool UpdateTarget(float newValue) { juce::ignoreUnused (newValue); return false; }
+
 
    void Cancel(bool moveToEndPosition)
    {
