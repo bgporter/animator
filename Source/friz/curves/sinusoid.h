@@ -54,6 +54,9 @@ class Sinusoid : public TimedValue
         // the actual sinusoid value on 1st call (and this went undetected for
         // so long because we were only testing with start phase = 0.)
         fStartVal = std::sin(fPhase);
+        // also update the end val in case the animation is cancelled and we jump
+        // to the end.
+        fEndVal = std::sin(fEndVal);
     }
 
     /**
