@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Brett g Porter. 
+ * Copyright (c) 2019 Brett g Porter.
  */
 #pragma once
 
@@ -7,10 +7,10 @@
 BEGIN_JUCE_MODULE_DECLARATION
 
 ID:               friz
-vendor:           bgporter 
+vendor:           bgporter
 version:          1.4.0
 name:             'friz' animator
-description:      Animation control classes for JUCE.    
+description:      Animation control classes for JUCE.
 website:          https://github.com/bgporter/animator
 license:          MIT
 
@@ -33,4 +33,3 @@ END_JUCE_MODULE_DECLARATION
 #include "curves/sequence.h"
 #include "curves/sinusoid.h"
 #include "curves/spring.h"
-
