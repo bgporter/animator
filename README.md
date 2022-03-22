@@ -46,7 +46,7 @@ Base class for a set of animation curve types that can be instantiated with a st
 
 ## Demo application 
 
-The included demonstration application performs simple animations that 
+The demonstration application (now located in the `bgporter/frizDemo` repository performs simple animations that 
 
 * apply each of the curve types to animate randomly sized & colored squares away from a mouse click.
 * after a delay from the movement animation, fade the square to invisiblity and delete it from the screen. 
@@ -56,6 +56,11 @@ The control panel on the right can be hidden and shown by clicking on its gray b
 Additionally, a 'show breadcrumbs' checkbox controls the display of a point on the screen indicating the position of the last square on each frame of the animation&mdash;very helpful for visualizing how each of the curves actually behaves. 
 
 ## Release History
+
+### 1.5.0 March 2022
+
+* Corrected bug in the Sinusoid animated value; start value returned when initial phase angle of the object was anything but zero was wrong. 
+* Removed demo app code & build files into a separate repo (look for the `bgporter/frizDemo` repo). This repository now contains just the bare JUCE module for inclusion in a JCUE project.
 
 ### 1.4.0 November 3, 2021
 
