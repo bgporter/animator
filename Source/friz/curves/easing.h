@@ -1,67 +1,62 @@
 /*
- * Copyright (c) 2019 Brett g Porter. 
+ * Copyright (c) 2019 Brett g Porter.
  */
 
 #pragma once
 
-#include "animatedValue.h" 
+#include "animatedValue.h"
 
+namespace friz
+{
+class EasingCurve : public ToleranceValue
+{
+  public:
+    EasingCurve(float startVal, float endVal, float tolerance, float slewRate);
 
-namespace friz 
-{
-class EasingCurve : public ToleranceValue 
-{
-public:
-   EasingCurve(float startVal, float endVal, float tolerance, float slewRate);
-   
-protected:
-   float fSlewRate;
-   
+  protected:
+    float fSlewRate;
 };
 
-
 /**
- * @class EaseIn 
+ * @class EaseIn
  *
- * @brief A slew-based ease in curve -- accelerates quickly, then decelerates 
- *        as it approaches the end value. 
- * 
+ * @brief A slew-based ease in curve -- accelerates quickly, then decelerates
+ *        as it approaches the end value.
+ *
  */
 
 class EaseIn : public EasingCurve
 {
-public:
-   /**
-    * Decelerate into the end value. 
-    * @param startVal  start value 
-    * @param endVal    end value 
-    * @param tolerance Tolerance for stopping. 
-    * @param slewRate  slew rate, must be 0 < rate < 1
-    */
-   EaseIn(float startVal, float endVal, float tolerance, float slewRate);
-   
-private:
-   float GenerateNextValue() override;
-   
+  public:
+    /**
+     * Decelerate into the end value.
+     * @param startVal  start value
+     * @param endVal    end value
+     * @param tolerance Tolerance for stopping.
+     * @param slewRate  slew rate, must be 0 < rate < 1
+     */
+    EaseIn(float startVal, float endVal, float tolerance, float slewRate);
+
+  private:
+    float GenerateNextValue() override;
 };
 
 /**
- * @brief An animated value whose end value can be changed while the animation 
+ * @brief An animated value whose end value can be changed while the animation
  *        is in progress.
  */
-class SmoothedValue : public EaseIn 
+class SmoothedValue : public EaseIn
 {
-public:
+  public:
     SmoothedValue(float startVal, float endVal, float tolerance, float slewRate)
-    : EaseIn(startVal, endVal, tolerance, slewRate)
+        : EaseIn(startVal, endVal, tolerance, slewRate)
     {
-        
     }
 
     /**
-     * @brief Update the target value while the animation is running. 
-     * 
-     * @param newTarget 
+     * @brief Update the target value while the animation is running.
+     *
+     * @param newTarget
      */
     bool UpdateTarget(float newTarget) override
     {
@@ -70,31 +65,28 @@ public:
     }
 };
 
-
 /**
- * @class EaseOut 
+ * @class EaseOut
  *
- * @brief A slew-based acceleration. starts slowly & accelerates. 
+ * @brief A slew-based acceleration. starts slowly & accelerates.
  */
-class EaseOut :public  EasingCurve
+class EaseOut : public EasingCurve
 {
-public:
-   /**
-    * Accelerate into the end value. 
-    * @param startVal  start val 
-    * @param endVal    end val 
-    * @param tolerance tolerance for stopping 
-    * @param slewRate  slew rate, must be > 1. 
-    */
-   EaseOut(float startVal, float endVal, float tolerance, float slewRate);
-   
-private:
-   float GenerateNextValue() override;
+  public:
+    /**
+     * Accelerate into the end value.
+     * @param startVal  start val
+     * @param endVal    end val
+     * @param tolerance tolerance for stopping
+     * @param slewRate  slew rate, must be > 1.
+     */
+    EaseOut(float startVal, float endVal, float tolerance, float slewRate);
 
-private:
-   float fCurrentRate; 
-   
+  private:
+    float GenerateNextValue() override;
+
+  private:
+    float fCurrentRate;
 };
-
 
 } // namespace friz

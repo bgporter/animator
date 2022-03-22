@@ -152,14 +152,10 @@ class ToleranceValue : public AnimatedValue
 
     bool IsFinished() override
     {
-#if 1
         // we are finished in either of these cases:
         // 1. user/code canceled us
         // 2. current value is within tolerance of the end value.
         return (this->ValueIsWithinTolerance(fCurrentVal) || fCanceled);
-#else
-        return (std::fabs(fCurrentVal - fEndVal) < fTolerance) || fCanceled;
-#endif
     }
 
   protected:
