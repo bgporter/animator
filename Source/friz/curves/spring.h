@@ -19,7 +19,7 @@ namespace friz
 
 class Spring : public ToleranceValue
 {
-  public:
+public:
     /**
      * A curve that accelerates toward the end value, then oscillates toward it
      * on overshoot.
@@ -30,12 +30,12 @@ class Spring : public ToleranceValue
      * @param dampen    How much to dampen the oscillation, 0 < dampen < 1.
      *                  smaller values dampen the oscillation faster.
      */
-    Spring(float startVal, float endVal, float tolerance, float accel, float dampen);
+    Spring (float startVal, float endVal, float tolerance, float accel, float dampen);
 
-  private:
-    float GenerateNextValue() override;
+private:
+    float GenerateNextValue () override;
 
-  private:
+private:
     /// The initial acceleration for this value.
     float fStartAcceleration;
 

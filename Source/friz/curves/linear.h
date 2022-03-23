@@ -14,7 +14,7 @@ namespace friz
 
 class Linear : public TimedValue
 {
-  public:
+public:
     /**
      * A value that changes linearly.
      * @param startVal  initial value
@@ -22,12 +22,12 @@ class Linear : public TimedValue
      * @param tolerance tolerance for completion.
      * @param duration  # of frames the effect should take.
      */
-    Linear(float startVal, float endVal, int duration);
+    Linear (float startVal, float endVal, int duration);
 
-  private:
-    float GenerateNextValue() override;
+private:
+    float GenerateNextValue () override;
 
-  private:
+private:
     /// Delta to add at each frame that passes
     float fDelta;
 };

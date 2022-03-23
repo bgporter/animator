@@ -18,21 +18,20 @@ namespace friz
 
 template <int valueCount> class Sequence : public Animation<valueCount>
 {
-  public:
-    Sequence(int id = 0) : Animation<valueCount>(id), fCurrentEffect{0}
+public:
+    Sequence (int id = 0)
+    : Animation<valueCount> (id)
+    , fCurrentEffect { 0 }
     {
     }
 
-    bool IsFinished() override
-    {
-        return (fCurrentEffect >= fSequence.size());
-    }
+    bool IsFinished () override { return (fCurrentEffect >= fSequence.size ()); }
 
-    bool IsReady() const override
+    bool IsReady () const override
     {
-        for (const auto &effect : fSequence)
+        for (const auto& effect : fSequence)
         {
-            if ((nullptr == effect) || (!effect->IsReady()))
+            if ((nullptr == effect) || (!effect->IsReady ()))
             {
                 return false;
             }
@@ -40,76 +39,81 @@ template <int valueCount> class Sequence : public Animation<valueCount>
         return true;
     }
 
-    int Update() override
+    int Update () override
     {
-        auto effect = this->GetEffect(fCurrentEffect);
+        auto effect = this->GetEffect (fCurrentEffect);
         if (effect)
         {
-            if (effect->Update())
+            if (effect->Update ())
             {
                 ++fCurrentEffect;
             }
 
-            return this->IsFinished() ? AnimationType::kFinished : AnimationType::kProcessing;
+            return this->IsFinished () ? AnimationType::kFinished
+                                       : AnimationType::kProcessing;
         }
 
         return AnimationType::kFinished;
     }
 
-    void Cancel(bool moveToEndPosition) override
+    void Cancel (bool moveToEndPosition) override
     {
         if (moveToEndPosition)
         {
-            auto lastIndex = static_cast<int>(fSequence.size() - 1);
-            auto lastEffect = this->GetEffect(lastIndex);
+            auto lastIndex  = static_cast<int> (fSequence.size () - 1);
+            auto lastEffect = this->GetEffect (lastIndex);
             if (lastEffect)
             {
-                lastEffect->Cancel(moveToEndPosition);
+                lastEffect->Cancel (moveToEndPosition);
             }
         }
     }
 
-    void AddAnimation(std::unique_ptr<Animation<valueCount>> effect)
+    void AddAnimation (std::unique_ptr<Animation<valueCount>> effect)
     {
         // We need to make each of the effects notify us on update or completion,
         // so that we can pass those along to whoever passed in a single
         // lambda to us.
-        effect->OnUpdate([=](int id, const typename Animation<valueCount>::ValueList &val) {
-            if (this->fUpdateFn)
+        effect->OnUpdate (
+            [=] (int /*id*/, const typename Animation<valueCount>::ValueList& val)
             {
-                this->fUpdateFn(this->GetId(), val);
-            }
-        });
+                if (this->fUpdateFn)
+                {
+                    this->fUpdateFn (this->GetId (), val);
+                }
+            });
 
-        effect->OnCompletion([=](int id) {
-            // Each effect in the sequence will notify us, but we only pass
-            // along the final one.
-            if ((fCurrentEffect == fSequence.size() - 1) && this->fCompleteFn)
+        effect->OnCompletion (
+            [=] (int /*id*/)
             {
-                this->fCompleteFn(this->GetId());
-            }
-        });
+                // Each effect in the sequence will notify us, but we only pass
+                // along the final one.
+                if ((fCurrentEffect == fSequence.size () - 1) && this->fCompleteFn)
+                {
+                    this->fCompleteFn (this->GetId ());
+                }
+            });
 
-        fSequence.push_back(std::move(effect));
+        fSequence.push_back (std::move (effect));
     }
 
-  private:
+private:
     /**
      * Get a pointer to one of our effects by its index.
      * @param  index 0..size-1
      * @return       nullptr if index is out of range.
      */
-    Animation<valueCount> *GetEffect(int index)
+    Animation<valueCount>* GetEffect (int index)
     {
-        if (juce::isPositiveAndBelow(index, fSequence.size()))
+        if (juce::isPositiveAndBelow (index, fSequence.size ()))
         {
-            return fSequence[index].get();
+            return fSequence[index].get ();
         }
-        jassert(false);
+        jassert (false);
         return nullptr;
     }
 
-  private:
+private:
     std::vector<std::unique_ptr<Animation<valueCount>>> fSequence;
 
     int fCurrentEffect;

@@ -19,7 +19,7 @@ namespace friz
 
 class Sinusoid : public TimedValue
 {
-  public:
+public:
     /**
      * A value object that can output sinusoid values. Note that we
      * place very few constraints here for folks who like to work
@@ -28,13 +28,14 @@ class Sinusoid : public TimedValue
      * @param endPhase   end phase, typically 0..2pi.
      * @param duration   duration in frames.
      */
-    Sinusoid(float startPhase, float endPhase, int duration) : TimedValue(startPhase, endPhase, duration)
+    Sinusoid (float startPhase, float endPhase, int duration)
+    : TimedValue (startPhase, endPhase, duration)
     {
-        jassert(duration > 0);
+        jassert (duration > 0);
 
         // requesting the same start/end phase is a request to
         // generate a single cycle
-        if (std::abs(fEndVal - fStartVal) < 0.01f)
+        if (std::abs (fEndVal - fStartVal) < 0.01f)
         {
             fEndVal = fStartVal + juce::MathConstants<float>::twoPi;
         }
@@ -46,17 +47,17 @@ class Sinusoid : public TimedValue
         }
 
         fPhaseDelta = (fEndVal - fStartVal) / (fDuration - 1);
-        fPhase = fStartVal;
+        fPhase      = fStartVal;
         // hack to make 1st value correct: all of the other value generators
         // correctly use 'fStartVal` as the first value to be returned. This
         // value generator does *not* want that; fStartVal is the phase of the
         // sinusoid, and we need to make sure that we convert phase back into
         // the actual sinusoid value on 1st call (and this went undetected for
         // so long because we were only testing with start phase = 0.)
-        fStartVal = std::sin(fPhase);
+        fStartVal = std::sin (fPhase);
         // also update the end val in case the animation is cancelled and we jump
         // to the end.
-        fEndVal = std::sin(fEndVal);
+        fEndVal = std::sin (fEndVal);
     }
 
     /**
@@ -69,20 +70,20 @@ class Sinusoid : public TimedValue
      * @param duration  duration in frames.
      */
 
-    Sinusoid(int startQuad, int endQuad, int duration)
-        : Sinusoid(startQuad * juce::MathConstants<float>::halfPi, endQuad * juce::MathConstants<float>::halfPi,
-                   duration)
+    Sinusoid (int startQuad, int endQuad, int duration)
+    : Sinusoid (startQuad * juce::MathConstants<float>::halfPi,
+                endQuad * juce::MathConstants<float>::halfPi, duration)
     {
     }
 
-  private:
-    float GenerateNextValue() override
+private:
+    float GenerateNextValue () override
     {
         fPhase += fPhaseDelta;
-        return std::sin(fPhase);
+        return std::sin (fPhase);
     }
 
-  private:
+private:
     /// current phase accumulator.
     float fPhase;
 

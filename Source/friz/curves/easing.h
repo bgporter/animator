@@ -10,10 +10,10 @@ namespace friz
 {
 class EasingCurve : public ToleranceValue
 {
-  public:
-    EasingCurve(float startVal, float endVal, float tolerance, float slewRate);
+public:
+    EasingCurve (float startVal, float endVal, float tolerance, float slewRate);
 
-  protected:
+protected:
     float fSlewRate;
 };
 
@@ -27,7 +27,7 @@ class EasingCurve : public ToleranceValue
 
 class EaseIn : public EasingCurve
 {
-  public:
+public:
     /**
      * Decelerate into the end value.
      * @param startVal  start value
@@ -35,10 +35,10 @@ class EaseIn : public EasingCurve
      * @param tolerance Tolerance for stopping.
      * @param slewRate  slew rate, must be 0 < rate < 1
      */
-    EaseIn(float startVal, float endVal, float tolerance, float slewRate);
+    EaseIn (float startVal, float endVal, float tolerance, float slewRate);
 
-  private:
-    float GenerateNextValue() override;
+private:
+    float GenerateNextValue () override;
 };
 
 /**
@@ -47,9 +47,9 @@ class EaseIn : public EasingCurve
  */
 class SmoothedValue : public EaseIn
 {
-  public:
-    SmoothedValue(float startVal, float endVal, float tolerance, float slewRate)
-        : EaseIn(startVal, endVal, tolerance, slewRate)
+public:
+    SmoothedValue (float startVal, float endVal, float tolerance, float slewRate)
+    : EaseIn (startVal, endVal, tolerance, slewRate)
     {
     }
 
@@ -58,7 +58,7 @@ class SmoothedValue : public EaseIn
      *
      * @param newTarget
      */
-    bool UpdateTarget(float newTarget) override
+    bool UpdateTarget (float newTarget) override
     {
         fEndVal = newTarget;
         return true;
@@ -72,7 +72,7 @@ class SmoothedValue : public EaseIn
  */
 class EaseOut : public EasingCurve
 {
-  public:
+public:
     /**
      * Accelerate into the end value.
      * @param startVal  start val
@@ -80,12 +80,12 @@ class EaseOut : public EasingCurve
      * @param tolerance tolerance for stopping
      * @param slewRate  slew rate, must be > 1.
      */
-    EaseOut(float startVal, float endVal, float tolerance, float slewRate);
+    EaseOut (float startVal, float endVal, float tolerance, float slewRate);
 
-  private:
-    float GenerateNextValue() override;
+private:
+    float GenerateNextValue () override;
 
-  private:
+private:
     float fCurrentRate;
 };
 

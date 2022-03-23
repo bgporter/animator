@@ -6,11 +6,12 @@
 namespace friz
 {
 
-Constant::Constant(int value, int duration) : TimedValue(value, value, duration)
+Constant::Constant (float value, int duration)
+: TimedValue (value, value, duration)
 {
 }
 
-float Constant::GenerateNextValue()
+float Constant::GenerateNextValue ()
 {
     return fStartVal;
 }

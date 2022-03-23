@@ -5,23 +5,26 @@
 
 namespace friz
 {
-Spring::Spring(float startVal, float endVal, float tolerance, float accel, float damping)
-    : ToleranceValue(startVal, endVal, tolerance), fStartAcceleration(accel), fAcceleration(accel), fDamping(damping),
-      fVelocity(0)
+Spring::Spring (float startVal, float endVal, float tolerance, float accel, float damping)
+: ToleranceValue (startVal, endVal, tolerance)
+, fStartAcceleration (accel)
+, fAcceleration (accel)
+, fDamping (damping)
+, fVelocity (0)
 {
     // the damping factor must be between 0..1.
-    jassert(juce::isPositiveAndBelow(damping, 1.f));
+    jassert (juce::isPositiveAndBelow (damping, 1.f));
     if (endVal < startVal)
     {
         fAcceleration *= -1;
     }
 }
 
-float Spring::GenerateNextValue()
+float Spring::GenerateNextValue ()
 {
     // a weird case we need to handle -- if we're already at our end state,
     // remain there! Dont' keep oscillating.
-    if (this->IsFinished())
+    if (this->IsFinished ())
     {
         return fEndVal;
     }

@@ -6,20 +6,21 @@
 namespace friz
 {
 
-Linear::Linear(float startVal, float endVal, int duration) : TimedValue(startVal, endVal, duration)
+Linear::Linear (float startVal, float endVal, int duration)
+: TimedValue (startVal, endVal, duration)
 {
-    jassert(duration > 0);
+    jassert (duration > 0);
     fDelta = (fEndVal - fStartVal) / fDuration;
 }
 
-float Linear::GenerateNextValue()
+float Linear::GenerateNextValue ()
 {
     auto calculated = fCurrentVal + fDelta;
     if (fStartVal < fEndVal)
     {
-        return juce::jmin(calculated, fEndVal);
+        return juce::jmin (calculated, fEndVal);
     }
-    return juce::jmax(calculated, fEndVal);
+    return juce::jmax (calculated, fEndVal);
 }
 
 #ifdef qRunUnitTests

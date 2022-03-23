@@ -24,18 +24,18 @@ namespace friz
 
 class Constant : public TimedValue
 {
-  public:
+public:
     /**
      * A value that doesn't change.
      * @param value      Value to generate.
      * @param duration # of frames the effect should take.
      */
-    Constant(int value, int duration);
+    Constant (float value, int duration);
 
-  private:
-    float GenerateNextValue() override;
+private:
+    float GenerateNextValue () override;
 
-  private:
+private:
 };
 
 } // namespace friz

@@ -15,19 +15,23 @@ namespace friz
 
 class AnimatedValue
 {
-  public:
+public:
     /**
      * Base class init for the animated value classes.
      * @param startVal  Initial Value
      * @param endVal    Target/end value.
      * @param tolerance Toleerance for when we've reached the target value.
      */
-    AnimatedValue(float startVal, float endVal)
-        : fStartVal(startVal), fEndVal(endVal), fCurrentVal(startVal), fFrameCount(0), fCanceled(false){
+    AnimatedValue (float startVal, float endVal)
+    : fStartVal (startVal)
+    , fEndVal (endVal)
+    , fCurrentVal (startVal)
+    , fFrameCount (0)
+    , fCanceled (false) {
 
-                                                                                       };
+    };
 
-    virtual ~AnimatedValue(){
+    virtual ~AnimatedValue () {
 
     };
 
@@ -36,7 +40,7 @@ class AnimatedValue
      * return the next value.
      * @return        next value (or last value if we're finished)
      */
-    float GetNextValue()
+    float GetNextValue ()
     {
         if (!fCanceled)
         {
@@ -46,7 +50,7 @@ class AnimatedValue
             }
             else
             {
-                fCurrentVal = this->SnapToTolerance(this->GenerateNextValue());
+                fCurrentVal = this->SnapToTolerance (this->GenerateNextValue ());
             }
         }
 
@@ -59,7 +63,7 @@ class AnimatedValue
      * (or if we've been canceled...)
      * @return [description]
      */
-    virtual bool IsFinished() = 0;
+    virtual bool IsFinished () = 0;
 
     /**
      * @brief Attempt to change the end value of an animation that's currently in process.
@@ -68,23 +72,20 @@ class AnimatedValue
      * @return true If the value type supports this and the operation succeeded.
      * @return false
      */
-    virtual bool UpdateTarget(float /*newValue*/)
-    {
-        return false;
-    }
+    virtual bool UpdateTarget (float /*newValue*/) { return false; }
 
-    void Cancel(bool moveToEndPosition)
+    void Cancel (bool moveToEndPosition)
     {
         fCanceled = true;
-        this->DoCancel(moveToEndPosition);
+        this->DoCancel (moveToEndPosition);
     }
 
-  private:
+private:
     /**
      * Implemented in derived classes to generate the next value in the sequence.
      * @return      next value.
      */
-    virtual float GenerateNextValue() = 0;
+    virtual float GenerateNextValue () = 0;
 
     /**
      * @brief Some derived classes should snap to the end value when within
@@ -92,15 +93,12 @@ class AnimatedValue
      *
      * @return (possibly modified) value
      */
-    virtual float SnapToTolerance(float val)
-    {
-        return val;
-    }
+    virtual float SnapToTolerance (float val) { return val; }
 
     /**
      * Override in derived classes to perform any unusual cancellation logic.
      */
-    virtual void DoCancel(bool moveToEndPosition)
+    virtual void DoCancel (bool moveToEndPosition)
     {
         if (moveToEndPosition)
         {
@@ -108,7 +106,7 @@ class AnimatedValue
         }
     }
 
-  protected:
+protected:
     float fStartVal;
     float fEndVal;
     float fCurrentVal;
@@ -116,14 +114,15 @@ class AnimatedValue
     int fFrameCount;
     bool fCanceled;
 
-  private:
+private:
 };
 
 class ToleranceValue : public AnimatedValue
 {
-  public:
-    ToleranceValue(float startVal, float endVal, float tolerance)
-        : AnimatedValue(startVal, endVal), fTolerance(tolerance)
+public:
+    ToleranceValue (float startVal, float endVal, float tolerance)
+    : AnimatedValue (startVal, endVal)
+    , fTolerance (tolerance)
     {
     }
 
@@ -136,45 +135,44 @@ class ToleranceValue : public AnimatedValue
      * @return true
      * @return false
      */
-    float SnapToTolerance(float val) override
+    float SnapToTolerance (float val) override
     {
-        if (this->ValueIsWithinTolerance(val))
+        if (this->ValueIsWithinTolerance (val))
         {
             return fEndVal;
         }
         return val;
     }
 
-    bool ValueIsWithinTolerance(float val) const
+    bool ValueIsWithinTolerance (float val) const
     {
-        return (std::fabs(val - fEndVal) < fTolerance);
+        return (std::fabs (val - fEndVal) < fTolerance);
     }
 
-    bool IsFinished() override
+    bool IsFinished () override
     {
         // we are finished in either of these cases:
         // 1. user/code canceled us
         // 2. current value is within tolerance of the end value.
-        return (this->ValueIsWithinTolerance(fCurrentVal) || fCanceled);
+        return (this->ValueIsWithinTolerance (fCurrentVal) || fCanceled);
     }
 
-  protected:
+protected:
     float fTolerance;
 };
 
 class TimedValue : public AnimatedValue
 {
-  public:
-    TimedValue(float startVal, float endVal, int duration) : AnimatedValue(startVal, endVal), fDuration(duration)
+public:
+    TimedValue (float startVal, float endVal, int duration)
+    : AnimatedValue (startVal, endVal)
+    , fDuration (duration)
     {
     }
 
-    bool IsFinished() override
-    {
-        return fFrameCount >= fDuration;
-    }
+    bool IsFinished () override { return fFrameCount >= fDuration; }
 
-  protected:
+protected:
     int fDuration;
 };
 
