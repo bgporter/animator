@@ -54,6 +54,14 @@ protected:
     int fFrameRate { 30 };
 };
 
+/**
+ * @class TimeController
+ *
+ * A FrameController that updates animation frames at the current frame rate.
+ *
+ *
+ *
+ */
 class TimeController : public FrameController,
                        public juce::Timer
 {
@@ -68,6 +76,30 @@ public:
 
 private:
     void timerCallback () override;
+};
+
+class AsyncController : public FrameController
+{
+public:
+    AsyncController () {};
+
+    void start () override { fStarted = true; }
+
+    void stop () override { fStarted = false; }
+
+    bool isRunning () override { return fStarted; }
+
+    /**
+     * @brief Call this from whatever logic you're using to drive the
+     * animation system. This tells the animator to advance to its next frame,
+     * which will only actually have an effect if there are any animations running
+     * at the current time.
+     *
+     */
+    void advanceToNextFrame ();
+
+private:
+    bool fStarted { false };
 };
 
 } // namespace friz

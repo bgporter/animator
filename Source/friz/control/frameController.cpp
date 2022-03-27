@@ -43,4 +43,10 @@ void TimeController::timerCallback ()
         fAnimator->updateFrame ();
 }
 
+void AsyncController::advanceToNextFrame ()
+{
+    jassert (nullptr != fAnimator);
+    fAnimator->updateFrame ();
+}
+
 } // namespace friz
