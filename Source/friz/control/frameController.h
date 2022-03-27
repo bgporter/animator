@@ -50,8 +50,8 @@ public:
     virtual bool isRunning () = 0;
 
 protected:
-    Animator* fAnimator;
-    int fFrameRate;
+    Animator* fAnimator { nullptr };
+    int fFrameRate { 30 };
 };
 
 class TimeController : public FrameController,

@@ -29,12 +29,12 @@ class FrameController;
 
 class Animator
 {
-  public:
-    Animator(int frameRate = 30, std::unique_ptr<FrameController> controller = nullptr);
+public:
+    Animator (int frameRate = 30, std::unique_ptr<FrameController> controller = nullptr);
 
-    ~Animator();
+    ~Animator ();
 
-    void updateFrame();
+    void updateFrame ();
 
     /**
      * Convert a time in seconds to the corresponding frame count based on the
@@ -42,14 +42,14 @@ class Animator
      * @param  seconds Seconds, must be > 0
      * @return         nearest # of frames, will be >= 1.
      */
-    int TimeToFrames(float seconds);
+    int TimeToFrames (float seconds);
 
     /**
      * Add a new animation to our list, which will start it going!
      * @param  animation The animation sequence to play.
      * @return           true if added okay.
      */
-    bool AddAnimation(std::unique_ptr<AnimationType> animation);
+    bool AddAnimation (std::unique_ptr<AnimationType> animation);
 
     /**
      * Cancel any animations with the specified ID, optionally sending one
@@ -61,14 +61,14 @@ class Animator
      *                           before canceling.
      * @return                   True if at least one animation was canceled.
      */
-    bool CancelAnimation(int id, bool moveToEndPosition);
+    bool CancelAnimation (int id, bool moveToEndPosition);
 
     /**
      * Cancel all active animations.
      * @param  moveToEndPosition True to force all values to their end positions first.
      * @return True if we canceled anything.
      */
-    bool CancelAllAnimations(bool moveToEndPosition);
+    bool CancelAllAnimations (bool moveToEndPosition);
 
     /**
      * Attempt to get a running animation object by passing in its ID value.
@@ -77,7 +77,7 @@ class Animator
      * @return    non-owning pointer (or nullptr if not present). Don't store this
      *            pointer as it may be deleted from beneath you.
      */
-    AnimationType *GetAnimation(int id);
+    AnimationType* GetAnimation (int id);
 
     /**
      * Attempt to get all animations that use a specific ID.
@@ -85,7 +85,7 @@ class Animator
      * @param  animations Vector to fill with non-owning pointers.
      * @return            number of effects found.
      */
-    int GetAnimations(int id, std::vector<AnimationType *> &animations);
+    int GetAnimations (int id, std::vector<AnimationType*>& animations);
 
     /**
      * @brief Pass a new ending value to the animation at `id`, if it is
@@ -99,17 +99,17 @@ class Animator
      *                  we actually succeeded.
      * @return false
      */
-    bool UpdateTarget(int id, int valIndex, float newTarget);
+    bool UpdateTarget (int id, int valIndex, float newTarget);
 
-  private:
+private:
     /**
      * Remove any animations that are complete or canceled from the list.
      * If we end with the list empty, stop the timer
      */
-    void Cleanup();
+    void Cleanup ();
 
-  private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Animator)
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Animator)
 
     std::unique_ptr<FrameController> fFrameController;
 
