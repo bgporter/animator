@@ -6,6 +6,7 @@
 
 #include "control/animation.cpp"
 #include "control/animator.cpp"
+#include "control/frameController.cpp"
 #include "curves/animatedValue.cpp"
 #include "curves/constant.cpp"
 #include "curves/easing.cpp"

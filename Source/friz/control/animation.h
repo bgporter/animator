@@ -20,34 +20,33 @@ namespace friz
 
 class AnimationType
 {
-  public:
+public:
     enum
     {
         kProcessing = 0,
         kFinished
     };
 
-    AnimationType(int id) : fId{id}, fDelay{0}
+    AnimationType (int id)
+    : fId { id }
+    , fDelay { 0 }
     {
         // only allow positive animation IDs.
-        jassert(id >= 0);
+        jassert (id >= 0);
     }
 
-    virtual ~AnimationType() = default;
+    virtual ~AnimationType () = default;
 
     /**
      * @return ID value for this Animation.
      */
-    int GetId() const
-    {
-        return fId;
-    }
+    int GetId () const { return fId; }
 
     /**
      * Set a number of frames to delay before starting to execute this animation.
      * @param delay # of delay frames.
      */
-    void SetDelay(int delay)
+    void SetDelay (int delay)
     {
         if (delay >= 0)
         {
@@ -59,7 +58,7 @@ class AnimationType
      * Before generating values, see if we should be delaying.
      * @return False to wait before generating effect values.
      */
-    bool DelayElapsed()
+    bool DelayElapsed ()
     {
         if (0 == fDelay)
         {
@@ -70,17 +69,17 @@ class AnimationType
         return false;
     }
 
-    virtual int Update() = 0;
+    virtual int Update () = 0;
 
-    virtual void Cancel(bool moveToEndPosition) = 0;
+    virtual void Cancel (bool moveToEndPosition) = 0;
 
-    virtual bool IsFinished() = 0;
+    virtual bool IsFinished () = 0;
 
-    virtual bool IsReady() const = 0;
+    virtual bool IsReady () const = 0;
 
-    virtual AnimatedValue *GetValue(size_t index) = 0;
+    virtual AnimatedValue* GetValue (size_t index) = 0;
 
-  private:
+private:
     /// optional ID value for this animation.
     int fId;
 
@@ -102,11 +101,11 @@ class AnimationType
 
 template <std::size_t valueCount> class Animation : public AnimationType
 {
-  public:
-    using ValueList = std::array<float, valueCount>;
-    using SourceList = std::array<std::unique_ptr<AnimatedValue>, valueCount>;
-    using UpdateFn = std::function<void(int, const ValueList &)>;
-    using CompletionFn = std::function<void(int)>;
+public:
+    using ValueList    = std::array<float, valueCount>;
+    using SourceList   = std::array<std::unique_ptr<AnimatedValue>, valueCount>;
+    using UpdateFn     = std::function<void (int, const ValueList&)>;
+    using CompletionFn = std::function<void (int)>;
 
     /**
      * Create an animation object that can be populated with changing
@@ -116,7 +115,9 @@ template <std::size_t valueCount> class Animation : public AnimationType
      * @param id Optional identifier, use as you wish. We don't enforce uniqueness,
      *           for example. Must be >= 0.
      */
-    Animation(int id = 0) : AnimationType(id), fFinished{false}
+    Animation (int id = 0)
+    : AnimationType (id)
+    , fFinished { false }
     {
     }
 
@@ -126,7 +127,10 @@ template <std::size_t valueCount> class Animation : public AnimationType
      * @param sources List of animated value objects.
      * @param id
      */
-    Animation(SourceList &&sources, int id = 0) : AnimationType(id), fFinished(false), fSources(std::move(sources))
+    Animation (SourceList&& sources, int id = 0)
+    : AnimationType (id)
+    , fFinished (false)
+    , fSources (std::move (sources))
     {
     }
 
@@ -136,15 +140,15 @@ template <std::size_t valueCount> class Animation : public AnimationType
      * @param  value AnimatedValue object to generate data.
      * @return       true on success.
      */
-    bool SetValue(size_t index, std::unique_ptr<AnimatedValue> value)
+    bool SetValue (size_t index, std::unique_ptr<AnimatedValue> value)
     {
         if (index < valueCount)
         {
-            fSources[index] = std::move(value);
+            fSources[index] = std::move (value);
             return true;
         }
 
-        jassert(false);
+        jassert (false);
         return false;
     }
 
@@ -155,13 +159,13 @@ template <std::size_t valueCount> class Animation : public AnimationType
      * @param index
      * @return AnimatedValue*
      */
-    AnimatedValue *GetValue(size_t index) override
+    AnimatedValue* GetValue (size_t index) override
     {
         if (index < valueCount)
         {
-            return fSources[index].get();
+            return fSources[index].get ();
         }
-        jassert(false);
+        jassert (false);
         return nullptr;
     }
 
@@ -170,32 +174,26 @@ template <std::size_t valueCount> class Animation : public AnimationType
      * once per frame.
      * @param update UpdateFn function.
      */
-    void OnUpdate(UpdateFn update)
-    {
-        fUpdateFn = update;
-    }
+    void OnUpdate (UpdateFn update) { fUpdateFn = update; }
 
     /**
      * Set the (optional) function that will be called once when this
      * animation is complete.
      * @param complete CompletionFn function.
      */
-    void OnCompletion(CompletionFn complete)
-    {
-        fCompleteFn = complete;
-    }
+    void OnCompletion (CompletionFn complete) { fCompleteFn = complete; }
 
     /**
      * Calculate the next value from each of our animated values, passing them
      * to our UpdateFn function.
      * @return        Zero if we have more data in the future, 1 if we're done.
      */
-    int Update() override
+    int Update () override
     {
         ValueList values;
-        int completeCount{0};
+        int completeCount { 0 };
 
-        if (!this->DelayElapsed())
+        if (!this->DelayElapsed ())
         {
             return kProcessing;
         }
@@ -204,7 +202,7 @@ template <std::size_t valueCount> class Animation : public AnimationType
         {
             if (fCompleteFn)
             {
-                fCompleteFn(this->GetId());
+                fCompleteFn (this->GetId ());
             }
 
             return kFinished;
@@ -212,18 +210,18 @@ template <std::size_t valueCount> class Animation : public AnimationType
 
         for (int i = 0; i < valueCount; ++i)
         {
-            auto &val = fSources[i];
-            jassert(val);
+            auto& val = fSources[i];
+            jassert (val);
             if (val)
             {
-                values[i] = val->GetNextValue();
-                completeCount += (val->IsFinished()) ? 1 : 0;
+                values[i] = val->GetNextValue ();
+                completeCount += (val->IsFinished ()) ? 1 : 0;
             }
         }
 
         if (fUpdateFn)
         {
-            fUpdateFn(this->GetId(), values);
+            fUpdateFn (this->GetId (), values);
         }
 
         if (completeCount == valueCount)
@@ -234,44 +232,41 @@ template <std::size_t valueCount> class Animation : public AnimationType
         return kProcessing;
     }
 
-    void Cancel(bool moveToEndPosition) override
+    void Cancel (bool moveToEndPosition) override
     {
         for (int i = 0; i < valueCount; ++i)
         {
-            auto &val = fSources[i];
-            jassert(val);
+            auto& val = fSources[i];
+            jassert (val);
             if (val)
             {
-                val->Cancel(moveToEndPosition);
+                val->Cancel (moveToEndPosition);
             }
         }
 
         if (moveToEndPosition)
         {
             // send out one more value update message sending the end positions;
-            this->Update();
+            this->Update ();
         }
         else
         {
             // ...just notify that the effect is complete.
             if (fCompleteFn)
             {
-                fCompleteFn(this->GetId());
+                fCompleteFn (this->GetId ());
             }
         }
         fFinished = true;
     }
 
-    bool IsFinished() override
-    {
-        return fFinished;
-    }
+    bool IsFinished () override { return fFinished; }
 
-    bool IsReady() const override
+    bool IsReady () const override
     {
-        for (auto &src : fSources)
+        for (auto& src : fSources)
         {
-            if (nullptr == src.get())
+            if (nullptr == src.get ())
             {
                 return false;
             }
@@ -279,7 +274,7 @@ template <std::size_t valueCount> class Animation : public AnimationType
         return true;
     }
 
-  protected:
+protected:
     /// function to call on each frame. Pass in std::array of new values,
     /// return true if all is okay, false to cancel this animation.
     UpdateFn fUpdateFn;
@@ -287,7 +282,7 @@ template <std::size_t valueCount> class Animation : public AnimationType
     /// function to call when the animation is completed or canceled.
     CompletionFn fCompleteFn;
 
-  private:
+private:
     /// is this animation complete?
     bool fFinished;
 
