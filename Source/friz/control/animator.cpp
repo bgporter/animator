@@ -27,23 +27,24 @@ void Animator::updateFrame ()
 {
     int finishedCount = 0;
     int updated       = 0;
-    // for (auto& animation : fAnimations)
     juce::ScopedLock lock (fMutex);
-    for (int i = 0; i < fAnimations.size (); ++i)
-    {
-        auto animation = fAnimations[i].get ();
-        jassert (animation);
-        finishedCount += animation->Update ();
-        ++updated;
-    }
 
+    for (int i { 0 }; i < fAnimations.size (); ++i)
+    {
+        auto& animation { fAnimations[i] };
+        if (animation.get ())
+        {
+            finishedCount += animation->Update ();
+            ++updated;
+        }
+    }
     if (finishedCount > 0)
     {
         this->Cleanup ();
     }
 }
 
-int Animator::TimeToFrames (float seconds)
+int Animator::TimeToFrames (float seconds) const
 {
     jassert (seconds > 0);
 
@@ -71,7 +72,7 @@ bool Animator::AddAnimation (std::unique_ptr<AnimationType> animation)
 
 bool Animator::CancelAnimation (int id, bool moveToEndPosition)
 {
-    int cancelCount = 0;
+    int cancelCount { 0 };
     juce::ScopedLock lock (fMutex);
     for (auto& animation : fAnimations)
     {
@@ -85,9 +86,10 @@ bool Animator::CancelAnimation (int id, bool moveToEndPosition)
     {
         // remove any animations we just canceled.
         this->Cleanup ();
+        return true;
     }
 
-    return (cancelCount > 0);
+    return false;
 }
 
 bool Animator::CancelAllAnimations (bool moveToEndPosition)

@@ -42,7 +42,7 @@ public:
      * @param  seconds Seconds, must be > 0
      * @return         nearest # of frames, will be >= 1.
      */
-    int TimeToFrames (float seconds);
+    int TimeToFrames (float seconds) const;
 
     /**
      * Add a new animation to our list, which will start it going!

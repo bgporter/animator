@@ -46,13 +46,7 @@ public:
      * Set a number of frames to delay before starting to execute this animation.
      * @param delay # of delay frames.
      */
-    void SetDelay (int delay)
-    {
-        if (delay >= 0)
-        {
-            fDelay = delay;
-        }
-    }
+    void SetDelay (int delay) { fDelay = std::max (0, delay); }
 
     /**
      * Before generating values, see if we should be delaying.
@@ -60,13 +54,12 @@ public:
      */
     bool DelayElapsed ()
     {
-        if (0 == fDelay)
+        if (fDelay > 0)
         {
-            return true;
+            --fDelay;
+            return false;
         }
-
-        --fDelay;
-        return false;
+        return true;
     }
 
     virtual int Update () = 0;
@@ -234,6 +227,15 @@ public:
 
     void Cancel (bool moveToEndPosition) override
     {
+#if 1
+        for (auto& val : fSources)
+        {
+            if (val)
+            {
+                val->Cancel (moveToEndPosition);
+            }
+        }
+#else
         for (int i = 0; i < valueCount; ++i)
         {
             auto& val = fSources[i];
@@ -243,6 +245,7 @@ public:
                 val->Cancel (moveToEndPosition);
             }
         }
+#endif
 
         if (moveToEndPosition)
         {
