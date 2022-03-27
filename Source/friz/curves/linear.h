@@ -25,7 +25,7 @@ public:
     Linear (float startVal, float endVal, int duration);
 
 private:
-    float GenerateNextValue () override;
+    float generateNextValue () override;
 
 private:
     /// Delta to add at each frame that passes

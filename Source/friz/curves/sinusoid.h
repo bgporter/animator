@@ -77,7 +77,7 @@ public:
     }
 
 private:
-    float GenerateNextValue () override
+    float generateNextValue () override
     {
         fPhase += fPhaseDelta;
         return std::sin (fPhase);

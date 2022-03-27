@@ -8,7 +8,8 @@ namespace
 {
 constexpr float kN1 { 7.5625f };
 constexpr float kD1 { 2.75f };
-float EaseOutBounce (float x)
+
+float easeOutBounce (float x)
 {
     if (x < (1 / kD1))
     {
@@ -31,9 +32,9 @@ float EaseOutBounce (float x)
     }
 }
 
-float EaseInBounce (float x)
+float easeInBounce (float x)
 {
-    return 1 - EaseOutBounce (1 - x);
+    return 1 - easeOutBounce (1 - x);
 }
 } // namespace
 
@@ -306,12 +307,12 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 
         case kEaseInBounce:
         {
-            curve = EaseInBounce;
+            curve = easeInBounce;
         }
         break;
         case kEaseOutBounce:
         {
-            curve = EaseOutBounce;
+            curve = easeOutBounce;
         }
         break;
         case kEaseInOutBounce:
@@ -320,9 +321,9 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             {
                 if (x < 0.5f)
                 {
-                    return 0.5f * (1 - EaseOutBounce (1 - 2 * x));
+                    return 0.5f * (1 - easeOutBounce (1 - 2 * x));
                 }
-                return 0.5f * (1 + EaseOutBounce (2 * x - 1));
+                return 0.5f * (1 + easeOutBounce (2 * x - 1));
             };
         }
         break;
@@ -336,17 +337,17 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
         break;
     }
 
-    this->SetCurve (curve);
+    setCurve (curve);
 
     fDistance = std::max (startVal, endVal) - std::min (startVal, endVal);
 }
 
-void Parametric::SetCurve (CurveFn curve)
+void Parametric::setCurve (CurveFn curve)
 {
     fCurve = curve;
 }
 
-float Parametric::GenerateNextValue ()
+float Parametric::generateNextValue ()
 {
     float progress   = (1.f * fFrameCount) / (fDuration);
     float curvePoint = fCurve (progress) * fDistance;

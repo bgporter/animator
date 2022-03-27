@@ -38,7 +38,7 @@ public:
     EaseIn (float startVal, float endVal, float tolerance, float slewRate);
 
 private:
-    float GenerateNextValue () override;
+    float generateNextValue () override;
 };
 
 /**
@@ -58,7 +58,7 @@ public:
      *
      * @param newTarget
      */
-    bool UpdateTarget (float newTarget) override
+    bool updateTarget (float newTarget) override
     {
         fEndVal = newTarget;
         return true;
@@ -83,7 +83,7 @@ public:
     EaseOut (float startVal, float endVal, float tolerance, float slewRate);
 
 private:
-    float GenerateNextValue () override;
+    float generateNextValue () override;
 
 private:
     float fCurrentRate;

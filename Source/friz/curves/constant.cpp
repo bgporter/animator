@@ -11,7 +11,7 @@ Constant::Constant (float value, int duration)
 {
 }
 
-float Constant::GenerateNextValue ()
+float Constant::generateNextValue ()
 {
     return fStartVal;
 }

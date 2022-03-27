@@ -40,7 +40,7 @@ public:
      * return the next value.
      * @return        next value (or last value if we're finished)
      */
-    float GetNextValue ()
+    float getNextValue ()
     {
         if (!fCanceled)
         {
@@ -50,7 +50,7 @@ public:
             }
             else
             {
-                fCurrentVal = this->SnapToTolerance (this->GenerateNextValue ());
+                fCurrentVal = snapToTolerance (generateNextValue ());
             }
         }
 
@@ -63,7 +63,7 @@ public:
      * (or if we've been canceled...)
      * @return [description]
      */
-    virtual bool IsFinished () = 0;
+    virtual bool isFinished () = 0;
 
     /**
      * @brief Attempt to change the end value of an animation that's currently in process.
@@ -72,12 +72,12 @@ public:
      * @return true If the value type supports this and the operation succeeded.
      * @return false
      */
-    virtual bool UpdateTarget (float /*newValue*/) { return false; }
+    virtual bool updateTarget (float /*newValue*/) { return false; }
 
-    void Cancel (bool moveToEndPosition)
+    void cancel (bool moveToEndPosition)
     {
         fCanceled = true;
-        this->DoCancel (moveToEndPosition);
+        doCancel (moveToEndPosition);
     }
 
 private:
@@ -85,7 +85,7 @@ private:
      * Implemented in derived classes to generate the next value in the sequence.
      * @return      next value.
      */
-    virtual float GenerateNextValue () = 0;
+    virtual float generateNextValue () = 0;
 
     /**
      * @brief Some derived classes should snap to the end value when within
@@ -93,12 +93,12 @@ private:
      *
      * @return (possibly modified) value
      */
-    virtual float SnapToTolerance (float val) { return val; }
+    virtual float snapToTolerance (float val) { return val; }
 
     /**
      * Override in derived classes to perform any unusual cancellation logic.
      */
-    virtual void DoCancel (bool moveToEndPosition)
+    virtual void doCancel (bool moveToEndPosition)
     {
         if (moveToEndPosition)
         {
@@ -135,26 +135,26 @@ public:
      * @return true
      * @return false
      */
-    float SnapToTolerance (float val) override
+    float snapToTolerance (float val) override
     {
-        if (this->ValueIsWithinTolerance (val))
+        if (valueIsWithinTolerance (val))
         {
             return fEndVal;
         }
         return val;
     }
 
-    bool ValueIsWithinTolerance (float val) const
+    bool valueIsWithinTolerance (float val) const
     {
         return (std::fabs (val - fEndVal) < fTolerance);
     }
 
-    bool IsFinished () override
+    bool isFinished () override
     {
         // we are finished in either of these cases:
         // 1. user/code canceled us
         // 2. current value is within tolerance of the end value.
-        return (this->ValueIsWithinTolerance (fCurrentVal) || fCanceled);
+        return (valueIsWithinTolerance (fCurrentVal) || fCanceled);
     }
 
 protected:
@@ -170,7 +170,7 @@ public:
     {
     }
 
-    bool IsFinished () override { return fFrameCount >= fDuration; }
+    bool isFinished () override { return fFrameCount >= fDuration; }
 
 protected:
     int fDuration;

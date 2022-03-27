@@ -34,17 +34,17 @@ void Animator::updateFrame ()
         auto& animation { fAnimations[i] };
         if (animation.get ())
         {
-            finishedCount += animation->Update ();
+            finishedCount += animation->update ();
             ++updated;
         }
     }
     if (finishedCount > 0)
     {
-        this->Cleanup ();
+        cleanup ();
     }
 }
 
-int Animator::TimeToFrames (float seconds) const
+int Animator::timeToFrames (float seconds) const
 {
     jassert (seconds > 0);
 
@@ -52,11 +52,11 @@ int Animator::TimeToFrames (float seconds) const
     return std::max (frames, 1);
 }
 
-bool Animator::AddAnimation (std::unique_ptr<AnimationType> animation)
+bool Animator::addAnimation (std::unique_ptr<AnimationType> animation)
 {
     // In debug builds, verify that the animation has valid AnimatedValue
     // objects before accepting it in the animator.
-    jassert (animation->IsReady ());
+    jassert (animation->isReady ());
 
     {
         juce::ScopedLock lock (fMutex);
@@ -70,40 +70,40 @@ bool Animator::AddAnimation (std::unique_ptr<AnimationType> animation)
     return true;
 }
 
-bool Animator::CancelAnimation (int id, bool moveToEndPosition)
+bool Animator::cancelAnimation (int id, bool moveToEndPosition)
 {
     int cancelCount { 0 };
     juce::ScopedLock lock (fMutex);
     for (auto& animation : fAnimations)
     {
-        if ((id < 0) || (animation->GetId () == id))
+        if ((id < 0) || (animation->getId () == id))
         {
-            animation->Cancel (moveToEndPosition);
+            animation->cancel (moveToEndPosition);
             ++cancelCount;
         }
     }
     if (cancelCount > 0)
     {
         // remove any animations we just canceled.
-        this->Cleanup ();
+        cleanup ();
         return true;
     }
 
     return false;
 }
 
-bool Animator::CancelAllAnimations (bool moveToEndPosition)
+bool Animator::cancelAllAnimations (bool moveToEndPosition)
 {
-    return this->CancelAnimation (-1, moveToEndPosition);
+    return cancelAnimation (-1, moveToEndPosition);
 }
 
-void Animator::Cleanup ()
+void Animator::cleanup ()
 {
     juce::ScopedLock lock (fMutex);
     fAnimations.erase (
         std::remove_if (fAnimations.begin (), fAnimations.end (),
                         [&] (const std::unique_ptr<AnimationType>& c) -> bool
-                        { return c->IsFinished (); }),
+                        { return c->isFinished (); }),
         fAnimations.end ());
 
     if (0 == fAnimations.size ())
@@ -112,12 +112,12 @@ void Animator::Cleanup ()
     }
 }
 
-AnimationType* Animator::GetAnimation (int id)
+AnimationType* Animator::getAnimation (int id)
 {
     juce::ScopedLock lock (fMutex);
     for (auto& animation : fAnimations)
     {
-        if (id == animation->GetId ())
+        if (id == animation->getId ())
         {
             return animation.get ();
         }
@@ -125,14 +125,14 @@ AnimationType* Animator::GetAnimation (int id)
     return nullptr;
 }
 
-int Animator::GetAnimations (int id, std::vector<AnimationType*>& animations)
+int Animator::getAnimations (int id, std::vector<AnimationType*>& animations)
 {
     int foundCount { 0 };
 
     juce::ScopedLock lock (fMutex);
     for (auto& animation : fAnimations)
     {
-        if (id == animation->GetId ())
+        if (id == animation->getId ())
         {
             animations.push_back (animation.get ());
             ++foundCount;
@@ -141,20 +141,20 @@ int Animator::GetAnimations (int id, std::vector<AnimationType*>& animations)
     return foundCount;
 }
 
-bool Animator::UpdateTarget (int id, int valueIndex, float newTarget)
+bool Animator::updateTarget (int id, int valueIndex, float newTarget)
 {
     juce::ScopedLock lock (fMutex);
 
     std::vector<AnimationType*> animations;
 
-    if (this->GetAnimations (id, animations) > 0)
+    if (getAnimations (id, animations) > 0)
     {
         for (auto* animation : animations)
         {
-            auto* value { animation->GetValue (valueIndex) };
+            auto* value { animation->getValue (valueIndex) };
             if (value)
             {
-                value->UpdateTarget (newTarget);
+                value->updateTarget (newTarget);
             }
         }
         return true;

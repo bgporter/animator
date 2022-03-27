@@ -80,10 +80,10 @@ public:
      *
      * @param curve
      */
-    void SetCurve (CurveFn curve);
+    void setCurve (CurveFn curve);
 
 private:
-    float GenerateNextValue () override;
+    float generateNextValue () override;
 
 private:
     CurveFn fCurve;

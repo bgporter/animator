@@ -13,7 +13,7 @@ Linear::Linear (float startVal, float endVal, int duration)
     fDelta = (fEndVal - fStartVal) / fDuration;
 }
 
-float Linear::GenerateNextValue ()
+float Linear::generateNextValue ()
 {
     auto calculated = fCurrentVal + fDelta;
     if (fStartVal < fEndVal)

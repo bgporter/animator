@@ -40,19 +40,19 @@ public:
     /**
      * @return ID value for this Animation.
      */
-    int GetId () const { return fId; }
+    int getId () const { return fId; }
 
     /**
      * Set a number of frames to delay before starting to execute this animation.
      * @param delay # of delay frames.
      */
-    void SetDelay (int delay) { fDelay = std::max (0, delay); }
+    void setDelay (int delay) { fDelay = std::max (0, delay); }
 
     /**
      * Before generating values, see if we should be delaying.
      * @return False to wait before generating effect values.
      */
-    bool DelayElapsed ()
+    bool delayElapsed ()
     {
         if (fDelay > 0)
         {
@@ -62,15 +62,15 @@ public:
         return true;
     }
 
-    virtual int Update () = 0;
+    virtual int update () = 0;
 
-    virtual void Cancel (bool moveToEndPosition) = 0;
+    virtual void cancel (bool moveToEndPosition) = 0;
 
-    virtual bool IsFinished () = 0;
+    virtual bool isFinished () = 0;
 
-    virtual bool IsReady () const = 0;
+    virtual bool isReady () const = 0;
 
-    virtual AnimatedValue* GetValue (size_t index) = 0;
+    virtual AnimatedValue* getValue (size_t index) = 0;
 
 private:
     /// optional ID value for this animation.
@@ -133,7 +133,7 @@ public:
      * @param  value AnimatedValue object to generate data.
      * @return       true on success.
      */
-    bool SetValue (size_t index, std::unique_ptr<AnimatedValue> value)
+    bool setValue (size_t index, std::unique_ptr<AnimatedValue> value)
     {
         if (index < valueCount)
         {
@@ -152,7 +152,7 @@ public:
      * @param index
      * @return AnimatedValue*
      */
-    AnimatedValue* GetValue (size_t index) override
+    AnimatedValue* getValue (size_t index) override
     {
         if (index < valueCount)
         {
@@ -167,26 +167,26 @@ public:
      * once per frame.
      * @param update UpdateFn function.
      */
-    void OnUpdate (UpdateFn update) { fUpdateFn = update; }
+    void onUpdate (UpdateFn update) { fUpdateFn = update; }
 
     /**
      * Set the (optional) function that will be called once when this
      * animation is complete.
      * @param complete CompletionFn function.
      */
-    void OnCompletion (CompletionFn complete) { fCompleteFn = complete; }
+    void onCompletion (CompletionFn complete) { fCompleteFn = complete; }
 
     /**
      * Calculate the next value from each of our animated values, passing them
      * to our UpdateFn function.
      * @return        Zero if we have more data in the future, 1 if we're done.
      */
-    int Update () override
+    int update () override
     {
         ValueList values;
         int completeCount { 0 };
 
-        if (!this->DelayElapsed ())
+        if (!delayElapsed ())
         {
             return kProcessing;
         }
@@ -195,7 +195,7 @@ public:
         {
             if (fCompleteFn)
             {
-                fCompleteFn (this->GetId ());
+                fCompleteFn (getId ());
             }
 
             return kFinished;
@@ -207,14 +207,14 @@ public:
             jassert (val);
             if (val)
             {
-                values[i] = val->GetNextValue ();
-                completeCount += (val->IsFinished ()) ? 1 : 0;
+                values[i] = val->getNextValue ();
+                completeCount += (val->isFinished ()) ? 1 : 0;
             }
         }
 
         if (fUpdateFn)
         {
-            fUpdateFn (this->GetId (), values);
+            fUpdateFn (getId (), values);
         }
 
         if (completeCount == valueCount)
@@ -225,47 +225,35 @@ public:
         return kProcessing;
     }
 
-    void Cancel (bool moveToEndPosition) override
+    void cancel (bool moveToEndPosition) override
     {
-#if 1
         for (auto& val : fSources)
         {
             if (val)
             {
-                val->Cancel (moveToEndPosition);
+                val->cancel (moveToEndPosition);
             }
         }
-#else
-        for (int i = 0; i < valueCount; ++i)
-        {
-            auto& val = fSources[i];
-            jassert (val);
-            if (val)
-            {
-                val->Cancel (moveToEndPosition);
-            }
-        }
-#endif
 
         if (moveToEndPosition)
         {
             // send out one more value update message sending the end positions;
-            this->Update ();
+            update ();
         }
         else
         {
             // ...just notify that the effect is complete.
             if (fCompleteFn)
             {
-                fCompleteFn (this->GetId ());
+                fCompleteFn (getId ());
             }
         }
         fFinished = true;
     }
 
-    bool IsFinished () override { return fFinished; }
+    bool isFinished () override { return fFinished; }
 
-    bool IsReady () const override
+    bool isReady () const override
     {
         for (auto& src : fSources)
         {

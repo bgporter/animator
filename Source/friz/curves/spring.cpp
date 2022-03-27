@@ -20,11 +20,11 @@ Spring::Spring (float startVal, float endVal, float tolerance, float accel, floa
     }
 }
 
-float Spring::GenerateNextValue ()
+float Spring::generateNextValue ()
 {
     // a weird case we need to handle -- if we're already at our end state,
     // remain there! Dont' keep oscillating.
-    if (this->IsFinished ())
+    if (isFinished ())
     {
         return fEndVal;
     }
