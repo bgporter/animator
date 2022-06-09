@@ -348,10 +348,14 @@ void Parametric::SetCurve (CurveFn curve)
 
 float Parametric::GenerateNextValue ()
 {
-    float progress   = (1.f * fFrameCount) / (fDuration);
+    float progress   = (float) fFrameCount / (float) fDuration;
     float curvePoint = fCurve (progress) * fDistance;
 
-    if (fEndVal > fStartVal)
+    if (progress >= 1.0f)
+    {
+        return fEndVal;
+    }
+    else if (fEndVal > fStartVal)
     {
         return fStartVal + curvePoint;
     }
