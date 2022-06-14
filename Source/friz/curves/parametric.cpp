@@ -90,7 +90,7 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
         case kEaseInOutQuad:
         {
             curve = [] (float x)
-            { return (x < 0.5f) ? (2 * x * x) : (1 - std::powf (-2 * x + 2, 2) / 2); };
+            { return (x < 0.5f) ? (2 * x * x) : (1 - (float) std::pow (-2 * x + 2, 2) / 2); };
         }
         break;
 
@@ -102,14 +102,14 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 
         case kEaseOutCubic:
         {
-            curve = [] (float x) { return 1 - std::powf (1 - x, 3); };
+            curve = [] (float x) { return 1 - (float) std::pow (1 - x, 3); };
         }
         break;
 
         case kEaseInOutCubic:
         {
             curve = [] (float x)
-            { return (x < 0.5f) ? 4 * x * x * x : 1 - std::powf (-2 * x + 2, 3) / 2; };
+            { return (x < 0.5f) ? 4 * x * x * x : 1 - (float) std::pow (-2 * x + 2, 3) / 2; };
         }
         break;
 
@@ -121,13 +121,13 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 
         case kEaseOutQuartic:
         {
-            curve = [] (float x) { return 1 - std::powf (1 - x, 4); };
+            curve = [] (float x) { return 1 - (float) std::pow (1 - x, 4); };
         }
         break;
         case kEaseInOutQuartic:
         {
             curve = [] (float x) {
-                return (x < 0.5f) ? 8 * x * x * x * x : 1 - std::powf (-2 * x + 2, 4) / 2;
+                return (x < 0.5f) ? 8 * x * x * x * x : 1 - (float) std::pow (-2 * x + 2, 4) / 2;
             };
         }
         break;
@@ -139,7 +139,7 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 
         case kEaseOutQuintic:
         {
-            curve = [] (float x) { return 1 - std::powf (1 - x, 5); };
+            curve = [] (float x) { return 1 - (float) std::pow (1 - x, 5); };
         }
         break;
 
@@ -147,21 +147,21 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
         {
             curve = [] (float x) {
                 return (x < 0.5f) ? 16 * x * x * x * x * x
-                                  : 1 - std::powf (-2 * x + 2, 5) / 2;
+                                  : 1 - (float) std::pow (-2 * x + 2, 5) / 2;
             };
         }
         break;
         case kEaseInExpo:
         {
             curve = [=] (float x)
-            { return (x < kZeroIsh) ? 0.f : std::powf (2, 10 * x - 10); };
+            { return (x < kZeroIsh) ? 0.f : (float) std::pow (2, 10 * x - 10); };
         }
         break;
 
         case kEaseOutExpo:
         {
             curve = [=] (float x)
-            { return (x > kOneIsh) ? 1.f : 1 - std::powf (2, -10 * x); };
+            { return (x > kOneIsh) ? 1.f : 1 - (float) std::pow (2, -10 * x); };
         }
         break;
 
@@ -179,21 +179,21 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
                 }
                 else if (x < 0.5f)
                 {
-                    return std::powf (2, 20 * x - 10) / 2;
+                    return (float) std::pow (2, 20 * x - 10) / 2;
                 }
-                return (2 - std::powf (2, -20 * x + 10)) / 2;
+                return (2 - (float) std::pow (2, -20 * x + 10)) / 2;
             };
         }
         break;
         case kEaseInCirc:
         {
-            curve = [] (float x) { return 1 - std::sqrt (1 - std::powf (x, 2)); };
+            curve = [] (float x) { return 1 - std::sqrt (1 - (float) std::pow (x, 2)); };
         }
         break;
 
         case kEaseOutCirc:
         {
-            curve = [] (float x) { return std::sqrt (1 - std::powf (x - 1, 2)); };
+            curve = [] (float x) { return std::sqrt (1 - (float) std::pow (x - 1, 2)); };
         }
         break;
 
@@ -203,9 +203,9 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             {
                 if (x < 0.5f)
                 {
-                    return (1 - std::sqrt (1 - std::powf (2 * x, 2))) / 2;
+                    return (1 - std::sqrt (1 - (float) std::pow (2 * x, 2))) / 2;
                 }
-                return 0.5f * std::sqrt (1 - std::powf (-2 * x + 2, 2)) + 1;
+                return 0.5f * std::sqrt (1 - (float) std::pow (-2 * x + 2, 2)) + 1;
             };
         }
         break;
@@ -219,7 +219,7 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
         case kEaseOutBack:
         {
             curve = [=] (float x)
-            { return 1 + kC3 * std::powf (x - 1, 3) + kC1 * std::powf (x - 1, 2); };
+            { return 1 + kC3 * (float) std::pow (x - 1, 3) + kC1 * (float) std::pow (x - 1, 2); };
         }
         break;
 
@@ -229,10 +229,10 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             {
                 if (x < 0.5f)
                 {
-                    return 0.5f * (std::powf (2 * x, 2) * ((kC2 + 1) * 2 * x - kC2));
+                    return 0.5f * ((float) std::pow (2 * x, 2) * ((kC2 + 1) * 2 * x - kC2));
                 }
                 return 0.5f *
-                       (std::powf (2 * x - 2, 2) * ((kC2 + 1) * (x * 2 - 2) + kC2) + 2);
+                       ((float) std::pow (2 * x - 2, 2) * ((kC2 + 1) * (x * 2 - 2) + kC2) + 2);
             };
         }
         break;
@@ -251,7 +251,7 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
                 }
                 else
                 {
-                    return -std::powf (2, 10 * x - 10) *
+                    return -(float) std::pow (2, 10 * x - 10) *
                            std::sin ((x * 10 - 10.75f) * kC4);
                 }
             };
@@ -271,7 +271,7 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
                 }
                 else
                 {
-                    return std::powf (2, -10 * x) * std::sin ((x * 10 - 0.75f) * kC4) + 1;
+                    return (float) std::pow (2, -10 * x) * std::sin ((x * 10 - 0.75f) * kC4) + 1;
                 }
             };
         }
@@ -291,12 +291,12 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
                 }
                 else if (x < 0.5f)
                 {
-                    return 0.5f * -(std::powf (2, 20 * x - 10) *
+                    return 0.5f * -((float) std::pow (2, 20 * x - 10) *
                                     std::sin ((20 * x - 11.125f) * kC5));
                 }
                 else
                 {
-                    return 0.5f * (std::powf (2, -20 * x + 10) *
+                    return 0.5f * ((float) std::pow (2, -20 * x + 10) *
                                    std::sin (20 * x - 11.125f)) +
                            1;
                 }
