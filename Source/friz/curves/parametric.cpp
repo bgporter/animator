@@ -59,19 +59,19 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
     {
         case kEaseInSine:
         {
-            curve = [=] (float x) { return 1 - std::cosf ((x * kPi) / 2); };
+            curve = [=] (float x) { return 1 - (float) std::cos ((x * kPi) / 2); };
         }
         break;
 
         case kEaseOutSine:
         {
-            curve = [=] (float x) { return std::sinf (x * kPi / 2); };
+            curve = [=] (float x) { return (float) std::sin (x * kPi / 2); };
         }
         break;
 
         case kEaseInOutSine:
         {
-            curve = [=] (float x) { return -(std::cosf (kPi * x) - 1) / 2; };
+            curve = [=] (float x) { return -((float) std::cos (kPi * x) - 1) / 2; };
         }
         break;
 
