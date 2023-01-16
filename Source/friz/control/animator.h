@@ -26,7 +26,6 @@ class FrameController;
  * Since the timer that drives the animations only executes if there is currently
  * an animation happening, there's no overhead when the animator is idle.
  */
-
 class Animator
 {
 public:
@@ -34,6 +33,9 @@ public:
 
     ~Animator ();
 
+    /**
+     * @brief Move to the next frame of animation.
+     */
     void updateFrame ();
 
     /**
@@ -111,15 +113,15 @@ private:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Animator)
 
-    std::unique_ptr<FrameController> fFrameController;
+    std::unique_ptr<FrameController> frameController;
 
-    std::vector<std::unique_ptr<AnimationType>> fAnimations;
+    std::vector<std::unique_ptr<AnimationType>> animations;
 
-    int fFrameRate;
+    int frameRate;
 
     /// protect code that might contain data races if updates come
     /// from a different thread.
-    juce::CriticalSection fMutex;
+    juce::CriticalSection mutex;
 };
 
 } // namespace friz
