@@ -39,20 +39,21 @@ public:
         return true;
     }
 
-    int update () override
+    AnimationType::Status update () override
     {
         auto effect = getEffect (fCurrentEffect);
         if (effect)
         {
-            if (effect->update ())
+            if (AnimationType::Status::finished == effect->update ())
             {
                 ++fCurrentEffect;
             }
 
-            return isFinished () ? AnimationType::kFinished : AnimationType::kProcessing;
+            return isFinished () ? AnimationType::Status::finished
+                                 : AnimationType::Status::processing;
         }
 
-        return AnimationType::kFinished;
+        return AnimationType::Status::finished;
     }
 
     void cancel (bool moveToEndPosition) override
@@ -74,22 +75,23 @@ public:
         // so that we can pass those along to whoever passed in a single
         // lambda to us.
         effect->onUpdate (
-            [=] (int /*id*/, const typename Animation<valueCount>::ValueList& val)
+            [this] (int /*id*/, const typename Animation<valueCount>::ValueList& val)
             {
-                if (this->fUpdateFn)
+                if (this->updateFn != nullptr)
                 {
-                    this->fUpdateFn (this->getId (), val);
+                    this->updateFn (this->getId (), val);
                 }
             });
 
         effect->onCompletion (
-            [=] (int /*id*/)
+            [this] (int /*id*/)
             {
                 // Each effect in the sequence will notify us, but we only pass
                 // along the final one.
-                if ((fCurrentEffect == fSequence.size () - 1) && this->fCompleteFn)
+                if ((fCurrentEffect == fSequence.size () - 1) &&
+                    this->completionFn != nullptr)
                 {
-                    this->fCompleteFn (this->getId ());
+                    this->completionFn (this->getId ());
                 }
             });
 

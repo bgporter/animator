@@ -26,7 +26,6 @@ Animator::~Animator ()
 void Animator::updateFrame ()
 {
     int finishedCount = 0;
-    int updated       = 0;
     juce::ScopedLock lock (mutex);
 
     for (int i { 0 }; i < animations.size (); ++i)
@@ -34,8 +33,8 @@ void Animator::updateFrame ()
         auto& animation { animations[i] };
         if (animation.get ())
         {
-            finishedCount += animation->update ();
-            ++updated;
+            if (AnimationType::Status::finished == animation->update ())
+                ++finishedCount;
         }
     }
     if (finishedCount > 0)

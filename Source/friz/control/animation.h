@@ -21,15 +21,15 @@ namespace friz
 class AnimationType
 {
 public:
-    enum
+    enum class Status
     {
-        kProcessing = 0,
-        kFinished
+        processing, ///< The animation is running right now.
+        finished    ///< Finished running, okay to clean up.
     };
 
     AnimationType (int id)
-    : fId { id }
-    , fDelay { 0 }
+    : animationId { id }
+    , preDelay { 0 }
     {
         // only allow positive animation IDs.
         jassert (id >= 0);
@@ -40,13 +40,13 @@ public:
     /**
      * @return ID value for this Animation.
      */
-    int getId () const { return fId; }
+    int getId () const { return animationId; }
 
     /**
      * Set a number of frames to delay before starting to execute this animation.
      * @param delay # of delay frames.
      */
-    void setDelay (int delay) { fDelay = std::max (0, delay); }
+    void setDelay (int delay) { preDelay = std::max (0, delay); }
 
     /**
      * Before generating values, see if we should be delaying.
@@ -54,15 +54,14 @@ public:
      */
     bool delayElapsed ()
     {
-        if (fDelay > 0)
-        {
-            --fDelay;
-            return false;
-        }
-        return true;
+        if (preDelay == 0)
+            return true;
+
+        --preDelay;
+        return false;
     }
 
-    virtual int update () = 0;
+    virtual Status update () = 0;
 
     virtual void cancel (bool moveToEndPosition) = 0;
 
@@ -74,10 +73,10 @@ public:
 
 private:
     /// optional ID value for this animation.
-    int fId;
+    int animationId;
 
     /// an optional pre-delay before beginning to execute the effect.
-    int fDelay;
+    int preDelay;
 };
 
 /**
@@ -109,8 +108,8 @@ public:
      *           for example. Must be >= 0.
      */
     Animation (int id = 0)
-    : AnimationType (id)
-    , fFinished { false }
+    : AnimationType { id }
+    , finished { false }
     {
     }
 
@@ -121,9 +120,9 @@ public:
      * @param id
      */
     Animation (SourceList&& sources, int id = 0)
-    : AnimationType (id)
-    , fFinished (false)
-    , fSources (std::move (sources))
+    : AnimationType { id }
+    , finished { false }
+    , sources { std::move (sources) }
     {
     }
 
@@ -137,11 +136,11 @@ public:
     {
         if (index < valueCount)
         {
-            fSources[index] = std::move (value);
+            sources[index] = std::move (value);
             return true;
         }
 
-        jassert (false);
+        jassertfalse;
         return false;
     }
 
@@ -155,10 +154,9 @@ public:
     AnimatedValue* getValue (size_t index) override
     {
         if (index < valueCount)
-        {
-            return fSources[index].get ();
-        }
-        jassert (false);
+            return sources[index].get ();
+
+        jassertfalse;
         return nullptr;
     }
 
@@ -167,43 +165,39 @@ public:
      * once per frame.
      * @param update UpdateFn function.
      */
-    void onUpdate (UpdateFn update) { fUpdateFn = update; }
+    void onUpdate (UpdateFn update) { updateFn = update; }
 
     /**
      * Set the (optional) function that will be called once when this
      * animation is complete.
      * @param complete CompletionFn function.
      */
-    void onCompletion (CompletionFn complete) { fCompleteFn = complete; }
+    void onCompletion (CompletionFn complete) { completionFn = complete; }
 
     /**
      * Calculate the next value from each of our animated values, passing them
      * to our UpdateFn function.
      * @return        Zero if we have more data in the future, 1 if we're done.
      */
-    int update () override
+    Status update () override
     {
         ValueList values;
         int completeCount { 0 };
 
         if (!delayElapsed ())
-        {
-            return kProcessing;
-        }
+            return Status::processing;
 
-        if (fFinished)
+        if (finished)
         {
-            if (fCompleteFn)
-            {
-                fCompleteFn (getId ());
-            }
+            if (completionFn)
+                completionFn (getId ());
 
-            return kFinished;
+            return Status::finished;
         }
 
         for (int i = 0; i < valueCount; ++i)
         {
-            auto& val = fSources[i];
+            auto& val = sources[i];
             jassert (val);
             if (val)
             {
@@ -212,74 +206,61 @@ public:
             }
         }
 
-        if (fUpdateFn)
-        {
-            fUpdateFn (getId (), values);
-        }
+        if (updateFn != nullptr)
+            updateFn (getId (), values);
 
         if (completeCount == valueCount)
-        {
-            fFinished = true;
-        }
+            finished = true;
 
-        return kProcessing;
+        return Status::processing;
     }
 
     void cancel (bool moveToEndPosition) override
     {
-        for (auto& val : fSources)
+        for (auto& val : sources)
         {
-            if (val)
-            {
+            if (val != nullptr)
                 val->cancel (moveToEndPosition);
-            }
         }
 
         if (moveToEndPosition)
-        {
             // send out one more value update message sending the end positions;
             update ();
-        }
         else
         {
             // ...just notify that the effect is complete.
-            if (fCompleteFn)
-            {
-                fCompleteFn (getId ());
-            }
+            if (completionFn != nullptr)
+                completionFn (getId ());
         }
-        fFinished = true;
+        finished = true;
     }
 
-    bool isFinished () override { return fFinished; }
+    bool isFinished () override { return finished; }
 
     bool isReady () const override
     {
-        for (auto& src : fSources)
+        for (auto& src : sources)
         {
             if (nullptr == src.get ())
-            {
                 return false;
-            }
         }
         return true;
     }
 
-protected:
+public:
     /// function to call on each frame. Pass in std::array of new values,
     /// return true if all is okay, false to cancel this animation.
-    UpdateFn fUpdateFn;
+    UpdateFn updateFn;
 
     /// function to call when the animation is completed or canceled.
-    CompletionFn fCompleteFn;
+    CompletionFn completionFn;
 
 private:
     /// is this animation complete?
-    bool fFinished;
+    bool finished;
 
     /// The array of animated value objects.
-    // std::array<std::unique_ptr<AnimatedValue>, valueCount> fSources;
-    SourceList fSources;
+    SourceList sources;
 };
 
 } // namespace friz
