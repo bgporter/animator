@@ -12,12 +12,12 @@ class Animator;
 class FrameController
 {
 public:
-    FrameController ();
-    virtual ~FrameController ()              = default;
-    FrameController (const FrameController&) = delete;
+    FrameController ()                                  = default;
+    virtual ~FrameController ()                         = default;
+    FrameController (const FrameController&)            = delete;
     FrameController& operator= (const FrameController&) = delete;
     FrameController (FrameController&&)                 = delete;
-    FrameController& operator= (FrameController&&) = delete;
+    FrameController& operator= (FrameController&&)      = delete;
 
     /** Point back at the Animator object that we're going to control.
      */
@@ -25,21 +25,18 @@ public:
 
     /**
      * Set our frame rate to match that used in the animation we're controlling.
-     *
      * @param frameRate
      */
     void setFrameRate (int frameRate);
 
     /**
      * @brief Called whenever we need to start timer callbacks flowing.
-     *
      */
     virtual void start () = 0;
 
     /**
      * @brief  Called whenever there are no more animations that need to
      * be updated.
-     *
      */
     virtual void stop () = 0;
 
@@ -50,17 +47,14 @@ public:
     virtual bool isRunning () = 0;
 
 protected:
-    Animator* fAnimator { nullptr };
-    int fFrameRate { 30 };
+    Animator* animator { nullptr };
+    int frameRate { 30 };
 };
 
 /**
  * @class TimeController
  *
  * A FrameController that updates animation frames at the current frame rate.
- *
- *
- *
  */
 class TimeController : public FrameController,
                        public juce::Timer
@@ -83,11 +77,11 @@ class AsyncController : public FrameController
 public:
     AsyncController () {};
 
-    void start () override { fStarted = true; }
+    void start () override { started = true; }
 
-    void stop () override { fStarted = false; }
+    void stop () override { started = false; }
 
-    bool isRunning () override { return fStarted; }
+    bool isRunning () override { return started; }
 
     /**
      * @brief Call this from whatever logic you're using to drive the
@@ -99,7 +93,7 @@ public:
     void advanceToNextFrame ();
 
 private:
-    bool fStarted { false };
+    bool started { false };
 };
 
 } // namespace friz
