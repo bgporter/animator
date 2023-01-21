@@ -256,13 +256,18 @@ void Parametric::setCurve (CurveFn curve_)
 
 float Parametric::generateNextValue ()
 {
-    float progress   = (1.f * frameCount) / (duration);
-    float curvePoint = curve (progress) * distance;
+    float progress   = (float) fFrameCount / (float) fDuration;
+    float curvePoint = fCurve (progress) * fDistance;
 
-    if (endVal > startVal)
-        return startVal + curvePoint;
-
-    return startVal - curvePoint;
+    if (progress >= 1.0f)
+    {
+        return fEndVal;
+    }
+    else if (fEndVal > fStartVal)
+    {
+        return fStartVal + curvePoint;
+    }
+    return fStartVal - curvePoint;
 }
 
 } // namespace friz
