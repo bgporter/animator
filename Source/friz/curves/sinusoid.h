@@ -35,29 +35,29 @@ public:
 
         // requesting the same start/end phase is a request to
         // generate a single cycle
-        if (std::abs (fEndVal - fStartVal) < 0.01f)
+        if (std::abs (endVal - startVal) < 0.01f)
         {
-            fEndVal = fStartVal + juce::MathConstants<float>::twoPi;
+            endVal = startVal + juce::MathConstants<float>::twoPi;
         }
 
         // if the end phase is less than start, adjust.
-        while (fEndVal < fStartVal)
+        while (endVal < startVal)
         {
-            fEndVal += juce::MathConstants<float>::twoPi;
+            endVal += juce::MathConstants<float>::twoPi;
         }
 
-        fPhaseDelta = (fEndVal - fStartVal) / (fDuration - 1);
-        fPhase      = fStartVal;
+        phaseDelta = (endVal - startVal) / (duration - 1);
+        phase      = startVal;
         // hack to make 1st value correct: all of the other value generators
-        // correctly use 'fStartVal` as the first value to be returned. This
-        // value generator does *not* want that; fStartVal is the phase of the
+        // correctly use 'startVal` as the first value to be returned. This
+        // value generator does *not* want that; startVal is the phase of the
         // sinusoid, and we need to make sure that we convert phase back into
         // the actual sinusoid value on 1st call (and this went undetected for
         // so long because we were only testing with start phase = 0.)
-        fStartVal = std::sin (fPhase);
+        startVal = std::sin (phase);
         // also update the end val in case the animation is cancelled and we jump
         // to the end.
-        fEndVal = std::sin (fEndVal);
+        endVal = std::sin (endVal);
     }
 
     /**
@@ -79,16 +79,16 @@ public:
 private:
     float generateNextValue () override
     {
-        fPhase += fPhaseDelta;
-        return std::sin (fPhase);
+        phase += phaseDelta;
+        return std::sin (phase);
     }
 
 private:
     /// current phase accumulator.
-    float fPhase;
+    float phase;
 
     /// phase increment for each frame.
-    float fPhaseDelta;
+    float phaseDelta;
 };
 
 } // namespace friz

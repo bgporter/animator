@@ -13,7 +13,7 @@ namespace friz
  *
  * @brief An Animation class that can hold multiple Animation objects and
  *        execute them in sequence. An easy way to create complex effects
- *        from promotove movements.
+ *        from primitive movements.
  */
 
 template <int valueCount> class Sequence : public Animation<valueCount>
@@ -21,33 +21,29 @@ template <int valueCount> class Sequence : public Animation<valueCount>
 public:
     Sequence (int id = 0)
     : Animation<valueCount> (id)
-    , fCurrentEffect { 0 }
+    , currentEffect { 0 }
     {
     }
 
-    bool isFinished () override { return (fCurrentEffect >= fSequence.size ()); }
+    bool isFinished () override { return (currentEffect >= sequence.size ()); }
 
     bool isReady () const override
     {
-        for (const auto& effect : fSequence)
+        for (const auto& effect : sequence)
         {
             if ((nullptr == effect) || (!effect->isReady ()))
-            {
                 return false;
-            }
         }
         return true;
     }
 
     AnimationType::Status update () override
     {
-        auto effect = getEffect (fCurrentEffect);
+        auto effect = getEffect (currentEffect);
         if (effect)
         {
             if (AnimationType::Status::finished == effect->update ())
-            {
-                ++fCurrentEffect;
-            }
+                ++currentEffect;
 
             return isFinished () ? AnimationType::Status::finished
                                  : AnimationType::Status::processing;
@@ -60,12 +56,10 @@ public:
     {
         if (moveToEndPosition)
         {
-            auto lastIndex  = static_cast<int> (fSequence.size () - 1);
+            auto lastIndex  = static_cast<int> (sequence.size () - 1);
             auto lastEffect = getEffect (lastIndex);
             if (lastEffect)
-            {
                 lastEffect->cancel (moveToEndPosition);
-            }
         }
     }
 
@@ -78,9 +72,7 @@ public:
             [this] (int /*id*/, const typename Animation<valueCount>::ValueList& val)
             {
                 if (this->updateFn != nullptr)
-                {
                     this->updateFn (this->getId (), val);
-                }
             });
 
         effect->onCompletion (
@@ -88,14 +80,12 @@ public:
             {
                 // Each effect in the sequence will notify us, but we only pass
                 // along the final one.
-                if ((fCurrentEffect == fSequence.size () - 1) &&
+                if ((currentEffect == sequence.size () - 1) &&
                     this->completionFn != nullptr)
-                {
                     this->completionFn (this->getId ());
-                }
             });
 
-        fSequence.push_back (std::move (effect));
+        sequence.push_back (std::move (effect));
     }
 
 private:
@@ -106,18 +96,17 @@ private:
      */
     Animation<valueCount>* getEffect (int index)
     {
-        if (juce::isPositiveAndBelow (index, fSequence.size ()))
-        {
-            return fSequence[index].get ();
-        }
-        jassert (false);
+        if (juce::isPositiveAndBelow (index, sequence.size ()))
+            return sequence[index].get ();
+
+        jassertfalse;
         return nullptr;
     }
 
 private:
-    std::vector<std::unique_ptr<Animation<valueCount>>> fSequence;
+    std::vector<std::unique_ptr<Animation<valueCount>>> sequence;
 
-    int fCurrentEffect;
+    int currentEffect { 0 };
 };
 
 } // namespace friz

@@ -12,15 +12,11 @@ namespace friz
 /**
  * @class Parametric
  *
- *
  * @brief A class that can generate different parametric easing curves.
  *
  *        We use formulas that are available (and demonstrated!) on
  *        https://easings.net
- *
- *
  */
-
 class Parametric : public TimedValue
 {
 public:
@@ -86,10 +82,10 @@ private:
     float generateNextValue () override;
 
 private:
-    CurveFn fCurve;
+    CurveFn curve;
 
     /// distance between start/end points.
-    float fDistance;
+    float distance;
 };
 
 } // namespace friz

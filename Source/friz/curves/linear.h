@@ -29,7 +29,7 @@ private:
 
 private:
     /// Delta to add at each frame that passes
-    float fDelta;
+    float delta;
 };
 
 } // namespace friz

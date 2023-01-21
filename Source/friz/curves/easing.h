@@ -11,10 +11,10 @@ namespace friz
 class EasingCurve : public ToleranceValue
 {
 public:
-    EasingCurve (float startVal, float endVal, float tolerance, float slewRate);
+    EasingCurve (float startVal, float endVal, float tolerance, float slewRate_);
 
 protected:
-    float fSlewRate;
+    float slewRate;
 };
 
 /**
@@ -60,7 +60,7 @@ public:
      */
     bool updateTarget (float newTarget) override
     {
-        fEndVal = newTarget;
+        endVal = newTarget;
         return true;
     }
 };
@@ -86,7 +86,7 @@ private:
     float generateNextValue () override;
 
 private:
-    float fCurrentRate;
+    float currentRate;
 };
 
 } // namespace friz

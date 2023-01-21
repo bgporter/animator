@@ -37,16 +37,16 @@ private:
 
 private:
     /// The initial acceleration for this value.
-    float fStartAcceleration;
+    float startAcceleration;
 
     /// When we're in a damping state, the acceleration will change.
-    float fAcceleration;
+    float acceleration;
 
     /// damping factor to apply when we need to oscillate toward end val.
-    float fDamping;
+    float damping;
 
     /// current velocity, updated with acceleration every frame.
-    float fVelocity;
+    float velocity;
 };
 
 } // namespace friz

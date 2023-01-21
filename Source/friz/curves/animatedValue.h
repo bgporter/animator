@@ -17,23 +17,20 @@ class AnimatedValue
 {
 public:
     /**
-     * Base class init for the animated value classes.
+     * @brief Base class init for the animated value classes.
      * @param startVal  Initial Value
      * @param endVal    Target/end value.
-     * @param tolerance Toleerance for when we've reached the target value.
      */
-    AnimatedValue (float startVal, float endVal)
-    : fStartVal (startVal)
-    , fEndVal (endVal)
-    , fCurrentVal (startVal)
-    , fFrameCount (0)
-    , fCanceled (false) {
+    AnimatedValue (float startVal_, float endVal_)
+    : startVal { startVal_ }
+    , endVal { endVal_ }
+    , currentVal { startVal_ }
+    , frameCount { 0 }
+    , canceled { false } {
 
     };
 
-    virtual ~AnimatedValue () {
-
-    };
+    virtual ~AnimatedValue () = default;
 
     /**
      * Derived classes should do whatever is needed to generate and
@@ -42,26 +39,22 @@ public:
      */
     float getNextValue ()
     {
-        if (!fCanceled)
+        if (!canceled)
         {
-            if (0 == fFrameCount++)
-            {
-                fCurrentVal = fStartVal;
-            }
+            if (0 == frameCount++)
+                currentVal = startVal;
             else
-            {
-                fCurrentVal = snapToTolerance (generateNextValue ());
-            }
+                currentVal = snapToTolerance (generateNextValue ());
         }
 
-        return fCurrentVal;
+        return currentVal;
     }
 
     /**
      * Have we reached the end of this animation sequence? By default,
-     * we're done when the current value is within `fTolerance` of the endValue
+     * we're done when the current value is within `tolerance` of the endValue
      * (or if we've been canceled...)
-     * @return [description]
+     * @return true if this value has reached the end of its animation.
      */
     virtual bool isFinished () = 0;
 
@@ -70,14 +63,22 @@ public:
      *
      * @param newValue
      * @return true If the value type supports this and the operation succeeded.
-     * @return false
      */
     virtual bool updateTarget (float /*newValue*/) { return false; }
 
+    /**
+     * @brief Cancel an in-progress animation.
+     *
+     * @param moveToEndPosition If true, will immediately take the ending value; otherwise
+     * cancels at its current value.
+     */
     void cancel (bool moveToEndPosition)
     {
-        fCanceled = true;
-        doCancel (moveToEndPosition);
+        if (!canceled)
+        {
+            canceled = true;
+            doCancel (moveToEndPosition);
+        }
     }
 
 private:
@@ -102,27 +103,25 @@ private:
     {
         if (moveToEndPosition)
         {
-            fCurrentVal = fEndVal;
+            currentVal = endVal;
         }
     }
 
 protected:
-    float fStartVal;
-    float fEndVal;
-    float fCurrentVal;
+    float startVal;
+    float endVal;
+    float currentVal;
 
-    int fFrameCount;
-    bool fCanceled;
-
-private:
+    int frameCount;
+    bool canceled { false };
 };
 
 class ToleranceValue : public AnimatedValue
 {
 public:
     ToleranceValue (float startVal, float endVal, float tolerance)
-    : AnimatedValue (startVal, endVal)
-    , fTolerance (tolerance)
+    : AnimatedValue { startVal, endVal }
+    , tolerance { tolerance }
     {
     }
 
@@ -139,14 +138,14 @@ public:
     {
         if (valueIsWithinTolerance (val))
         {
-            return fEndVal;
+            return endVal;
         }
         return val;
     }
 
     bool valueIsWithinTolerance (float val) const
     {
-        return (std::fabs (val - fEndVal) < fTolerance);
+        return (std::fabs (val - endVal) < tolerance);
     }
 
     bool isFinished () override
@@ -154,26 +153,26 @@ public:
         // we are finished in either of these cases:
         // 1. user/code canceled us
         // 2. current value is within tolerance of the end value.
-        return (valueIsWithinTolerance (fCurrentVal) || fCanceled);
+        return (valueIsWithinTolerance (currentVal) || canceled);
     }
 
 protected:
-    float fTolerance;
+    float tolerance;
 };
 
 class TimedValue : public AnimatedValue
 {
 public:
-    TimedValue (float startVal, float endVal, int duration)
-    : AnimatedValue (startVal, endVal)
-    , fDuration (duration)
+    TimedValue (float startVal, float endVal, int duration_)
+    : AnimatedValue { startVal, endVal }
+    , duration { duration_ }
     {
     }
 
-    bool isFinished () override { return fFrameCount >= fDuration; }
+    bool isFinished () override { return frameCount >= duration; }
 
 protected:
-    int fDuration;
+    int duration;
 };
 
 } // namespace friz

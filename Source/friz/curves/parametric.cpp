@@ -171,21 +171,17 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = [=] (float x)
             {
                 if (x < kZeroIsh)
-                {
                     return 0.f;
-                }
                 else if (x > kOneIsh)
-                {
                     return 1.f;
-                }
                 else if (x < 0.5f)
-                {
                     return std::powf (2, 20 * x - 10) / 2;
-                }
+
                 return (2 - std::powf (2, -20 * x + 10)) / 2;
             };
         }
         break;
+
         case kEaseInCirc:
         {
             curve = [] (float x) { return 1 - std::sqrt (1 - std::powf (x, 2)); };
@@ -203,9 +199,8 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = [] (float x)
             {
                 if (x < 0.5f)
-                {
                     return (1 - std::sqrt (1 - std::powf (2 * x, 2))) / 2;
-                }
+
                 return 0.5f * std::sqrt (1 - std::powf (-2 * x + 2, 2)) + 1;
             };
         }
@@ -229,9 +224,8 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = [=] (float x)
             {
                 if (x < 0.5f)
-                {
                     return 0.5f * (std::powf (2 * x, 2) * ((kC2 + 1) * 2 * x - kC2));
-                }
+
                 return 0.5f *
                        (std::powf (2 * x - 2, 2) * ((kC2 + 1) * (x * 2 - 2) + kC2) + 2);
             };
@@ -243,37 +237,25 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = [=] (float x) -> float
             {
                 if (x < kZeroIsh)
-                {
                     return 0.f;
-                }
                 else if (x > kOneIsh)
-                {
                     return 1.f;
-                }
-                else
-                {
-                    return -std::powf (2, 10 * x - 10) *
-                           std::sin ((x * 10 - 10.75f) * kC4);
-                }
+
+                return -std::powf (2, 10 * x - 10) * std::sin ((x * 10 - 10.75f) * kC4);
             };
         }
         break;
+
         case kEaseOutElastic:
         {
             curve = [=] (float x) -> float
             {
                 if (x < kZeroIsh)
-                {
                     return 0.f;
-                }
                 else if (x > kOneIsh)
-                {
                     return 1.f;
-                }
-                else
-                {
-                    return std::powf (2, -10 * x) * std::sin ((x * 10 - 0.75f) * kC4) + 1;
-                }
+
+                return std::powf (2, -10 * x) * std::sin ((x * 10 - 0.75f) * kC4) + 1;
             };
         }
         break;
@@ -283,24 +265,15 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = [=] (float x) -> float
             {
                 if (x < kZeroIsh)
-                {
                     return 0.f;
-                }
                 else if (x > kOneIsh)
-                {
                     return 1.f;
-                }
                 else if (x < 0.5f)
-                {
                     return 0.5f * -(std::powf (2, 20 * x - 10) *
                                     std::sin ((20 * x - 11.125f) * kC5));
-                }
-                else
-                {
-                    return 0.5f * (std::powf (2, -20 * x + 10) *
-                                   std::sin (20 * x - 11.125f)) +
-                           1;
-                }
+                return 0.5f *
+                           (std::powf (2, -20 * x + 10) * std::sin (20 * x - 11.125f)) +
+                       1;
             };
         };
         break;
@@ -310,11 +283,13 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             curve = easeInBounce;
         }
         break;
+
         case kEaseOutBounce:
         {
             curve = easeOutBounce;
         }
         break;
+
         case kEaseInOutBounce:
         {
             curve = [] (float x)
@@ -339,24 +314,23 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 
     setCurve (curve);
 
-    fDistance = std::max (startVal, endVal) - std::min (startVal, endVal);
+    distance = std::max (startVal, endVal) - std::min (startVal, endVal);
 }
 
-void Parametric::setCurve (CurveFn curve)
+void Parametric::setCurve (CurveFn curve_)
 {
-    fCurve = curve;
+    curve = curve_;
 }
 
 float Parametric::generateNextValue ()
 {
-    float progress   = (1.f * fFrameCount) / (fDuration);
-    float curvePoint = fCurve (progress) * fDistance;
+    float progress   = (1.f * frameCount) / (duration);
+    float curvePoint = curve (progress) * distance;
 
-    if (fEndVal > fStartVal)
-    {
-        return fStartVal + curvePoint;
-    }
-    return fStartVal - curvePoint;
+    if (endVal > startVal)
+        return startVal + curvePoint;
+
+    return startVal - curvePoint;
 }
 
 } // namespace friz

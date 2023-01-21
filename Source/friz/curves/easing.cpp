@@ -7,9 +7,9 @@
 namespace friz
 {
 
-EasingCurve::EasingCurve (float startVal, float endVal, float tolerance, float slewRate)
+EasingCurve::EasingCurve (float startVal, float endVal, float tolerance, float slewRate_)
 : ToleranceValue (startVal, endVal, tolerance)
-, fSlewRate (slewRate)
+, slewRate (slewRate_)
 {
 }
 
@@ -21,22 +21,22 @@ EaseIn::EaseIn (float startVal, float endVal, float tolerance, float slewRate)
 
 float EaseIn::generateNextValue ()
 {
-    return fCurrentVal + fSlewRate * (fEndVal - fCurrentVal);
+    return currentVal + slewRate * (endVal - currentVal);
 }
 
 EaseOut::EaseOut (float startVal, float endVal, float tolerance, float slewRate)
 : EasingCurve (startVal, endVal, tolerance, slewRate)
-, fCurrentRate { 0.01f }
+, currentRate { 0.01f }
 {
     jassert (slewRate > 1.f);
 }
 
 float EaseOut::generateNextValue ()
 {
-    auto val = fCurrentVal + fCurrentRate * (fEndVal - fCurrentVal);
+    auto val = currentVal + currentRate * (endVal - currentVal);
 
     // limit the slew to prevent us blowing up.
-    fCurrentRate = std::min (0.95f, fCurrentRate * fSlewRate);
+    currentRate = std::min (0.95f, currentRate * slewRate);
     return val;
 }
 

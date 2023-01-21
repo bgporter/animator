@@ -5,19 +5,18 @@
 
 namespace friz
 {
-Spring::Spring (float startVal, float endVal, float tolerance, float accel, float damping)
+Spring::Spring (float startVal, float endVal, float tolerance, float accel,
+                float damping_)
 : ToleranceValue (startVal, endVal, tolerance)
-, fStartAcceleration (accel)
-, fAcceleration (accel)
-, fDamping (damping)
-, fVelocity (0)
+, startAcceleration (accel)
+, acceleration (accel)
+, damping (damping_)
+, velocity (0)
 {
     // the damping factor must be between 0..1.
     jassert (juce::isPositiveAndBelow (damping, 1.f));
     if (endVal < startVal)
-    {
-        fAcceleration *= -1;
-    }
+        acceleration *= -1;
 }
 
 float Spring::generateNextValue ()
@@ -25,33 +24,29 @@ float Spring::generateNextValue ()
     // a weird case we need to handle -- if we're already at our end state,
     // remain there! Dont' keep oscillating.
     if (isFinished ())
-    {
-        return fEndVal;
-    }
+        return endVal;
 
-    float prev = fCurrentVal;
-    fVelocity += fAcceleration;
-    float next = prev + fVelocity;
+    float prev = currentVal;
+    velocity += acceleration;
+    float next = prev + velocity;
 
     // see if we have crossed over the end value
     // if so, we may need to change direction and dampen the oscillation
-    if ((fEndVal - prev) * (fEndVal - next) <= 0)
+    if ((endVal - prev) * (endVal - next) <= 0)
     {
-        if (0.f == fDamping)
-        {
+        if (0.f == damping)
             // we overshot the end and don't want to oscillate. Clamp to the
             // end value instead.
-            next = fEndVal;
-        }
+            next = endVal;
         else
         {
             // reverse our acceleration direction and reduce it by the
             // damping factor; we'll keep oscillating around the end value
             // until we're within the tolerance value of it, at which
             // point we'll stop.
-            fAcceleration = -1 * fAcceleration * fDamping;
-            // fVelocity = 0.f;
-            fVelocity *= -fDamping;
+            acceleration = -1 * acceleration * damping;
+            // velocity = 0.f;
+            velocity *= -damping;
         }
     }
 

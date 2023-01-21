@@ -10,17 +10,15 @@ Linear::Linear (float startVal, float endVal, int duration)
 : TimedValue (startVal, endVal, duration)
 {
     jassert (duration > 0);
-    fDelta = (fEndVal - fStartVal) / fDuration;
+    delta = (endVal - startVal) / duration;
 }
 
 float Linear::generateNextValue ()
 {
-    auto calculated = fCurrentVal + fDelta;
-    if (fStartVal < fEndVal)
-    {
-        return juce::jmin (calculated, fEndVal);
-    }
-    return juce::jmax (calculated, fEndVal);
+    const auto calculated = currentVal + delta;
+    if (startVal < endVal)
+        return juce::jmin (calculated, endVal);
+    return juce::jmax (calculated, endVal);
 }
 
 #ifdef qRunUnitTests

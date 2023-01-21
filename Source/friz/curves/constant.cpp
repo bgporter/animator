@@ -13,7 +13,7 @@ Constant::Constant (float value, int duration)
 
 float Constant::generateNextValue ()
 {
-    return fStartVal;
+    return startVal;
 }
 
 #ifdef qRunUnitTests
