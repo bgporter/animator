@@ -134,11 +134,11 @@ bool Animator::updateTarget (int id, int valueIndex, float newTarget)
 {
     juce::ScopedLock lock (mutex);
 
-    std::vector<AnimationType*> animations;
+    std::vector<AnimationType*> foundAnimations;
 
-    if (getAnimations (id, animations) > 0)
+    if (getAnimations (id, foundAnimations) > 0)
     {
-        for (auto* animation : animations)
+        for (auto* animation : foundAnimations)
         {
             auto* value { animation->getValue (valueIndex) };
             if (value)
