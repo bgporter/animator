@@ -175,4 +175,26 @@ protected:
     int duration;
 };
 
+// GCC doesn't support some functions that are specified in the standard:
+// std::sinf / cosf/ powf/ etc. (see
+// https://stackoverflow.com/questions/56417980/cosf-sinf-etc-are-not-in-std).
+// We define a few inline utility functions to narrow the return type of
+// the double-returning sin/cos/pow functions to float as we prefer here.
+// Thanks to [Sudara](https://github.com/sudara) for catching this.
+
+inline float sin_f (float v)
+{
+    return static_cast<float> (std::sin (v));
+}
+
+inline float cos_f (float v)
+{
+    return static_cast<float> (std::cos (v));
+}
+
+inline float pow_f (float v, float pow)
+{
+    return static_cast<float> (std::pow (v, pow));
+}
+
 } // namespace friz
