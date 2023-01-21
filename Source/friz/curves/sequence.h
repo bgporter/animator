@@ -25,64 +25,64 @@ public:
     {
     }
 
-    bool isFinished () override { return (currentEffect >= sequence.size ()); }
+    bool IsFinished () override { return (currentEffect >= sequence.size ()); }
 
-    bool isReady () const override
+    bool IsReady () const override
     {
         for (const auto& effect : sequence)
         {
-            if ((nullptr == effect) || (!effect->isReady ()))
+            if ((nullptr == effect) || (!effect->IsReady ()))
                 return false;
         }
         return true;
     }
 
-    AnimationType::Status update () override
+    AnimationType::Status Update () override
     {
-        auto effect = getEffect (currentEffect);
+        auto effect = GetEffect (currentEffect);
         if (effect)
         {
-            if (AnimationType::Status::finished == effect->update ())
+            if (AnimationType::Status::finished == effect->Update ())
                 ++currentEffect;
 
-            return isFinished () ? AnimationType::Status::finished
+            return IsFinished () ? AnimationType::Status::finished
                                  : AnimationType::Status::processing;
         }
 
         return AnimationType::Status::finished;
     }
 
-    void cancel (bool moveToEndPosition) override
+    void Cancel (bool moveToEndPosition) override
     {
         if (moveToEndPosition)
         {
             auto lastIndex  = static_cast<int> (sequence.size () - 1);
-            auto lastEffect = getEffect (lastIndex);
+            auto lastEffect = GetEffect (lastIndex);
             if (lastEffect)
-                lastEffect->cancel (moveToEndPosition);
+                lastEffect->Cancel (moveToEndPosition);
         }
     }
 
-    void addAnimation (std::unique_ptr<Animation<valueCount>> effect)
+    void AddAnimation (std::unique_ptr<Animation<valueCount>> effect)
     {
         // We need to make each of the effects notify us on update or completion,
         // so that we can pass those along to whoever passed in a single
         // lambda to us.
-        effect->onUpdate (
+        effect->OnUpdate (
             [this] (int /*id*/, const typename Animation<valueCount>::ValueList& val)
             {
                 if (this->updateFn != nullptr)
-                    this->updateFn (this->getId (), val);
+                    this->updateFn (this->GetId (), val);
             });
 
-        effect->onCompletion (
+        effect->OnCompletion (
             [this] (int /*id*/)
             {
                 // Each effect in the sequence will notify us, but we only pass
                 // along the final one.
                 if ((currentEffect == sequence.size () - 1) &&
                     this->completionFn != nullptr)
-                    this->completionFn (this->getId ());
+                    this->completionFn (this->GetId ());
             });
 
         sequence.push_back (std::move (effect));
@@ -94,7 +94,7 @@ private:
      * @param  index 0..size-1
      * @return       nullptr if index is out of range.
      */
-    Animation<valueCount>* getEffect (int index)
+    Animation<valueCount>* GetEffect (int index)
     {
         if (juce::isPositiveAndBelow (index, sequence.size ()))
             return sequence[index].get ();

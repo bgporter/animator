@@ -33,7 +33,7 @@ public:
     Constant (float value, int duration);
 
 private:
-    float generateNextValue () override;
+    float GenerateNextValue () override;
 
 private:
 };

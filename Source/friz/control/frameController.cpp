@@ -8,30 +8,30 @@
 namespace friz
 {
 
-void FrameController::setAnimator (Animator* animator_)
+void FrameController::SetAnimator (Animator* animator_)
 {
     animator = animator_;
 }
 
-void FrameController::setFrameRate (int frameRate_)
+void FrameController::SetFrameRate (int frameRate_)
 {
     frameRate = frameRate_;
 }
 
 TimeController::TimeController () {}
 
-void TimeController::start ()
+void TimeController::Start ()
 {
     jassert (nullptr != animator);
     startTimerHz (frameRate);
 }
 
-void TimeController::stop ()
+void TimeController::Stop ()
 {
     stopTimer ();
 }
 
-bool TimeController::isRunning ()
+bool TimeController::IsRunning ()
 {
     return isTimerRunning ();
 }
@@ -39,13 +39,13 @@ bool TimeController::isRunning ()
 void TimeController::timerCallback ()
 {
     if (animator != nullptr)
-        animator->updateFrame ();
+        animator->UpdateFrame ();
 }
 
-void AsyncController::advanceToNextFrame ()
+void AsyncController::AdvanceToNextFrame ()
 {
     jassert (nullptr != animator);
-    animator->updateFrame ();
+    animator->UpdateFrame ();
 }
 
 } // namespace friz

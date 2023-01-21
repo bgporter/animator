@@ -14,16 +14,16 @@ Animator::Animator (int frameRate_, std::unique_ptr<FrameController> controller)
     else
         frameController = std::make_unique<TimeController> ();
 
-    frameController->setAnimator (this);
-    frameController->setFrameRate (frameRate);
+    frameController->SetAnimator (this);
+    frameController->SetFrameRate (frameRate);
 }
 
 Animator::~Animator ()
 {
-    frameController->stop ();
+    frameController->Stop ();
 }
 
-void Animator::updateFrame ()
+void Animator::UpdateFrame ()
 {
     int finishedCount = 0;
     juce::ScopedLock lock (mutex);
@@ -33,15 +33,15 @@ void Animator::updateFrame ()
         auto& animation { animations[i] };
         if (animation.get ())
         {
-            if (AnimationType::Status::finished == animation->update ())
+            if (AnimationType::Status::finished == animation->Update ())
                 ++finishedCount;
         }
     }
     if (finishedCount > 0)
-        cleanup ();
+        Cleanup ();
 }
 
-int Animator::timeToFrames (float seconds) const
+int Animator::TimeToFrames (float seconds) const
 {
     jassert (seconds > 0);
 
@@ -49,31 +49,31 @@ int Animator::timeToFrames (float seconds) const
     return std::max (frames, 1);
 }
 
-bool Animator::addAnimation (std::unique_ptr<AnimationType> animation)
+bool Animator::AddAnimation (std::unique_ptr<AnimationType> animation)
 {
     // In debug builds, verify that the animation has valid AnimatedValue
     // objects before accepting it in the animator.
-    jassert (animation->isReady ());
+    jassert (animation->IsReady ());
 
     {
         juce::ScopedLock lock (mutex);
         animations.push_back (std::move (animation));
     }
 
-    if (!frameController->isRunning ())
-        frameController->start ();
+    if (!frameController->IsRunning ())
+        frameController->Start ();
     return true;
 }
 
-bool Animator::cancelAnimation (int id, bool moveToEndPosition)
+bool Animator::CancelAnimation (int id, bool moveToEndPosition)
 {
     int cancelCount { 0 };
     juce::ScopedLock lock (mutex);
     for (auto& animation : animations)
     {
-        if ((id < 0) || (animation->getId () == id))
+        if ((id < 0) || (animation->GetId () == id))
         {
-            animation->cancel (moveToEndPosition);
+            animation->Cancel (moveToEndPosition);
             ++cancelCount;
         }
     }
@@ -81,47 +81,47 @@ bool Animator::cancelAnimation (int id, bool moveToEndPosition)
         return false;
 
     // remove any animations we just canceled.
-    cleanup ();
+    Cleanup ();
     return true;
 }
 
-bool Animator::cancelAllAnimations (bool moveToEndPosition)
+bool Animator::CancelAllAnimations (bool moveToEndPosition)
 {
-    return cancelAnimation (-1, moveToEndPosition);
+    return CancelAnimation (-1, moveToEndPosition);
 }
 
-void Animator::cleanup ()
+void Animator::Cleanup ()
 {
     juce::ScopedLock lock (mutex);
     animations.erase (
         std::remove_if (animations.begin (), animations.end (),
                         [&] (const std::unique_ptr<AnimationType>& c) -> bool
-                        { return c->isFinished (); }),
+                        { return c->IsFinished (); }),
         animations.end ());
 
     if (0 == animations.size ())
-        frameController->stop ();
+        frameController->Stop ();
 }
 
-AnimationType* Animator::getAnimation (int id)
+AnimationType* Animator::GetAnimation (int id)
 {
     juce::ScopedLock lock (mutex);
     for (auto& animation : animations)
     {
-        if (id == animation->getId ())
+        if (id == animation->GetId ())
             return animation.get ();
     }
     return nullptr;
 }
 
-int Animator::getAnimations (int id, std::vector<AnimationType*>& foundAnimations)
+int Animator::GetAnimations (int id, std::vector<AnimationType*>& foundAnimations)
 {
     int foundCount { 0 };
 
     juce::ScopedLock lock (mutex);
     for (auto& animation : animations)
     {
-        if (id == animation->getId ())
+        if (id == animation->GetId ())
         {
             foundAnimations.push_back (animation.get ());
             ++foundCount;
@@ -130,19 +130,19 @@ int Animator::getAnimations (int id, std::vector<AnimationType*>& foundAnimation
     return foundCount;
 }
 
-bool Animator::updateTarget (int id, int valueIndex, float newTarget)
+bool Animator::UpdateTarget (int id, int valueIndex, float newTarget)
 {
     juce::ScopedLock lock (mutex);
 
     std::vector<AnimationType*> foundAnimations;
 
-    if (getAnimations (id, foundAnimations) > 0)
+    if (GetAnimations (id, foundAnimations) > 0)
     {
         for (auto* animation : foundAnimations)
         {
-            auto* value { animation->getValue (valueIndex) };
+            auto* value { animation->GetValue (valueIndex) };
             if (value)
-                value->updateTarget (newTarget);
+                value->UpdateTarget (newTarget);
         }
         return true;
     }

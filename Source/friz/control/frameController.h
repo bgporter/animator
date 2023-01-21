@@ -21,30 +21,30 @@ public:
 
     /** Point back at the Animator object that we're going to control.
      */
-    void setAnimator (Animator* animator);
+    void SetAnimator (Animator* animator);
 
     /**
      * Set our frame rate to match that used in the animation we're controlling.
      * @param frameRate
      */
-    void setFrameRate (int frameRate);
+    void SetFrameRate (int frameRate);
 
     /**
      * @brief Called whenever we need to start timer callbacks flowing.
      */
-    virtual void start () = 0;
+    virtual void Start () = 0;
 
     /**
      * @brief  Called whenever there are no more animations that need to
      * be updated.
      */
-    virtual void stop () = 0;
+    virtual void Stop () = 0;
 
     /**
      * @brief Test to see if the timer is currently running.
      *
      */
-    virtual bool isRunning () = 0;
+    virtual bool IsRunning () = 0;
 
 protected:
     Animator* animator { nullptr };
@@ -62,11 +62,11 @@ class TimeController : public FrameController,
 public:
     TimeController ();
 
-    void start () override;
+    void Start () override;
 
-    void stop () override;
+    void Stop () override;
 
-    bool isRunning () override;
+    bool IsRunning () override;
 
 private:
     void timerCallback () override;
@@ -77,11 +77,11 @@ class AsyncController : public FrameController
 public:
     AsyncController () {};
 
-    void start () override { started = true; }
+    void Start () override { started = true; }
 
-    void stop () override { started = false; }
+    void Stop () override { started = false; }
 
-    bool isRunning () override { return started; }
+    bool IsRunning () override { return started; }
 
     /**
      * @brief Call this from whatever logic you're using to drive the
@@ -90,7 +90,7 @@ public:
      * at the current time.
      *
      */
-    void advanceToNextFrame ();
+    void AdvanceToNextFrame ();
 
 private:
     bool started { false };

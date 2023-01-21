@@ -36,7 +36,7 @@ public:
     /**
      * @brief Move to the next frame of animation.
      */
-    void updateFrame ();
+    void UpdateFrame ();
 
     /**
      * Convert a time in seconds to the corresponding frame count based on the
@@ -44,14 +44,14 @@ public:
      * @param  seconds Seconds, must be > 0
      * @return         nearest # of frames, will be >= 1.
      */
-    int timeToFrames (float seconds) const;
+    int TimeToFrames (float seconds) const;
 
     /**
      * Add a new animation to our list, which will start it going!
      * @param  animation The animation sequence to play.
      * @return           true if added okay.
      */
-    bool addAnimation (std::unique_ptr<AnimationType> animation);
+    bool AddAnimation (std::unique_ptr<AnimationType> animation);
 
     /**
      * Cancel any animations with the specified ID, optionally sending one
@@ -63,14 +63,14 @@ public:
      *                           before canceling.
      * @return                   True if at least one animation was canceled.
      */
-    bool cancelAnimation (int id, bool moveToEndPosition);
+    bool CancelAnimation (int id, bool moveToEndPosition);
 
     /**
      * Cancel all active animations.
      * @param  moveToEndPosition True to force all values to their end positions first.
      * @return True if we canceled anything.
      */
-    bool cancelAllAnimations (bool moveToEndPosition);
+    bool CancelAllAnimations (bool moveToEndPosition);
 
     /**
      * Attempt to get a running animation object by passing in its ID value.
@@ -79,7 +79,7 @@ public:
      * @return    non-owning pointer (or nullptr if not present). Don't store this
      *            pointer as it may be deleted from beneath you.
      */
-    AnimationType* getAnimation (int id);
+    AnimationType* GetAnimation (int id);
 
     /**
      * Attempt to get all animations that use a specific ID.
@@ -87,7 +87,7 @@ public:
      * @param  animations Vector to fill with non-owning pointers.
      * @return            number of effects found.
      */
-    int getAnimations (int id, std::vector<AnimationType*>& animations);
+    int GetAnimations (int id, std::vector<AnimationType*>& animations);
 
     /**
      * @brief Pass a new ending value to the animation at `id`, if it is
@@ -101,14 +101,14 @@ public:
      *                  we actually succeeded.
      * @return false
      */
-    bool updateTarget (int id, int valIndex, float newTarget);
+    bool UpdateTarget (int id, int valIndex, float newTarget);
 
 private:
     /**
      * Remove any animations that are complete or canceled from the list.
      * If we end with the list empty, stop the timer
      */
-    void cleanup ();
+    void Cleanup ();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Animator)

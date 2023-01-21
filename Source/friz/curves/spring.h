@@ -33,7 +33,7 @@ public:
     Spring (float startVal, float endVal, float tolerance, float accel, float dampen);
 
 private:
-    float generateNextValue () override;
+    float GenerateNextValue () override;
 
 private:
     /// The initial acceleration for this value.

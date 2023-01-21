@@ -19,7 +19,7 @@ EaseIn::EaseIn (float startVal, float endVal, float tolerance, float slewRate)
     jassert (slewRate < 1.f);
 }
 
-float EaseIn::generateNextValue ()
+float EaseIn::GenerateNextValue ()
 {
     return currentVal + slewRate * (endVal - currentVal);
 }
@@ -31,7 +31,7 @@ EaseOut::EaseOut (float startVal, float endVal, float tolerance, float slewRate)
     jassert (slewRate > 1.f);
 }
 
-float EaseOut::generateNextValue ()
+float EaseOut::GenerateNextValue ()
 {
     auto val = currentVal + currentRate * (endVal - currentVal);
 

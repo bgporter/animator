@@ -249,14 +249,14 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
     distance = std::max (startVal, endVal) - std::min (startVal, endVal);
 }
 
-void Parametric::setCurve (CurveFn curve_)
+void Parametric::SetCurve (CurveFn curve_)
 {
     curve = curve_;
 }
 
-float Parametric::generateNextValue ()
+float Parametric::GenerateNextValue ()
 {
-    const auto progress { static_cast<float> (frameCount) / duration};
+    const auto progress { static_cast<float> (frameCount) / duration };
 
     if (progress >= 1.0f)
         return endVal;
@@ -265,7 +265,7 @@ float Parametric::generateNextValue ()
 
     if (endVal > startVal)
         return startVal + curvePoint;
-    
+
     return startVal - curvePoint;
 }
 

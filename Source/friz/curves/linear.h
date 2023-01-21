@@ -11,7 +11,6 @@ namespace friz
  * @class Linear
  * @brief Simple linear interpolator.
  */
-
 class Linear : public TimedValue
 {
 public:
@@ -25,7 +24,7 @@ public:
     Linear (float startVal, float endVal, int duration);
 
 private:
-    float generateNextValue () override;
+    float GenerateNextValue () override;
 
 private:
     /// Delta to add at each frame that passes
