@@ -35,9 +35,13 @@ public:
     /**
      * Derived classes should do whatever is needed to generate and
      * return the next value.
+     * @param   msElapsed time since this value started running. (used by 'time-based'
+     *          values)
+     * @param   msSinceLastUpdate time since we were last evaluated (used by
+     *          threshold-based values)
      * @return        next value (or last value if we're finished)
      */
-    float GetNextValue ()
+    float GetNextValue (int msElapsed, int msSinceLastUpdate)
     {
         if (!canceled)
         {
