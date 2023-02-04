@@ -16,7 +16,7 @@
 namespace friz
 {
 
-class FrameController;
+class Controller;
 
 /**
  * @class Animator
@@ -29,29 +29,78 @@ class FrameController;
 class Animator
 {
 public:
-    Animator (int frameRate = 30, std::unique_ptr<FrameController> controller = nullptr);
+    /**
+     * @brief Construct a new Animator object. If not configured otherwise, will
+     * create an animator that is controlled by a timer that updates around
+     * 30 Hz.
+     *
+     * @param controller
+     */
+    Animator (std::unique_ptr<Controller> controller_ = nullptr);
 
     ~Animator ();
 
     /**
-     * @brief Move to the next frame of animation.
+     * @brief Set a new controller object, replacing (and destryoying) the
+     * current one
+     *
+     * @param controller
      */
-    void UpdateFrame ();
+    void setController (std::unique_ptr<Controller> controller);
+
+    /**
+     * @brief return a pointer to the active controller object.
+     *
+     * @return Controller*
+     */
+    Controller* getController () const;
+
+    /**
+     * @brief Attempt to set the controller's frame rate.
+     *
+     * @param rateInHz
+     * @return true if the controller's framerate can be changed, and the requested rate
+     * is valid.
+     */
+    bool setFrameRate (int rateInHz);
+
+    /**
+     * @brief get the (reported) frame rate of the controller. This may be
+     * the rate that was requested or a rate that's measured; the actual value
+     * returned is dependent on the controller object in use
+     *
+     * @return float, < 0 on error.
+     */
+    float getFrameRate () const;
+
+    /**
+     * @brief Update all active animations with a new time.
+     *
+     * @param timeInMs
+     */
+    void gotoTime (juce::int64 timeInMs);
+
+    /**
+     * @brief Move to the next frame of animation.
+     * REPLACE
+     */
+    // void UpdateFrame ();
 
     /**
      * Convert a time in seconds to the corresponding frame count based on the
      * current frame rate.
+     * DELETE
      * @param  seconds Seconds, must be > 0
      * @return         nearest # of frames, will be >= 1.
      */
-    int TimeToFrames (float seconds) const;
+    // int TimeToFrames (float seconds) const;
 
     /**
      * Add a new animation to our list, which will start it going!
      * @param  animation The animation sequence to play.
      * @return           true if added okay.
      */
-    bool AddAnimation (std::unique_ptr<AnimationType> animation);
+    bool addAnimation (std::unique_ptr<AnimationType> animation);
 
     /**
      * Cancel any animations with the specified ID, optionally sending one
@@ -63,14 +112,14 @@ public:
      *                           before canceling.
      * @return                   True if at least one animation was canceled.
      */
-    bool CancelAnimation (int id, bool moveToEndPosition);
+    bool cancelAnimation (int id, bool moveToEndPosition);
 
     /**
      * Cancel all active animations.
      * @param  moveToEndPosition True to force all values to their end positions first.
      * @return True if we canceled anything.
      */
-    bool CancelAllAnimations (bool moveToEndPosition);
+    bool cancelAllAnimations (bool moveToEndPosition);
 
     /**
      * Attempt to get a running animation object by passing in its ID value.
@@ -79,7 +128,7 @@ public:
      * @return    non-owning pointer (or nullptr if not present). Don't store this
      *            pointer as it may be deleted from beneath you.
      */
-    AnimationType* GetAnimation (int id);
+    AnimationType* getAnimation (int id);
 
     /**
      * Attempt to get all animations that use a specific ID.
@@ -87,7 +136,7 @@ public:
      * @param  animations Vector to fill with non-owning pointers.
      * @return            number of effects found.
      */
-    int GetAnimations (int id, std::vector<AnimationType*>& animations);
+    int getAnimations (int id, std::vector<AnimationType*>& animations);
 
     /**
      * @brief Pass a new ending value to the animation at `id`, if it is
@@ -101,23 +150,23 @@ public:
      *                  we actually succeeded.
      * @return false
      */
-    bool UpdateTarget (int id, int valIndex, float newTarget);
+    bool updateTarget (int id, int valIndex, float newTarget);
 
 private:
     /**
      * Remove any animations that are complete or canceled from the list.
      * If we end with the list empty, stop the timer
      */
-    void Cleanup ();
+    void cleanup ();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Animator)
 
-    std::unique_ptr<FrameController> frameController;
+    std::unique_ptr<Controller> controller;
 
     std::vector<std::unique_ptr<AnimationType>> animations;
 
-    int frameRate;
+    // int frameRate; /// DELETE
 
     /// protect code that might contain data races if updates come
     /// from a different thread.

@@ -246,7 +246,6 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
             break;
     }
 
-    distance = std::max (startVal, endVal) - std::min (startVal, endVal);
 }
 
 void Parametric::SetCurve (CurveFn curve_)
@@ -254,19 +253,16 @@ void Parametric::SetCurve (CurveFn curve_)
     curve = curve_;
 }
 
-float Parametric::GenerateNextValue ()
+float Parametric::generateNextValue (float progress)
 {
-    const auto progress { static_cast<float> (frameCount) / duration };
-
     if (progress >= 1.0f)
         return endVal;
 
-    float curvePoint = curve (progress) * distance;
+    jassert (curve != nullptr);
 
-    if (endVal > startVal)
-        return startVal + curvePoint;
-
-    return startVal - curvePoint;
+    // float curvePoint = curve (progress) * distance;
+    // return startVal + (curvePoint * (endVal - startVal));
+    return scale (curve (progress));
 }
 
 } // namespace friz

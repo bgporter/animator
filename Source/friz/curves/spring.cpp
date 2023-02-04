@@ -19,11 +19,11 @@ Spring::Spring (float startVal, float endVal, float tolerance, float accel,
         acceleration *= -1;
 }
 
-float Spring::GenerateNextValue ()
+float Spring::generateNextValue ()
 {
     // a weird case we need to handle -- if we're already at our end state,
     // remain there! Dont' keep oscillating.
-    if (IsFinished ())
+    if (isFinished ())
         return endVal;
 
     float prev = currentVal;
@@ -34,7 +34,7 @@ float Spring::GenerateNextValue ()
     // if so, we may need to change direction and dampen the oscillation
     if ((endVal - prev) * (endVal - next) <= 0)
     {
-        if (0.f == damping)
+        if (std::fabs (damping) < 0.001)
             // we overshot the end and don't want to oscillate. Clamp to the
             // end value instead.
             next = endVal;

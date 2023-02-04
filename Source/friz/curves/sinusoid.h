@@ -28,36 +28,36 @@ public:
      * @param endPhase   end phase, typically 0..2pi.
      * @param duration   duration in frames.
      */
-    Sinusoid (float startPhase, float endPhase, int duration)
-    : TimedValue (startPhase, endPhase, duration)
+    Sinusoid (float startPhase_, float endPhase_, int duration)
+    : TimedValue (startPhase_, endPhase_, duration)
+    , startPhase { startPhase_ }
+    , endPhase { endPhase_ }
     {
         jassert (duration > 0);
 
         // requesting the same start/end phase is a request to
         // generate a single cycle
-        if (std::abs (endVal - startVal) < 0.01f)
+        if (std::abs (endPhase - startPhase) < 0.01f)
         {
-            endVal = startVal + juce::MathConstants<float>::twoPi;
+            endPhase = startPhase + juce::MathConstants<float>::twoPi;
         }
 
         // if the end phase is less than start, adjust.
-        while (endVal < startVal)
+        while (endPhase < startPhase)
         {
-            endVal += juce::MathConstants<float>::twoPi;
+            endPhase += juce::MathConstants<float>::twoPi;
         }
 
-        phaseDelta = (endVal - startVal) / (duration - 1);
-        phase      = startVal;
         // hack to make 1st value correct: all of the other value generators
         // correctly use 'startVal` as the first value to be returned. This
         // value generator does *not* want that; startVal is the phase of the
         // sinusoid, and we need to make sure that we convert phase back into
         // the actual sinusoid value on 1st call (and this went undetected for
         // so long because we were only testing with start phase = 0.)
-        startVal = std::sin (phase);
+        startVal = std::sin (startPhase);
         // also update the end val in case the animation is cancelled and we jump
         // to the end.
-        endVal = std::sin (endVal);
+        endVal = std::sin (endPhase);
     }
 
     /**
@@ -77,18 +77,24 @@ public:
     }
 
 private:
-    float GenerateNextValue () override
+    /**
+     * @brief Calculate the next phase value, then return its sine as the
+     * actual curve value.
+     *
+     * @param progress
+     * @return float
+     */
+    float generateNextValue (float progress) override
     {
-        phase += phaseDelta;
+        const auto phase { startPhase + (progress * (endPhase - startPhase)) };
         return std::sin (phase);
     }
 
 private:
-    /// current phase accumulator.
-    float phase;
-
-    /// phase increment for each frame.
-    float phaseDelta;
+    /// @brief initial phase of the sinusoid.
+    float startPhase;
+    /// @brief ending phase of the sinusoid
+    float endPhase;
 };
 
 } // namespace friz

@@ -24,9 +24,7 @@ public:
     AnimatedValue (float startVal_, float endVal_)
     : startVal { startVal_ }
     , endVal { endVal_ }
-    , currentVal { startVal_ }
-    , frameCount { 0 }
-    , canceled { false } {
+    , currentVal { startVal_ } {
 
     };
 
@@ -41,18 +39,16 @@ public:
      *          threshold-based values)
      * @return        next value (or last value if we're finished)
      */
-    float GetNextValue (int msElapsed, int msSinceLastUpdate)
-    {
-        if (!canceled)
-        {
-            if (0 == frameCount++)
-                currentVal = startVal;
-            else
-                currentVal = SnapToTolerance (GenerateNextValue ());
-        }
+    virtual float getNextValue (int msElapsed, int msSinceLastUpdate) = 0;
 
-        return currentVal;
-    }
+    /**
+     * @brief get the ending state of this value object. When we cancel
+     * an in-progress animation, we may need to snap to the end value, and
+     * this gives a way to get there immediately.
+     *
+     * @return float
+     */
+    float getEndValue () const { return endVal; }
 
     /**
      * Have we reached the end of this animation sequence? By default,
@@ -60,7 +56,7 @@ public:
      * (or if we've been canceled...)
      * @return true if this value has reached the end of its animation.
      */
-    virtual bool IsFinished () = 0;
+    virtual bool isFinished () = 0;
 
     /**
      * @brief Attempt to change the end value of an animation that's currently in process.
@@ -68,7 +64,7 @@ public:
      * @param newValue
      * @return true If the value type supports this and the operation succeeded.
      */
-    virtual bool UpdateTarget (float /*newValue*/) { return false; }
+    virtual bool updateTarget (float /*newValue*/) { return false; }
 
     /**
      * @brief Cancel an in-progress animation.
@@ -76,34 +72,20 @@ public:
      * @param moveToEndPosition If true, will immediately take the ending value; otherwise
      * cancels at its current value.
      */
-    void Cancel (bool moveToEndPosition)
+    void cancel (bool moveToEndPosition)
     {
         if (!canceled)
         {
             canceled = true;
-            DoCancel (moveToEndPosition);
+            doCancel (moveToEndPosition);
         }
     }
 
 private:
     /**
-     * Implemented in derived classes to generate the next value in the sequence.
-     * @return      next value.
-     */
-    virtual float GenerateNextValue () = 0;
-
-    /**
-     * @brief Some derived classes should snap to the end value when within
-     *        some tolerance of it. Default implementation does nothing.
-     *
-     * @return (possibly modified) value
-     */
-    virtual float SnapToTolerance (float val) { return val; }
-
-    /**
      * Override in derived classes to perform any unusual cancellation logic.
      */
-    virtual void DoCancel (bool moveToEndPosition)
+    virtual void doCancel (bool moveToEndPosition)
     {
         if (moveToEndPosition)
             currentVal = endVal;
@@ -114,8 +96,8 @@ protected:
     float endVal;
     float currentVal;
 
-    int frameCount;
     bool canceled { false };
+    bool finished { false };
 };
 
 class ToleranceValue : public AnimatedValue
@@ -128,33 +110,64 @@ public:
     }
 
     /**
-     * @brief If the current value is within tolerance of the end value,
-     *        snap the current value to the end value and return true
-     *        to indicate that we did this. This prevents us from stopping
-     *        shy of the actual desired end value.
-     *
-     * @return true
-     * @return false
+     * @brief Calculate the next value in the sequence based on the delta
+     * time since last updated. Internally, we use an update rate of
+     * 1 kHz to recalculate values so that we can remain consistent
+     * as the actual animation frame rate changes.
+     * @param msSinceLastUpdate a delta time since last updated.
+     * @return the calculated value.
      */
-    float SnapToTolerance (float val) override
+    float getNextValue (int /*msElapsed*/, int msSinceLastUpdate) override
     {
-        if (ValueIsWithinTolerance (val))
-            return endVal;
-        return val;
+        jassert (msSinceLastUpdate >= 0);
+        if (msSinceLastUpdate == 0)
+            return currentVal;
+
+        for (int i { 0 }; i < msSinceLastUpdate; ++i)
+        {
+            currentVal = snapToEnd (generateNextValue ());
+            if (isFinished ())
+                break;
+        }
+
+        return currentVal;
     }
 
-    bool ValueIsWithinTolerance (float val) const
-    {
-        return (std::fabs (val - endVal) < tolerance);
-    }
-
-    bool IsFinished () override
+    /**
+     * @brief Test to see if this value has reached its end state.
+     */
+    bool isFinished () override
     {
         // we are finished in either of these cases:
         // 1. user/code canceled us
         // 2. current value is within tolerance of the end value.
-        return (ValueIsWithinTolerance (currentVal) || canceled);
+        return (finished || canceled);
     }
+
+private:
+    /**
+     * @brief The underlying calculation (in floating point) may approach the
+     * desired end value asymptotically; we've already defined a tolerance
+     * value that's "close enough" to the end. When we get inside that tolerance,
+     * we snap to the end value and mark this object as finished.
+     *
+     */
+    float snapToEnd (float val)
+    {
+        if (std::fabs (val - endVal) < tolerance)
+        {
+            finished = true;
+            return endVal;
+        }
+        return val;
+    }
+
+    /**
+     * @brief Execute a single step of this curve's function.
+     *
+     * @return      next value.
+     */
+    virtual float generateNextValue () = 0;
 
 protected:
     float tolerance;
@@ -169,9 +182,41 @@ public:
     {
     }
 
-    bool IsFinished () override { return frameCount >= duration; }
+    float getNextValue (int msElapsed, int /* msSinceLastUpdate*/) override
+    {
+        if (msElapsed >= duration)
+        {
+            finished   = true;
+            currentVal = endVal;
+            return currentVal;
+        }
+        float progress { static_cast<float> (msElapsed) / duration };
+        return generateNextValue (progress);
+    }
+
+    bool isFinished () override { return finished; }
 
 protected:
+    /**
+     * @brief Given a fractional curve point (typically) in the range (0.f..1.f),
+     * interpolate this point between this value's start and end points.
+     *
+     * @param curvePoint
+     * @return float
+     */
+    float scale (float curvePoint) { return startVal + curvePoint * (endVal - startVal); }
+
+private:
+    /**
+     * @brief generate the value according to progress in time.
+     * @param progress position in the animation (0.0..1.0)
+     *
+     * @return      next value.
+     */
+    virtual float generateNextValue (float progress) = 0;
+
+protected:
+    /// @brief duration of the event in ms.
     int duration;
 };
 

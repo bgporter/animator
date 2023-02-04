@@ -24,11 +24,7 @@ public:
     Linear (float startVal, float endVal, int duration);
 
 private:
-    float GenerateNextValue () override;
-
-private:
-    /// Delta to add at each frame that passes
-    float delta;
+    float generateNextValue (float progress) override;
 };
 
 } // namespace friz

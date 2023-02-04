@@ -79,13 +79,10 @@ public:
     void SetCurve (CurveFn curve);
 
 private:
-    float GenerateNextValue () override;
+    float generateNextValue (float progress) override;
 
 private:
     CurveFn curve;
-
-    /// distance between start/end points.
-    float distance;
 };
 
 } // namespace friz

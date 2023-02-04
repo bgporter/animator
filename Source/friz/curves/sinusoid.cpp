@@ -1,12 +1,6 @@
-/*
-  ==============================================================================
-
-    sinusoid.cpp
-    Created: 2 Sep 2019 9:10:34am
-    Author:  Brett Porter
-
-  ==============================================================================
-*/
+//
+// Copyright (c) 2023 Brett g Porter. All Rights Reserved.
+//
 
 #include "sinusoid.h"
 

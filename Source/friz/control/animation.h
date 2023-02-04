@@ -40,43 +40,30 @@ public:
     /**
      * @return ID value for this Animation.
      */
-    int GetId () const { return animationId; }
+    int getId () const { return animationId; }
 
     /**
      * Set a number of frames to delay before starting to execute this animation.
      * @param delay # of delay frames.
      */
-    void SetDelay (int delay) { preDelay = std::max (0, delay); }
+    void setDelay (int delay) { preDelay = std::max (0, delay); }
 
-    /**
-     * Before generating values, see if we should be delaying.
-     * @return False to wait before generating effect values.
-     */
-    bool DelayElapsed ()
-    {
-        if (preDelay == 0)
-            return true;
+    virtual Status gotoTime (juce::int64 timeInMs) = 0;
 
-        --preDelay;
-        return false;
-    }
+    virtual void cancel (bool moveToEndPosition) = 0;
 
-    virtual Status Update () = 0;
+    virtual bool isFinished () = 0;
 
-    virtual void Cancel (bool moveToEndPosition) = 0;
+    virtual bool isReady () const = 0;
 
-    virtual bool IsFinished () = 0;
+    virtual AnimatedValue* getValue (size_t index) = 0;
 
-    virtual bool IsReady () const = 0;
-
-    virtual AnimatedValue* GetValue (size_t index) = 0;
-
-private:
+protected:
     /// optional ID value for this animation.
-    int animationId;
+    int animationId { 0 };
 
     /// an optional pre-delay before beginning to execute the effect.
-    int preDelay;
+    int preDelay { 0 };
 };
 
 /**
@@ -91,11 +78,11 @@ private:
  * garbage collect it.
  */
 
-template <std::size_t valueCount> class Animation : public AnimationType
+template <std::size_t ValueCount> class Animation : public AnimationType
 {
 public:
-    using ValueList    = std::array<float, valueCount>;
-    using SourceList   = std::array<std::unique_ptr<AnimatedValue>, valueCount>;
+    using ValueList    = std::array<float, ValueCount>;
+    using SourceList   = std::array<std::unique_ptr<AnimatedValue>, ValueCount>;
     using UpdateFn     = std::function<void (int, const ValueList&)>;
     using CompletionFn = std::function<void (int)>;
 
@@ -109,7 +96,6 @@ public:
      */
     Animation (int id = 0)
     : AnimationType { id }
-    , finished { false }
     {
     }
 
@@ -121,27 +107,26 @@ public:
      */
     Animation (SourceList&& sources, int id = 0)
     : AnimationType { id }
-    , finished { false }
     , sources { std::move (sources) }
     {
     }
 
     /**
      * Set the AnimatedValue object to use for one of this animation's slots.
-     * @param  index Value index, 0..valueCount-1
+     * @param  index Value index, 0..ValueCount-1
      * @param  value AnimatedValue object to generate data.
      * @return       true on success.
      */
-    bool SetValue (size_t index, std::unique_ptr<AnimatedValue> value)
+    bool setValue (size_t index, std::unique_ptr<AnimatedValue> value)
     {
-        if (index < valueCount)
+        if (index >= ValueCount)
         {
-            sources[index] = std::move (value);
-            return true;
+            jassertfalse;
+            return false;
         }
 
-        jassertfalse;
-        return false;
+        sources[index] = std::move (value);
+        return true;
     }
 
     /**
@@ -151,9 +136,9 @@ public:
      * @param index
      * @return AnimatedValue*
      */
-    AnimatedValue* GetValue (size_t index) override
+    AnimatedValue* getValue (size_t index) override
     {
-        if (index < valueCount)
+        if (index < ValueCount)
             return sources[index].get ();
 
         jassertfalse;
@@ -162,82 +147,116 @@ public:
 
     /**
      * Set the function that will be called with an array of animation values
-     * once per frame.
+     * once per frame. `updateFn` is public, so you can also just assign to it directly.
      * @param update UpdateFn function.
      */
-    void OnUpdate (UpdateFn update) { updateFn = update; }
+    void onUpdate (UpdateFn update) { updateFn = update; }
 
     /**
      * Set the (optional) function that will be called once when this
      * animation is complete.
+     * `completionFn` is public, so you can also just assign to it directly.
      * @param complete CompletionFn function.
      */
-    void OnCompletion (CompletionFn complete) { completionFn = complete; }
+    void onCompletion (CompletionFn complete) { completionFn = complete; }
 
     /**
-     * Calculate the next value from each of our animated values, passing them
-     * to our UpdateFn function.
-     * @return        Zero if we have more data in the future, 1 if we're done.
+     * @brief Advance to the specified time, sending value updates to the
+     * code that's waiting for them.
+     *
+     * @param timeInMs number of milliseconds since some fixed event in the past.
+     * @return Status, either `processing` or `finished`
      */
-    Status Update () override
+    Status gotoTime (juce::int64 timeInMs) override
     {
-        ValueList values;
-        int completeCount { 0 };
-
-        if (!DelayElapsed ())
-            return Status::processing;
-
         if (finished)
         {
-            if (completionFn)
-                completionFn (GetId ());
-
+            if (completionFn != nullptr)
+                completionFn (getId ());
             return Status::finished;
         }
 
-        for (int i = 0; i < valueCount; ++i)
+        juce::int64 deltaTime;
+        // if this is the first time we're being executed, perform some setup:
+        if (startTime < 0)
+        {
+            startTime = lastTime = timeInMs;
+            deltaTime            = 0;
+        }
+        else
+        {
+            deltaTime = timeInMs - lastTime;
+            lastTime  = timeInMs;
+        }
+
+        auto totalElapsed { timeInMs - startTime };
+
+        // if we're still delaying, just return.
+        if (totalElapsed < preDelay)
+            return Status::processing;
+
+        // recalculate the elapsed and delta times to account for an
+        // expired delay
+        auto effectElapsed { totalElapsed - preDelay };
+        deltaTime = std::min (deltaTime, totalElapsed);
+
+        // loop through our value generators and update:
+        ValueList values;
+        int completeCount { 0 };
+
+        for (int i = 0; i < ValueCount; ++i)
         {
             auto& val = sources[i];
-            jassert (val);
-            if (val)
+            jassert (val != nullptr);
+            if (val != nullptr)
             {
-                values[i] = val->GetNextValue ();
-                completeCount += (val->IsFinished ()) ? 1 : 0;
+                // values[i] = val->GetNextValue ();
+                values[i] = val->getNextValue (static_cast<int>(effectElapsed), static_cast<int>(deltaTime));
+                completeCount += (val->isFinished ()) ? 1 : 0;
             }
         }
 
         if (updateFn != nullptr)
-            updateFn (GetId (), values);
+            updateFn (getId (), values);
 
-        if (completeCount == valueCount)
+        if (completeCount == ValueCount)
             finished = true;
 
         return Status::processing;
     }
 
-    void Cancel (bool moveToEndPosition) override
+    void cancel (bool moveToEndPosition) override
     {
         for (auto& val : sources)
         {
             if (val != nullptr)
-                val->Cancel (moveToEndPosition);
+                val->cancel (moveToEndPosition);
         }
 
-        if (moveToEndPosition)
-            // send out one more value update message sending the end positions;
-            Update ();
-        else
+        if (moveToEndPosition && updateFn != nullptr)
         {
-            // ...just notify that the effect is complete.
-            if (completionFn != nullptr)
-                completionFn (GetId ());
+            // send one more update where all of the individual values
+            // have snapped to their end states.
+            ValueList values;
+            for (int i = 0; i < ValueCount; ++i)
+            {
+                auto& val = sources[i];
+                jassert (val != nullptr);
+                if (val != nullptr)
+                    values[i] = val->getEndValue ();
+            }
+            updateFn (getId (), values);
         }
+
+        // notify that the effect is complete.
+        if (completionFn != nullptr)
+            completionFn (getId ());
         finished = true;
     }
 
-    bool IsFinished () override { return finished; }
+    bool isFinished () override { return finished; }
 
-    bool IsReady () const override
+    bool isReady () const override
     {
         for (auto& src : sources)
         {
@@ -256,8 +275,13 @@ public:
     CompletionFn completionFn;
 
 private:
+    /// @brief Timestamp of first update.
+    juce::int64 startTime { -1 };
+    /// @brief timestamp of most recent update.
+    juce::int64 lastTime { -1 };
+
     /// is this animation complete?
-    bool finished;
+    bool finished { false };
 
     /// The array of animated value objects.
     SourceList sources;

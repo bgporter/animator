@@ -10,15 +10,13 @@ Linear::Linear (float startVal, float endVal, int duration)
 : TimedValue (startVal, endVal, duration)
 {
     jassert (duration > 0);
-    delta = (endVal - startVal) / duration;
 }
 
-float Linear::GenerateNextValue ()
+float Linear::generateNextValue (float progress)
 {
-    const auto calculated = currentVal + delta;
-    if (startVal < endVal)
-        return juce::jmin (calculated, endVal);
-    return juce::jmax (calculated, endVal);
+    // simple linear interpolation; maybe use the parametric
+    // curves instead?
+    return scale (progress);
 }
 
 #ifdef qRunUnitTests

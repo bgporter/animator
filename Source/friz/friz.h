@@ -25,7 +25,7 @@ END_JUCE_MODULE_DECLARATION
 
 #include "control/animation.h"
 #include "control/animator.h"
-#include "control/frameController.h"
+#include "control/controller.h"
 #include "curves/animatedValue.h"
 #include "curves/constant.h"
 #include "curves/easing.h"
