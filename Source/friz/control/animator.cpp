@@ -58,8 +58,10 @@ void Animator::gotoTime (juce::int64 timeInMs)
     int finishedCount { 0 };
     juce::ScopedLock lock { mutex };
 
-    for (auto& animation : animations)
+    // for (auto& animation : animations)
+    for (int i { 0 }; i < animations.size (); ++i)
     {
+        auto& animation { animations[i] };
         if (animation.get () != nullptr)
         {
             if (AnimationType::Status::finished == animation->gotoTime (timeInMs))
@@ -69,32 +71,6 @@ void Animator::gotoTime (juce::int64 timeInMs)
     if (finishedCount > 0)
         cleanup ();
 }
-
-// void Animator::UpdateFrame ()
-// {
-//     int finishedCount = 0;
-//     juce::ScopedLock lock (mutex);
-
-//     for (int i { 0 }; i < animations.size (); ++i)
-//     {
-//         auto& animation { animations[i] };
-//         if (animation.get ())
-//         {
-//             if (AnimationType::Status::finished == animation->Update ())
-//                 ++finishedCount;
-//         }
-//     }
-//     if (finishedCount > 0)
-//         Cleanup ();
-// }
-
-// int Animator::TimeToFrames (float seconds) const
-// {
-//     jassert (seconds > 0);
-
-//     auto frames = static_cast<int> (0.5f + seconds * frameRate);
-//     return std::max (frames, 1);
-// }
 
 bool Animator::addAnimation (std::unique_ptr<AnimationType> animation)
 {
@@ -106,13 +82,16 @@ bool Animator::addAnimation (std::unique_ptr<AnimationType> animation)
         return false;
     }
 
-    {
-        juce::ScopedLock lock (mutex);
-        animations.push_back (std::move (animation));
-    }
+    juce::ScopedLock lock (mutex);
+    DBG ("ADDING ANIMATION");
+    animations.push_back (std::move (animation));
 
     if (!controller->isRunning ())
+    {
+        DBG ("STARTING CONTROLLER ");
         controller->start ();
+    }
+
     return true;
 }
 
@@ -120,6 +99,7 @@ bool Animator::cancelAnimation (int id, bool moveToEndPosition)
 {
     int cancelCount { 0 };
     juce::ScopedLock lock (mutex);
+    DBG ("CANCEL ANIMATION ID " << id);
     for (auto& animation : animations)
     {
         if ((id < 0) || (animation->getId () == id))
@@ -144,14 +124,19 @@ bool Animator::cancelAllAnimations (bool moveToEndPosition)
 void Animator::cleanup ()
 {
     juce::ScopedLock lock (mutex);
+    DBG ("CLEANUP: " << animations.size () << " animations @ start");
     animations.erase (
         std::remove_if (animations.begin (), animations.end (),
                         [&] (const std::unique_ptr<AnimationType>& c) -> bool
                         { return c->isFinished (); }),
         animations.end ());
 
+    DBG ("CLEANUP: " << animations.size () << " animations @ end");
     if (0 == animations.size ())
+    {
+        DBG (" STOPPING CONTROLLER ");
         controller->stop ();
+    }
 }
 
 AnimationType* Animator::getAnimation (int id)

@@ -81,10 +81,16 @@ protected:
 template <std::size_t ValueCount> class Animation : public AnimationType
 {
 public:
-    using ValueList    = std::array<float, ValueCount>;
-    using SourceList   = std::array<std::unique_ptr<AnimatedValue>, ValueCount>;
-    using UpdateFn     = std::function<void (int, const ValueList&)>;
-    using CompletionFn = std::function<void (int)>;
+    using ValueList  = std::array<float, ValueCount>;
+    using SourceList = std::array<std::unique_ptr<AnimatedValue>, ValueCount>;
+    using UpdateFn   = std::function<void (int, const ValueList&)>;
+    /**
+     * @brief callback on completion of this effect
+     * @param int id -- ID of this animation.
+     * @param bool wasCanceled -- true if the completion is because of cancellation.
+     *
+     */
+    using CompletionFn = std::function<void (int, bool)>;
 
     /**
      * Create an animation object that can be populated with changing
@@ -172,7 +178,7 @@ public:
         if (finished)
         {
             if (completionFn != nullptr)
-                completionFn (getId ());
+                completionFn (getId (), false);
             return Status::finished;
         }
 
@@ -211,7 +217,8 @@ public:
             if (val != nullptr)
             {
                 // values[i] = val->GetNextValue ();
-                values[i] = val->getNextValue (static_cast<int>(effectElapsed), static_cast<int>(deltaTime));
+                values[i] = val->getNextValue (static_cast<int> (effectElapsed),
+                                               static_cast<int> (deltaTime));
                 completeCount += (val->isFinished ()) ? 1 : 0;
             }
         }
@@ -250,7 +257,7 @@ public:
 
         // notify that the effect is complete.
         if (completionFn != nullptr)
-            completionFn (getId ());
+            completionFn (getId (), true);
         finished = true;
     }
 

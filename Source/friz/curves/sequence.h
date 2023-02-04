@@ -76,13 +76,13 @@ public:
             });
 
         effect->onCompletion (
-            [this] (int /*id*/)
+            [this] (int /*id*/, bool wasCanceled)
             {
                 // Each effect in the sequence will notify us, but we only pass
                 // along the final one.
                 if ((currentEffect == sequence.size () - 1) &&
                     this->completionFn != nullptr)
-                    this->completionFn (this->getId ());
+                    this->completionFn (this->getId (), wasCanceled);
             });
 
         sequence.push_back (std::move (effect));
