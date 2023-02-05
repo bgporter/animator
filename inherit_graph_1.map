@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classfriz_1_1_animation_type.html" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="5,31,136,56"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animation.html" title=" " alt="" coords="185,5,375,31"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_animation.html" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate..." alt="" coords="184,55,376,80"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_sequence.html" title="An Animation class that can hold multiple Animation objects and execute them in sequence...." alt="" coords="424,5,615,31"/>
+</map>

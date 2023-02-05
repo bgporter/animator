@@ -1,0 +1,9 @@
+<map id="friz::ToleranceValue" name="friz::ToleranceValue">
+<area shape="rect" id="node1" title=" " alt="" coords="127,79,261,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_easing_curve.html" title=" " alt="" coords="72,152,191,177"/>
+<area shape="rect" id="node7" href="$classfriz_1_1_spring.html" title="Accelerates toward the end value – if this acceleration takes it past the end value,..." alt="" coords="215,152,298,177"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations." alt="" coords="127,5,261,31"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_ease_in.html" title="A slew&#45;based ease in curve – accelerates quickly, then decelerates as it approaches the end value." alt="" coords="31,225,117,251"/>
+<area shape="rect" id="node6" href="$classfriz_1_1_ease_out.html" title="A slew&#45;based acceleration. starts slowly &amp; accelerates." alt="" coords="141,225,236,251"/>
+<area shape="rect" id="node5" href="$classfriz_1_1_smoothed_value.html" title="An animated value whose end value can be changed while the animation is in progress." alt="" coords="5,299,143,324"/>
+</map>

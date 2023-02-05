@@ -1,0 +1,4 @@
+<map id="friz::Animation&lt; ValueCount &gt;" name="friz::Animation&lt; ValueCount &gt;">
+<area shape="rect" id="node1" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate..." alt="" coords="5,79,197,104"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animation_type.html" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="36,5,167,31"/>
+</map>

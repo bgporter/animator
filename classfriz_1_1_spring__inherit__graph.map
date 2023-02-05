@@ -1,0 +1,5 @@
+<map id="friz::Spring" name="friz::Spring">
+<area shape="rect" id="node1" title="Accelerates toward the end value – if this acceleration takes it past the end value,..." alt="" coords="31,152,114,177"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_tolerance_value.html" title=" " alt="" coords="5,79,140,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations." alt="" coords="6,5,139,31"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="friz::TimedValue" name="friz::TimedValue">
+<area shape="rect" id="node1" title=" " alt="" coords="169,79,283,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_constant.html" title="A class that generates a single constant value for its duration." alt="" coords="5,152,103,177"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_linear.html" title="Simple linear interpolator." alt="" coords="127,152,208,177"/>
+<area shape="rect" id="node5" href="$classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves." alt="" coords="232,152,340,177"/>
+<area shape="rect" id="node6" href="$classfriz_1_1_sinusoid.html" title="Sine/Cosine wave generator." alt="" coords="364,152,459,177"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations." alt="" coords="159,5,293,31"/>
+</map>

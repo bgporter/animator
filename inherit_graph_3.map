@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classfriz_1_1_controller.html" title=" " alt="" coords="5,55,105,80"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_async_controller.html" title="Controller to support clocking an animation manually, or at rates that aren&#39;t tied to wall&#45;clock time..." alt="" coords="171,5,307,31"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_display_sync_controller.html" title="Synchronize animations with a display&#39;s vertical blank interval." alt="" coords="153,55,324,80"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_time_controller.html" title=" " alt="" coords="174,104,303,129"/>
+<area shape="rect" id="node5" title=" " alt="" coords="13,104,98,129"/>
+</map>

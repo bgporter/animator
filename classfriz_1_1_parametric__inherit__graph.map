@@ -1,0 +1,5 @@
+<map id="friz::Parametric" name="friz::Parametric">
+<area shape="rect" id="node1" title="A class that can generate different parametric easing curves." alt="" coords="18,152,126,177"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_timed_value.html" title=" " alt="" coords="15,79,129,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations." alt="" coords="5,5,139,31"/>
+</map>

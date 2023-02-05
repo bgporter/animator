@@ -1,0 +1,4 @@
+<map id="friz::AsyncController" name="friz::AsyncController">
+<area shape="rect" id="node1" title="Controller to support clocking an animation manually, or at rates that aren&#39;t tied to wall&#45;clock time..." alt="" coords="5,79,141,104"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_controller.html" title=" " alt="" coords="23,5,123,31"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="friz::SmoothedValue" name="friz::SmoothedValue">
+<area shape="rect" id="node1" title="An animated value whose end value can be changed while the animation is in progress." alt="" coords="5,299,143,324"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_ease_in.html" title="A slew&#45;based ease in curve – accelerates quickly, then decelerates as it approaches the end value." alt="" coords="31,225,117,251"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_easing_curve.html" title=" " alt="" coords="15,152,133,177"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_tolerance_value.html" title=" " alt="" coords="7,79,141,104"/>
+<area shape="rect" id="node5" href="$classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations." alt="" coords="7,5,141,31"/>
+</map>
