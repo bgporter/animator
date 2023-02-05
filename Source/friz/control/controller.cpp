@@ -22,6 +22,8 @@
 
 #include "controller.h"
 
+#include "animator.h"
+
 namespace friz
 {
 juce::int64 Controller::getCurrentTime ()
@@ -30,4 +32,78 @@ juce::int64 Controller::getCurrentTime ()
     auto nowInMs { 1000 * juce::Time::highResolutionTicksToSeconds (nowInTix) };
     return static_cast<juce::int64> (nowInMs + 0.5);
 }
+
+void FrameRateCalculator::update (juce::int64 timeInMs)
+{
+    if (lastUpdate > 0)
+    {
+        int currentSum { sum.load () };
+        currentSum -= memory[index];
+        const auto delta { static_cast<int> (timeInMs - lastUpdate) };
+        currentSum += delta;
+        memory[index++] = delta;
+        index %= frameCount;
+        sum.store (currentSum);
+        updateCount++;
+    }
+
+    lastUpdate = timeInMs;
+}
+
+float FrameRateCalculator::get () const
+{
+    // convert the average interval between updates into a rate/sec
+    const int divisor = std::min (updateCount.load (), frameCount);
+    if (divisor > 0)
+        return 1000.f / (sum.load () / static_cast<float> (divisor));
+    return 0.f;
+}
+
+void FrameRateCalculator::clear ()
+{
+    lastUpdate = -1;
+    sum.store (0);
+    memory.fill (0);
+    index = 0;
+    updateCount.store (0);
+}
+
+void TimeController::timerCallback ()
+{
+    animator->gotoTime (getCurrentTime ());
+}
+
+void DisplaySyncController::start ()
+{
+    jassert (animator != nullptr);
+    if (sync.isEmpty () && animator != nullptr)
+    {
+        frameRate.clear ();
+        sync = { syncSource, [this]
+                 {
+                     const auto now { getCurrentTime () };
+                     animator->gotoTime (now);
+                     frameRate.update (now);
+                 } };
+        running = true;
+    }
+}
+
+bool AsyncController::gotoTime (juce::int64 timeInMs)
+{
+    if (!isRunning ())
+        return false;
+
+    if (timeInMs <= lastTime)
+    {
+        // time can only go forward!
+        jassertfalse;
+        return false;
+    }
+    animator->gotoTime (timeInMs);
+    frameRate.update (timeInMs);
+    lastTime = timeInMs;
+    return true;
+}
+
 } // namespace friz

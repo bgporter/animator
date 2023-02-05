@@ -28,6 +28,46 @@
 namespace friz
 {
 class Animator;
+/**
+ * @class FrameRateCalculator
+ * @brief Calculate the actual current (average) frame rate as measured
+ * at runtime.
+ *
+ */
+class FrameRateCalculator
+{
+public:
+    FrameRateCalculator () = default;
+
+    /**
+     * @brief Called each time we update the animator so we can keep track
+     * of the frequency.
+     *
+     * @param timeInMs
+     */
+    void update (juce::int64 timeInMs);
+
+    /**
+     * @brief Calculate the actual frame rate that we're running at.
+     *
+     * @return float frames per second (averaged over recent history)
+     */
+    float get () const;
+
+    /**
+     * @brief reset all internal values before starting.
+     */
+    void clear ();
+
+private:
+    juce::int64 lastUpdate { -1 };
+    static constexpr int frameCount { 24 };
+    std::array<int, frameCount> memory;
+    /// @brief  keep a running sum of intervals so we can just divide.
+    std::atomic<int> sum { 0 };
+    std::atomic<int> updateCount { 0 };
+    int index { 0 };
+};
 
 class Controller
 {
@@ -129,13 +169,19 @@ public:
     bool isRunning () const override { return isTimerRunning (); }
 
 private:
-    void timerCallback () override { animator->gotoTime (getCurrentTime ()); }
+    void timerCallback () override;
 
 private:
     /// @brief Approx. frames/sec
     int frameRate { 30 };
 };
 
+/**
+ * @class DisplaySyncController
+
+ * @brief Synchronize animations with a display's vertical blank interval.
+ *
+ */
 class DisplaySyncController : public Controller
 {
 public:
@@ -152,20 +198,7 @@ public:
     /**
      * @brief Called whenever we need to start timer callbacks flowing.
      */
-    virtual void start () override
-    {
-        if (sync.isEmpty ())
-        {
-            frameRate.clear ();
-            sync = { syncSource, [this]
-                     {
-                         const auto now { getCurrentTime () };
-                         animator->gotoTime (now);
-                         frameRate.update (now);
-                     } };
-            running = true;
-        }
-    }
+    virtual void start () override;
 
     /**
      * @brief  Called whenever there are no more animations that need to
@@ -198,72 +231,43 @@ private:
     /// @brief The VBlank listener that will update this controller.
     juce::VBlankAttachment sync;
 
-    class FrameRateCalculator
-    {
-    public:
-        FrameRateCalculator () = default;
-
-        /**
-         * @brief Called each time we update the animator so we can keep track
-         * of the frequency.
-         *
-         * @param timeInMs
-         */
-        void update (juce::int64 timeInMs)
-        {
-            if (lastUpdate > 0)
-            {
-                int currentSum { sum.load () };
-                currentSum -= memory[index];
-                const auto delta { static_cast<int> (timeInMs - lastUpdate) };
-                currentSum += delta;
-                memory[index++] = delta;
-                index %= frameCount;
-                sum.store (currentSum);
-                updateCount++;
-            }
-
-            lastUpdate = timeInMs;
-        }
-
-        /**
-         * @brief Calculate the actual frame rate that we're running at.
-         *
-         * @return float frames per second (averaged over recent history)
-         */
-        float get () const
-        {
-            // convert the average interval between updates into a rate/sec
-            const int divisor = std::min (updateCount.load (), frameCount);
-            if (divisor > 0)
-                return 1000.f / (sum.load () / static_cast<float> (divisor));
-            return 0.f;
-        }
-
-        /**
-         * @brief reset all internal values before starting.
-         */
-        void clear ()
-        {
-            lastUpdate = -1;
-            sum.store (0);
-            memory.fill (0);
-            index = 0;
-            updateCount.store (0);
-        }
-
-    private:
-        juce::int64 lastUpdate { -1 };
-        static constexpr int frameCount { 24 };
-        std::array<int, frameCount> memory;
-        /// @brief  keep a running sum of intervals so we can just divide.
-        std::atomic<int> sum { 0 };
-        std::atomic<int> updateCount { 0 };
-        int index { 0 };
-    };
-
     FrameRateCalculator frameRate;
     bool running { false };
+};
+
+/**
+ * @class AsyncController
+ * @brief Controller to support clocking an animation manually, or at rates
+ * that aren't tied to wall-clock time (e.g. rendering an animation faster than
+ * realtime)
+
+ */
+class AsyncController : public Controller
+{
+public:
+    AsyncController () = default;
+
+    virtual float getFrameRate () const override { return frameRate.get (); }
+
+    void start () override { running = true; }
+
+    void stop () override { running = false; }
+
+    bool isRunning () const override { return running; }
+
+    /**
+     * @brief Manually advance the animation to a point in time. Each call
+     * to this method must move time forward!
+     *
+     * @param timeInMs
+     * @return false
+     */
+    bool gotoTime (juce::int64 timeInMs);
+
+private:
+    FrameRateCalculator frameRate;
+    bool running { false };
+    juce::int64 lastTime { 0 };
 };
 
 } // namespace friz
