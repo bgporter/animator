@@ -1,4 +1,4 @@
-# Animator
+# Friz
 
 **Fall 2019 * Bg Porter**
 
@@ -15,7 +15,7 @@ It's named after [Friz Freling](https://en.wikipedia.org/wiki/Friz_Freleng), ani
 ## Design Goals 
 
 * *Lightweight* If no effects are being run, there's no runtime overhead. 
-* *Flexible* Adding new types of animation curves is simple, typically only requiring the creation of a new C++ class derived from an existing effect type and the overriding of a single method. Client code provides a pair of `lambda` objects to receive updates on frame updates and effect completion. 
+* *Flexible* Adding new types of animation curves is simple, typically only requiring the creation of a new C++ class derived from an existing effect type and the overriding of a single method. Client code provides a pair of `lambda` objects to receive updates on frame updates and effect completion. Using the `Parametric` class, you can implement an effect by providing a single function that maps a floating point value in the range [0, 1] to a floating point output variable _mostly_ in the range [0, 1] (small excursions outside that range are permitted and can be useful!)
 * *Decoupled* Friz doesn't need or want to know anything about your application ; it just sends your code back a stream of values at regular intervals.  
 * *Modern* Written using current (C++11 and later) capabilities and techniques. 
 
@@ -31,7 +31,7 @@ An individual instance of a set of animation data. Each animation can provide on
 
 ### `friz::AnimatedValue`
 
-Base class for a set of animation curve types that can be instantiated with a start/end value and the definition of when the end value has been reached, either a set number of frames/time duration, or a floating point tolerance. 
+Base class for a set of animation curve types that can be instantiated with a start/end value and the definition of when the end value has been reached, either a time duration, or a floating point tolerance to the ending value.
 
 #### Currently Defined Curves
 
@@ -46,7 +46,7 @@ Base class for a set of animation curve types that can be instantiated with a st
 
 ## Demo application 
 
-The demonstration application (now located in the `bgporter/frizDemo` repository performs simple animations that 
+The demonstration application (located in the [`bgporter/frizDemo` repository](https://github.com/bgporter/frizDemo) performs simple animations that 
 
 * apply each of the curve types to animate randomly sized & colored squares away from a mouse click.
 * after a delay from the movement animation, fade the square to invisiblity and delete it from the screen. 
