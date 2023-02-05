@@ -6,6 +6,10 @@ A generic UI animation controller for JUCE projects.
 
 For a fuller discussion of these classes, see my blog post at [https://artandlogic.com/2019/09/friz-and-the-illusion-of-life/](https://artandlogic.com/2019/09/friz-and-the-illusion-of-life/). 
 
+## API Docs
+
+API documentation is available [here](https://bgporter.github.io/animator/)
+
 ## Overview 
 
 The `friz` project is a set of C++ classes that can be used in projects built with the [JUCE](https://www.juce.com) application framework to add animation effects to user interface elements. 
