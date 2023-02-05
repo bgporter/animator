@@ -240,7 +240,6 @@ private:
  * @brief Controller to support clocking an animation manually, or at rates
  * that aren't tied to wall-clock time (e.g. rendering an animation faster than
  * realtime)
-
  */
 class AsyncController : public Controller
 {
