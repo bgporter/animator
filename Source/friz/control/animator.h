@@ -1,6 +1,24 @@
 /*
- * Copyright (c) 2019 Brett g Porter.
- */
+    Copyright (c) 2019-2023 Brett g Porter
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+*/
 
 #pragma once
 
@@ -81,21 +99,6 @@ public:
     void gotoTime (juce::int64 timeInMs);
 
     /**
-     * @brief Move to the next frame of animation.
-     * REPLACE
-     */
-    // void UpdateFrame ();
-
-    /**
-     * Convert a time in seconds to the corresponding frame count based on the
-     * current frame rate.
-     * DELETE
-     * @param  seconds Seconds, must be > 0
-     * @return         nearest # of frames, will be >= 1.
-     */
-    // int TimeToFrames (float seconds) const;
-
-    /**
      * Add a new animation to our list, which will start it going!
      * @param  animation The animation sequence to play.
      * @return           true if added okay.
@@ -123,10 +126,11 @@ public:
 
     /**
      * Attempt to get a running animation object by passing in its ID value.
-     * @param  id ID of the animation you want. If more than one anumation use
+     * @param  id ID of the animation you want. If more than one animation use
      *            the same ID, this will only return the first one found.
      * @return    non-owning pointer (or nullptr if not present). Don't store this
      *            pointer as it may be deleted from beneath you.
+     * @sa        getAnimations()
      */
     AnimationType* getAnimation (int id);
 
@@ -148,7 +152,6 @@ public:
      * @param newTarget
      * @return true     If the animation exists; this doesn't indicate that
      *                  we actually succeeded.
-     * @return false
      */
     bool updateTarget (int id, int valIndex, float newTarget);
 
@@ -165,8 +168,6 @@ private:
     std::unique_ptr<Controller> controller;
 
     std::vector<std::unique_ptr<AnimationType>> animations;
-
-    // int frameRate; /// DELETE
 
     /// protect code that might contain data races if updates come
     /// from a different thread.

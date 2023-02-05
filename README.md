@@ -57,6 +57,26 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 ## Release History
 
+### 2.0.0 February 5, 2023
+
+**Breaking Changes**
+
+This is a major version bump, and as such, there are breaking changes that will require updates in existing code:
+
+* All functions/method names have been converted from `StudlyCaps` to `mixedCase` to follow JUCE conventions. 
+* All durations are now specified in milliseconds instead of frames. It should always have been this way, but without doing this, synching to vertical blanking would have been problematic. 
+* New `DisplaySyncController` class uses the `juce::VBlankAttachment` class to synchronize animation updates with the display. 
+* The Easing family of `AnimatedValue` (`EaseIn`, `EaseOut`, `Spring`) objects will need much attention with regards to their control values (slew, acceleration, etc.) To support variable frame rates sensibly, all of these curves are now updated _internally_ at a rate of 1000 frames per second, so they should have the same behavior regardless of the actual frame update rate that's in use. 
+
+**Non-breaking Changes**
+
+* Doxygen comments corrected, cleaned up, added as needed
+* General cleanup throughout
+* MIT license text added at top of all source files. 
+
+### 1.6.0 January 2023
+* bug fixes, compiler warnings
+
 ### 1.5.0 March 2022
 
 * Corrected bug in the Sinusoid animated value; start value returned when initial phase angle of the object was anything but zero was wrong. 

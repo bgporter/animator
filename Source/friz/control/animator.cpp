@@ -1,6 +1,24 @@
 /*
- * Copyright (c) 2019 Brett g Porter.
- */
+    Copyright (c) 2019-2023 Brett g Porter
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+*/
 #include "animator.h"
 #include "controller.h"
 namespace friz
@@ -12,8 +30,6 @@ Animator::Animator (std::unique_ptr<Controller> controller_)
         setController (std::move (controller_));
     else
         setController (std::make_unique<TimeController> ());
-
-    controller->setAnimator (this);
 }
 
 Animator::~Animator ()
@@ -24,6 +40,7 @@ Animator::~Animator ()
 void Animator::setController (std::unique_ptr<Controller> controller_)
 {
     controller = std::move (controller_);
+    controller->setAnimator (this);
 }
 
 Controller* Animator::getController () const
@@ -83,12 +100,10 @@ bool Animator::addAnimation (std::unique_ptr<AnimationType> animation)
     }
 
     juce::ScopedLock lock (mutex);
-    DBG ("ADDING ANIMATION");
     animations.push_back (std::move (animation));
 
     if (!controller->isRunning ())
     {
-        DBG ("STARTING CONTROLLER ");
         controller->start ();
     }
 
@@ -99,7 +114,6 @@ bool Animator::cancelAnimation (int id, bool moveToEndPosition)
 {
     int cancelCount { 0 };
     juce::ScopedLock lock (mutex);
-    DBG ("CANCEL ANIMATION ID " << id);
     for (auto& animation : animations)
     {
         if ((id < 0) || (animation->getId () == id))
@@ -124,19 +138,14 @@ bool Animator::cancelAllAnimations (bool moveToEndPosition)
 void Animator::cleanup ()
 {
     juce::ScopedLock lock (mutex);
-    DBG ("CLEANUP: " << animations.size () << " animations @ start");
     animations.erase (
         std::remove_if (animations.begin (), animations.end (),
                         [&] (const std::unique_ptr<AnimationType>& c) -> bool
                         { return c->isFinished (); }),
         animations.end ());
 
-    DBG ("CLEANUP: " << animations.size () << " animations @ end");
     if (0 == animations.size ())
-    {
-        DBG (" STOPPING CONTROLLER ");
         controller->stop ();
-    }
 }
 
 AnimationType* Animator::getAnimation (int id)

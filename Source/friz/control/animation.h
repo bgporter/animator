@@ -1,6 +1,24 @@
 /*
- * Copyright (c) 2019 Brett g Porter.
- */
+    Copyright (c) 2019-2023 Brett g Porter
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+*/
 #pragma once
 
 // #include "../animatorApp.h"
@@ -17,7 +35,6 @@ namespace friz
  * @brief Abstract base class; all the real action happens in the derived
  *        templated `Animation` class, below.
  */
-
 class AnimationType
 {
 public:
@@ -48,14 +65,40 @@ public:
      */
     void setDelay (int delay) { preDelay = std::max (0, delay); }
 
+    /**
+     * @brief Advance all active animations to this point in time.
+     *
+     * @param timeInMs Time since some fixed event; only used internally to calculate
+     * deltas.
+     * @return Status either processing or finished.
+     */
     virtual Status gotoTime (juce::int64 timeInMs) = 0;
 
+    /**
+     * @brief Cancel an in-progress animation, optionally moving directly to its
+     * end value.
+     *
+     * @param moveToEndPosition if true, go immediately to the end value.
+     */
     virtual void cancel (bool moveToEndPosition) = 0;
 
+    /**
+     * @return true if the effect has completed.
+     */
     virtual bool isFinished () = 0;
 
+    /**
+     * @return true if the animation is ready to be executed (e.g. has all its values
+     * set to valid AnimatedValue objects.)
+     */
     virtual bool isReady () const = 0;
 
+    /**
+     * @brief Retrieve a pointer to one of this animation's value objects.
+     *
+     * @param index
+     * @return AnimatedValue*
+     */
     virtual AnimatedValue* getValue (size_t index) = 0;
 
 protected:
@@ -77,7 +120,6 @@ protected:
  * Once this animation is complete, the `Animator` object that owns it will
  * garbage collect it.
  */
-
 template <std::size_t ValueCount> class Animation : public AnimationType
 {
 public:
@@ -195,7 +237,7 @@ public:
             lastTime  = timeInMs;
         }
 
-        auto totalElapsed { timeInMs - startTime };
+        const auto totalElapsed { timeInMs - startTime };
 
         // if we're still delaying, just return.
         if (totalElapsed < preDelay)
@@ -203,7 +245,7 @@ public:
 
         // recalculate the elapsed and delta times to account for an
         // expired delay
-        auto effectElapsed { totalElapsed - preDelay };
+        const auto effectElapsed { totalElapsed - preDelay };
         deltaTime = std::min (deltaTime, totalElapsed);
 
         // loop through our value generators and update:
@@ -213,7 +255,6 @@ public:
         for (int i = 0; i < ValueCount; ++i)
         {
             auto& val = sources[i];
-            jassert (val != nullptr);
             if (val != nullptr)
             {
                 // values[i] = val->GetNextValue ();
@@ -221,6 +262,8 @@ public:
                                                static_cast<int> (deltaTime));
                 completeCount += (val->isFinished ()) ? 1 : 0;
             }
+            else
+                jassertfalse;
         }
 
         if (updateFn != nullptr)
