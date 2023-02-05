@@ -65,6 +65,7 @@ This is a major version bump, and as such, there are breaking changes that will 
 
 * All functions/method names have been converted from `StudlyCaps` to `mixedCase` to follow JUCE conventions. 
 * All durations are now specified in milliseconds instead of frames. It should always have been this way, but without doing this, synching to vertical blanking would have been problematic. 
+* new argument added to the completion callback; a boolean `wasCanceled` will be passed to indicate whether the animation is ending normally, or because it was cancelled. 
 * New `DisplaySyncController` class uses the `juce::VBlankAttachment` class to synchronize animation updates with the display. 
 * The Easing family of `AnimatedValue` (`EaseIn`, `EaseOut`, `Spring`) objects will need much attention with regards to their control values (slew, acceleration, etc.) To support variable frame rates sensibly, all of these curves are now updated _internally_ at a rate of 1000 frames per second, so they should have the same behavior regardless of the actual frame update rate that's in use. 
 
