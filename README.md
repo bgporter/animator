@@ -8,7 +8,7 @@ For a fuller discussion of these classes, see my blog post at [https://artandlog
 
 ## API Docs
 
-API documentation is available [here](https://bgporter.github.io/animator/)
+API documentation is available [here](https://bgporter.github.io/animator/).
 
 ## Overview 
 
