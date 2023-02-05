@@ -47,7 +47,7 @@ public:
      * Set our frame rate to match that used in the animation we're controlling.
      * @param frameRate
      */
-    virtual bool setFrameRate (int frameRate) { return false; }
+    virtual bool setFrameRate (int /*frameRate*/) { return false; }
 
     /**
      * @brief report the current frame rate, whether what was requested or the actual
@@ -236,7 +236,7 @@ private:
             // convert the average interval between updates into a rate/sec
             const int divisor = std::min (updateCount.load (), frameCount);
             if (divisor > 0)
-                return 1000.0 / (sum.load () / static_cast<float> (divisor));
+                return 1000.f / (sum.load () / static_cast<float> (divisor));
             return 0.f;
         }
 
