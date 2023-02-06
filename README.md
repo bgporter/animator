@@ -4,7 +4,7 @@
 
 A generic UI animation controller for JUCE projects.  
 
-For a fuller discussion of these classes, see my blog post at [https://artandlogic.com/2019/09/friz-and-the-illusion-of-life/](https://artandlogic.com/2019/09/friz-and-the-illusion-of-life/). 
+For a fuller discussion of these classes, see my blog post at [https://artandlogic.com/friz-and-the-illusion-of-life/](https://artandlogic.com/friz-and-the-illusion-of-life/). 
 
 ## API Docs
 
