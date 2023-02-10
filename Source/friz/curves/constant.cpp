@@ -29,9 +29,14 @@ Constant::Constant (float value, int duration)
 {
 }
 
+Constant::Constant (float /*startVal*/, float endVal_, int duration)
+: Constant (endVal_, duration)
+{
+}
+
 float Constant::generateNextValue (float /*progress*/)
 {
-    return startVal;
+    return endVal;
 }
 
 #ifdef qRunUnitTests

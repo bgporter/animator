@@ -81,13 +81,29 @@ public:
 
     /**
      * @brief Construct a new Parametric object
+     * As of version 2.1, this ctor is deprecated; prefer to use the
+     * constructor that has the CurveType argument last.
      *
      * @param type Type of curve to use.
      * @param startVal
      * @param endVal
-     * @param duration # of frames.
+     * @param duration in ms
      */
+    [[deprecated ("Use ctor with CurveType as last argument")]]
+
     Parametric (CurveType type, float startVal, float endVal, int duration);
+
+    /**
+     * @brief Construct a new Parametric object
+     * As of version 2.1, this ctor is deprecated; prefer to use the
+     * constructor that has the CurveType argument last.
+     *
+     * @param startVal
+     * @param endVal
+     * @param duration in ms
+     * @param type Type of curve to use.
+     */
+    Parametric (float startVal, float endVal, int duration, CurveType type);
 
     /**
      * @brief Set a new curve function for the generator.

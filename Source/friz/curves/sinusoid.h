@@ -44,7 +44,7 @@ public:
      * the corner conditions.
      * @param startPhase start phase, typically 0..2pi
      * @param endPhase   end phase, typically 0..2pi.
-     * @param duration   duration in frames.
+     * @param duration   duration in milliseconds.
      */
     Sinusoid (float startPhase_, float endPhase_, int duration)
     : TimedValue (startPhase_, endPhase_, duration)

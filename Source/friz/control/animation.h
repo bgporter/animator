@@ -337,4 +337,31 @@ private:
     SourceList sources;
 };
 
+template <class T, int ValueCount, class... Args>
+std::unique_ptr<Animation<ValueCount>> makeAnimation (int id,
+                                              std::array<float, ValueCount>&& from,
+                                              std::array<float, ValueCount>&& to,
+                                              Args... args)
+{
+    // make sure we're trying to create an animation object.
+    static_assert (std::is_base_of<AnimatedValue, T>::value);
+
+    auto animation { std::make_unique<Animation<ValueCount>> (id) };
+
+    for (int i { 0 }; i < ValueCount; ++i)
+    {
+        auto curve { std::make_unique<T> (from[i], to[i], std::forward<Args> (args)...) };
+        animation->setValue (i, std::move (curve));
+    }
+
+    return animation;
+}
+
+// cleaner version to animate a single value:
+template <class T, class... Args>
+std::unique_ptr<Animation<1>> makeAnimation (int id, float from, float to, Args... args)
+{
+    return makeAnimation<T, 1> (id, {from}, {to}, std::forward<Args>(args)...);
+}
+
 } // namespace friz

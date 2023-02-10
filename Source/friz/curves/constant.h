@@ -46,9 +46,22 @@ public:
     /**
      * A value that doesn't change.
      * @param value      Value to generate.
-     * @param duration # of frames the effect should take.
+     * @param duration # of milliseconds the effect should take.
      */
     Constant (float value, int duration);
+
+    /**
+     * @brief An alternate constructor that can be used by the
+     * `makeAnimation()` factory function, which requires that all
+     * animation effects have separate start and end values. We ignore anything
+     * passed to the startValue argument.
+     *
+     * @param startVal **ignored**
+     * @param endVal    The only value this effect wil emit.
+     * @param duration in milliseconds.
+     *
+     */
+    Constant (float /*startVal*/, float endVal, int duration);
 
 private:
     float generateNextValue (float progress) override;

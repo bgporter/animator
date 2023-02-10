@@ -70,6 +70,11 @@ namespace friz
 {
 
 Parametric::Parametric (CurveType type, float startVal, float endVal, int duration)
+: Parametric (startVal, endVal, duration, type)
+{
+}
+
+Parametric::Parametric (float startVal, float endVal, int duration, CurveType type)
 : TimedValue (startVal, endVal, duration)
 {
     switch (type)
@@ -275,10 +280,14 @@ float Parametric::generateNextValue (float progress)
     if (progress >= 1.0f)
         return endVal;
 
-    jassert (curve != nullptr);
+    // if we don't have a curve function, return the scaled input so we at
+    // least have sensible linear behavior.
+    if (curve == nullptr)
+    {
+        jassertfalse;
+        return scale (progress);
+    }
 
-    // float curvePoint = curve (progress) * distance;
-    // return startVal + (curvePoint * (endVal - startVal));
     return scale (curve (progress));
 }
 
