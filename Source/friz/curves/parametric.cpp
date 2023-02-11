@@ -191,7 +191,7 @@ Parametric::Parametric (float startVal, float endVal, int duration, CurveType ty
 
         case kEaseOutBack:
             curve = [] (float x)
-            { return 1 + kC3 * pow_f (x - 1, 3) + kC1 * std::powf (x - 1, 2); };
+            { return 1 + kC3 * pow_f (x - 1, 3) + kC1 * pow_f (x - 1, 2); };
             break;
 
         case kEaseInOutBack:
