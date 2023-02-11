@@ -10,7 +10,7 @@ API documentation is available [here](https://bgporter.github.io/animator/).
 
 ## Overview 
 
-The `friz` project is a set of C++ classes that can be used in projects built with the [JUCE](https://www.juce.com) application framework to add animation effects to user interface elements. Using this library lets you easily specify a stream of timed values that can be used for any purpose in an application, but most frequently for moving or otherwise changing the visual appearance of UI elements in the application. It comes with a rich set of "easing curves" that control how the values are generated over time, and adding your own easings is simple and straightforward. 
+The `friz` project is a set of C++ classes that can be used in projects built with the [JUCE](https://www.juce.com) application framework to add animation effects to user interface elements. Using this library lets you easily specify a stream of timed values that can be used for any purpose in an application, but most frequently for moving or otherwise changing the visual appearance of UI elements in the application. It comes with a rich set of "easing curves" that control how the values are generated over time, and adding your own control curves is simple and straightforward. 
 
 It's named after [Friz Freling](https://en.wikipedia.org/wiki/Friz_Freleng), animator and director of Looney Tunes/Merrie Melodies shorts in the golden age of the Warner Bros. animation studio. 
 
@@ -86,7 +86,9 @@ void MyContentComponent::mouseDown (const juce::MouseEvent& e)
 }
 ```
 
-...and that's it. Clicking inside the component will start the animation, run it to completion, and clean up all the objects that it needed when it completes. This animation at 30 frames/second is pretty nice, but JUCE timers aren't rock-solid (by design; they really weren't designed for this level of precision). If your app targets versions of JUCE after 7.0.0, you can add a single line of code to use the `VBlankAttachment` class that was added, synchronizing our animations to the vertical blank refresh of the monitor that your application is running on, making the animation as smooth as it can be -- add this line to the constructor of ths component:
+...and that's it. Clicking inside the component will start the animation, run it to completion, and clean up all the objects that it needed when it completes. 
+
+This animation at 30 frames/second is pretty nice, but JUCE timers aren't rock-solid (by design; they really weren't designed for this level of precision). If your app targets versions of JUCE after 7.0.0, you can add a single line of code to make your animations sync exactly to the refresh rate of the monitor, which will make them execute as smoothly as they possibly can:
 
 ```cpp
 MyContentComponent::MyContentComponent ()
@@ -104,7 +106,7 @@ This instantiates the animator so that it uses the refresh interval of whatever 
 
 * *Lightweight* If no effects are being run, there's no runtime overhead. 
 * *Flexible* Adding new types of animation curves is simple, typically only requiring the creation of a new C++ class derived from an existing effect type and the overriding of a single method. Client code provides a pair of `lambda` objects to receive updates on frame updates and effect completion. Using the `Parametric` class, you can implement an effect by providing a single function that maps a floating point value in the range [0, 1] to a floating point output variable _mostly_ in the range [0, 1] (small excursions outside that range are permitted and can be useful!)
-* *Decoupled* Friz doesn't need or want to know anything about your application ; it just sends your code back a stream of values at regular intervals.  
+* *Decoupled* Friz doesn't need or want to know anything about your application; it just sends your code back a stream of values at regular intervals.  
 * *Modern* Written using current (C++11 and later) capabilities and techniques. 
 
 ## Classes 
@@ -132,10 +134,10 @@ Base class for a set of animation curve types that can be instantiated with a st
 * **Constant**&mdash;emits a stream consisting of the same constant value
 * **Linear**&mdash;interpolates linearly between start and end 
 * **Parametric**&mdash;provides a set of commonly used easing curves as seen e.g. at https://easings.net
+* **Sinusoid**&mdash;generates `sin`/`cos` values between any two phase values
 * **EaseIn**&mdash;accelerates quickly away from startVal, decelerates as it approaches endVal
 * **EaseOut**&mdash;accelerates slowly away from startVal, accelerates into endVal 
 * **Spring**&mdash;accelerates away from startVal. If it overshoots the endVal, will simulate the oscillation of a dampened spring around the endVal until within tolerance. 
-* **Sinusoid**&mdash;generates `sin`/`cos` values between any two phase values
 
 
 ## Demo application 
@@ -148,6 +150,23 @@ The demonstration application (located in the [`bgporter/frizDemo` repository](h
 The control panel on the right can be hidden and shown by clicking on its gray border (and is itself animated). All of the animation parameters can be tweaked and played with using the sliders in the control panel. 
 
 Additionally, a 'show breadcrumbs' checkbox controls the display of a point on the screen indicating the position of the last square on each frame of the animation&mdash;very helpful for visualizing how each of the curves actually behaves. 
+
+## Other Examples
+
+(Courtesy of [Sudara](https://github.com/sudara)):
+This tween animates 2 values at once, the opacity and the position of the component. It uses an AffineTransform for smooth float positioning accuracy. You could also use juce::Component's setBounds methods with integers.
+
+```cpp
+auto fadeIn = std::make_unique<friz::Parametric> (friz::Parametric::CurveType::kEaseOutSine, 0.0f, 1.0f, 0.3f * 60);
+auto dropIn = std::make_unique<friz::Parametric> (friz::Parametric::CurveType::kEaseOutSine, -10.f, 0.f, 0.5f * 60);
+auto animation = std::make_unique<friz::Animation<2>> (friz::Animation<2>::SourceList { std::move (fadeIn), std::move (dropIn) }, 0);
+animation->onUpdate ([&] (int id, const auto& val) {
+    juce::AffineTransform t;
+    this->setTransform (t.translated (0, val[1]));
+    this->setAlpha (val[0]);
+});
+animator.addAnimation (std::move (animation));
+```
 
 ## Release History
 
