@@ -27,7 +27,6 @@
 #include "../curves/constant.h"
 #include "../curves/easing.h"
 #include "../curves/linear.h"
-#include "../curves/sequence.h"
 #include "../curves/spring.h"
 #include "animation.h"
 

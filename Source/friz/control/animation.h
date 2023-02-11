@@ -372,14 +372,7 @@ std::unique_ptr<Animation<ValueCount>> makeAnimation (
 
 /**
  * @brief 1-dimensional version of the makeAnimation function.
- *
- * @tparam T
- * @tparam Args
- * @param id
- * @param from
- * @param to
- * @param args
- * @return std::unique_ptr<Animation<1>>
+ * @sa makeAnimation
  */
 template <class T, class... Args>
 std::unique_ptr<Animation<1>> makeAnimation (int id, float from, float to, Args... args)
