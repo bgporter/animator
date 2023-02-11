@@ -65,6 +65,18 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 #### Non-breaking Changes
 
+##### `Chain` animation type
+
+Add a new `Chain` animation type that lets you bundle together a series of individual animations that will be triggered sequentially. Animations added to a `Chain` each retain their own update and completion callback functions, and do not need to have the same number of Values. 
+
+The existing `Sequence` animation type has been updated so that it's a specialization of the `Chain` type, where all the contained animations must contain the same number of Values, and a single `UpdateFn` callback is used for the entire series of effects. 
+
+Comceptually, a `Chain` lets you say "I want this to happen, and when that's done, I want this other thing to happen." A `Sequence` is used when you want to build a single complex animation out of several simpler effects that happen in order. 
+
+In the demo app, we use a Sequence for the 'pop out' of the sidebar&mdash;we first click the sidebar to the right, then run another animation to pop it out and make it visible. A single callback updates the position of the sidebar component. 
+
+We use a `Chain` when handling the demo boxes; the first animation moves a box from its creation point to some other (x,y) position on screen, and when that's done we start a second animation that performs a linear (1-dimensional) fade of the box's fill color.
+
 ##### Factory Function
 
 Add a new free function `makeAnimation` to make the creation of many effects much simpler. In practice, most of the effects that I use are either 1-dimensional, or multi-dimensional, but all of the values being generated are using the same curve type and parameters. 
@@ -87,9 +99,8 @@ auto fade = friz::makeAnimation<friz::Linear>(effectId, startValue, endValue, du
 The benefits become apparent when making multi-dimensional effects, as you can pass all the keyframe values at once: 
 
 ```cpp
-
 auto moveEffect { friz::makeAnimation<friz::Parametric, 2> (
-    effectId, {0.f, 0.f}, {100.f, 100,f}, 200, friz::Parametric::kCubic)};
+    effectId, {0.f, 0.f}, {100.f, 100.f}, 200, friz::Parametric::kCubic)};
 ```
 
 -- creating an animation object that contains two AnimatedValue obiects, ready to run by passing to an Animator object. 
