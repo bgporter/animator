@@ -12,9 +12,93 @@ API documentation is available [here](https://bgporter.github.io/animator/).
 
 ## Overview 
 
-The `friz` project is a set of C++ classes that can be used in projects built with the [JUCE](https://www.juce.com) application framework to add animation effects to user interface elements. 
+The `friz` project is a set of C++ classes that can be used in projects built with the [JUCE](https://www.juce.com) application framework to add animation effects to user interface elements. Using this library lets you easily specify a stream of timed values that can be used for any purpose in an application, but most frequently for moving or otherwise changing the visual appearance of UI elements in the application. It comes with a rich set of "easing curves" that control how the values are generated over time, and adding your own easings is simple and straightforward. 
 
 It's named after [Friz Freling](https://en.wikipedia.org/wiki/Friz_Freleng), animator and director of Looney Tunes/Merrie Melodies shorts in the golden age of the Warner Bros. animation studio. 
+
+## Crash Course
+
+Let's imagine a simple use of this: A JUCE applicaton with a main component that has nothing in it. Every time you click inside the window, the background color will smoothly animate to a new, random color. This component needs two member variables, a `juce::Colour` and a `friz::Animator`.
+
+```cpp
+class MyContentComponent : public juce::Component 
+{
+public:
+    MyContentComponent (); 
+
+    // called whenever the mouse is clicked in the component
+    void mouseDown (const juce::MouseEvent& e) override;
+
+    // flood-fill the component with the active color
+    void paint (juce::Graphics& g) override { g.fillAll (bgColor); }
+private:
+    juce::Colour bgColor { juce::Colours::white };
+    friz::Animator animator;   
+};
+```
+
+We'll hand-wave past all of the "getting a JUCE application that has a main window that can host this as a content component" business -- you should already know how to do that part. 
+
+Without doing anything more, we have a component that is ready to generate and handle animation events. Instantiating a `friz::Animator` with no arguments creates an animation controller that's driven by a `juce::Timer` and will execute a a rate of 30 frames per second when an animation is running. 
+
+To get the color change animation running, we'll implement the `mouseDown` handler that JUCE provides for us: 
+
+```cpp
+void MyContentComponent::mouseDown (const juce::MouseEvent& e)
+{
+    // arbitrary ID value; we use to prevent multiple animations at once. 
+    const int animationId { 1 };
+
+    // check to see if our animation is currently running -- if so, just exit:
+    if (animator->getAnimation (animationId) != nullptr)
+        return;
+    // we'll animate the color through HSB color space, so we need some random numbers to go toward: 
+    auto& random { Random::getSystemRandom () };
+    const auto nextHue { random.nextFloat () };
+    const auto nextSat { random.nextFloat () };
+    const auto nextBright { random.nextFloat () };
+    // a random number of milliseconds for the transition, between 300 and 2000
+    const auto duration { random.nextInt { 300, 2000 } };
+
+    // create the animation, using 3 parametric curves with the same settings:
+    auto effect { friz::makeAnimation <friz::Parametric, 3> (
+        // ID of the animation
+        animationId, 
+        //  The values to start from, Hue/Saturation/Brightness
+        { bgColor.getHue (), bgColor.getSaturation (), bgColor.getBrightness ()}, 
+        // The values to animate toward
+        { nextHue, nextSat, nextBright}, 
+        // # of millseconds for the transition
+        duration, 
+        // additional args -- here, we specify the shape of the curve. 
+        friz::Parametric::kCubic)
+        };
+
+    // The animator will execute a callback lambda on every frame:
+    effect->updateFn = [this] (int id, const auto& vals)
+    {
+        // vals is an std::array<float, 3> containing the current in-between state of the 
+        // animation. Update the bg color variable and repaint. 
+        bgColor = juce::Colour (vals[0], vals[1], vals[2], 1.f);
+        repaint ();
+    }
+
+    // pass the animation object to the animator, which will start running it immediately. 
+    animator.addAnimation (std::move (effect));
+}
+```
+
+...and that's it. Clicking inside the component will start the animation, run it to completion, and clean up all the objects that it needed when it completes. This animation at 30 frames/second is pretty nice, but JUCE timers aren't rock-solid (by design; they really weren't designed for this level of precision). If your app targets versions of JUCE after 7.0.0, you can add a single line of code to use the `VBlankAttachment` class that was added, synchronizing our animations to the vertical blank refresh of the monitor that your application is running on, making the animation as smooth as it can be -- add this line to the constructor of ths component:
+
+```cpp
+MyContentComponent::MyContentComponent ()
+:   animator { std::make_unique<friz::DisplaySyncController> (this) }
+{
+
+}
+```
+
+This instantiates the animator so that it uses the refresh interval of whatever display the component is being displayed on as its timing source; if you drag your app window from a monitor with a 60Hz refresh rate to a different monitor that updates at 120 Hz, everything adapts automatically for the best performance. 
 
 ## Design Goals 
 
