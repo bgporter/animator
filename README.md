@@ -170,7 +170,7 @@ animator.addAnimation (std::move (animation));
 
 ## Release History
 
-### 2.1.0 XXX X, 2023
+### 2.1.0 Feb 11, 2023
 
 #### Non-breaking Changes
 
