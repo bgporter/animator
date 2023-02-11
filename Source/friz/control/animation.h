@@ -65,7 +65,7 @@ public:
      */
     void setDelay (int delay) { preDelay = std::max (0, delay); }
 
-    virtual bool setValue (size_t index, std::unique_ptr<AnimatedValue> value)
+    virtual bool setValue (size_t /*index*/, std::unique_ptr<AnimatedValue> /*value*/)
     {
         jassertfalse;
         return false;
