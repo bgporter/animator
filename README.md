@@ -1,7 +1,5 @@
 # Friz
 
-**Fall 2019 * Bg Porter**
-
 A generic UI animation controller for JUCE projects.  
 
 For a fuller discussion of these classes, see my blog post at [https://artandlogic.com/friz-and-the-illusion-of-life/](https://artandlogic.com/friz-and-the-illusion-of-life/). 
@@ -39,7 +37,7 @@ private:
 
 We'll hand-wave past all of the "getting a JUCE application that has a main window that can host this as a content component" business -- you should already know how to do that part. 
 
-Without doing anything more, we have a component that is ready to generate and handle animation events. Instantiating a `friz::Animator` with no arguments creates an animation controller that's driven by a `juce::Timer` and will execute a a rate of 30 frames per second when an animation is running. 
+Without doing anything more, we have a component that is ready to generate and handle animation events. Instantiating a `friz::Animator` with no arguments creates an animation controller that's driven by a `juce::Timer` and will execute at a rate of 30 frames per second when an animation is running. 
 
 To get the color change animation running, we'll implement the `mouseDown` handler that JUCE provides for us: 
 
@@ -74,7 +72,7 @@ void MyContentComponent::mouseDown (const juce::MouseEvent& e)
         friz::Parametric::kCubic)
         };
 
-    // The animator will execute a callback lambda on every frame:
+    // The animator will execute this callback lambda on every frame:
     effect->updateFn = [this] (int id, const auto& vals)
     {
         // vals is an std::array<float, 3> containing the current in-between state of the 
@@ -100,6 +98,8 @@ MyContentComponent::MyContentComponent ()
 
 This instantiates the animator so that it uses the refresh interval of whatever display the component is being displayed on as its timing source; if you drag your app window from a monitor with a 60Hz refresh rate to a different monitor that updates at 120 Hz, everything adapts automatically for the best performance. 
 
+
+
 ## Design Goals 
 
 * *Lightweight* If no effects are being run, there's no runtime overhead. 
@@ -111,20 +111,26 @@ This instantiates the animator so that it uses the refresh interval of whatever 
 
 ### `friz::Animator`
 
+[Animator docs](https://bgporter.github.io/animator/classfriz_1_1_animator.html)
+
 Top level animator object, typically owned by a JUCE `Component` object that needs to animate some aspect of one or more child components. 
 
 ### `friz::Animation`
 
+[Animation docs](https://bgporter.github.io/animator/classfriz_1_1_animation.html)
+
 An individual instance of a set of animation data. Each animation can provide one or more sets of animation curve data that will be sent back to your code on each frame. A derived class `friz::Sequence` is used to chain multiple animations together as a single logical unit. 
 
 ### `friz::AnimatedValue`
+
+[AnimatedValue docs](https://bgporter.github.io/animator/classfriz_1_1_animated_value.html)
 
 Base class for a set of animation curve types that can be instantiated with a start/end value and the definition of when the end value has been reached, either a time duration, or a floating point tolerance to the ending value.
 
 #### Currently Defined Curves
 
 * **Constant**&mdash;emits a stream consisting of the same constant value
-* **Linear**&mdash;interpolates linearly between start and end over a set number of frames 
+* **Linear**&mdash;interpolates linearly between start and end 
 * **Parametric**&mdash;provides a set of commonly used easing curves as seen e.g. at https://easings.net
 * **EaseIn**&mdash;accelerates quickly away from startVal, decelerates as it approaches endVal
 * **EaseOut**&mdash;accelerates slowly away from startVal, accelerates into endVal 
@@ -161,7 +167,7 @@ In the demo app, we use a Sequence for the 'pop out' of the sidebar&mdash;we fir
 
 We use a `Chain` when handling the demo boxes; the first animation moves a box from its creation point to some other (x,y) position on screen, and when that's done we start a second animation that performs a linear (1-dimensional) fade of the box's fill color.
 
-##### Factory Function
+##### `makeAnimation` Factory Function
 
 Add a new free function `makeAnimation` to make the creation of many effects much simpler. In practice, most of the effects that I use are either 1-dimensional, or multi-dimensional, but all of the values being generated are using the same curve type and parameters. 
 
