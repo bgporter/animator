@@ -61,9 +61,42 @@ Additionally, a 'show breadcrumbs' checkbox controls the display of a point on t
 
 ## Release History
 
+### 2.1.0 XXX X, 2023
+
+#### Non-breaking Changes
+
+##### Factory Function
+
+Add a new free function `makeAnimation` to make the creation of many effects much simpler. In practice, most of the effects that I use are either 1-dimensional, or multi-dimensional, but all of the values being generated are using the same curve type and parameters. 
+
+Code that before might have been written like:
+
+```cpp
+auto fade = std::make_unique<friz::Animation<1>> (
+    friz::Animation<1>::SourceList {
+        std::make_unique<friz::Linear> (startValue, endValue, duration) },
+                effectId);
+```
+
+can be cleaned up into: 
+
+```cpp
+auto fade = friz::makeAnimation<friz::Linear>(effectId, startValue, endValue, duration);
+```
+
+The benefits become apparent when making multi-dimensional effects, as you can pass all the keyframe values at once: 
+
+```cpp
+
+auto moveEffect { friz::makeAnimation<friz::Parametric, 2> (
+    effectId, {0.f, 0.f}, {100.f, 100,f}, 200, friz::Parametric::kCubic)};
+```
+
+-- creating an animation object that contains two AnimatedValue obiects, ready to run by passing to an Animator object. 
+
 ### 2.0.0 February 5, 2023
 
-**Breaking Changes**
+#### Breaking Changes
 
 This is a major version bump, and as such, there are breaking changes that will require updates in existing code:
 
@@ -73,7 +106,7 @@ This is a major version bump, and as such, there are breaking changes that will 
 * New `DisplaySyncController` class uses the `juce::VBlankAttachment` class to synchronize animation updates with the display. 
 * The Easing family of `AnimatedValue` (`EaseIn`, `EaseOut`, `Spring`) objects will need much attention with regards to their control values (slew, acceleration, etc.) To support variable frame rates sensibly, all of these curves are now updated _internally_ at a rate of 1000 frames per second, so they should have the same behavior regardless of the actual frame update rate that's in use. 
 
-**Non-breaking Changes**
+#### Non-breaking Changes
 
 * Doxygen comments corrected, cleaned up, added as needed
 * General cleanup throughout
