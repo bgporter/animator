@@ -1,5 +1,6 @@
-<map id="friz::Sequence&lt; valueCount &gt;" name="friz::Sequence&lt; valueCount &gt;">
-<area shape="rect" id="node1" title="An Animation class that can hold multiple Animation objects and execute them in sequence...." alt="" coords="5,152,196,177"/>
-<area shape="rect" id="node2" href="$classfriz_1_1_animation.html" title=" " alt="" coords="5,79,196,104"/>
-<area shape="rect" id="node3" href="$classfriz_1_1_animation_type.html" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="35,5,166,31"/>
+<map id="friz::Sequence&lt; ValueCount &gt;" name="friz::Sequence&lt; ValueCount &gt;">
+<area shape="rect" id="node1" title="An Animation class that can hold multiple Animation objects and execute them in sequence." alt="" coords="39,167,231,192"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_chain.html" title="A container animation object that holds several animations and executes them in order." alt="" coords="31,86,110,111"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_animation_type.html" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="5,5,136,31"/>
+<area shape="rect" id="node4" href="$classfriz_1_1_update_source.html" title=" " alt="" coords="135,79,263,119"/>
 </map>

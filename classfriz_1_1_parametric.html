@@ -168,8 +168,11 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>CurveFn</b> = std::f
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5ce073be9f7d5ce74feaaffcc53e89f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_parametric.html#a5ce073be9f7d5ce74feaaffcc53e89f3">Parametric</a> (CurveType type, float startVal, float endVal, int <a class="el" href="classfriz_1_1_timed_value.html#ab1893af5eb4efbf3f490e2485c7a5456">duration</a>)</td></tr>
-<tr class="memdesc:a5ce073be9f7d5ce74feaaffcc53e89f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object.  <br /></td></tr>
+<tr class="memdesc:a5ce073be9f7d5ce74feaaffcc53e89f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object As of version 2.1, this ctor is deprecated; prefer to use the constructor that has the CurveType argument last.  <br /></td></tr>
 <tr class="separator:a5ce073be9f7d5ce74feaaffcc53e89f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a324cec8a2c75e6efe04ccf40efd3cd0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_parametric.html#a324cec8a2c75e6efe04ccf40efd3cd0b">Parametric</a> (float startVal, float endVal, int <a class="el" href="classfriz_1_1_timed_value.html#ab1893af5eb4efbf3f490e2485c7a5456">duration</a>, CurveType type)</td></tr>
+<tr class="memdesc:a324cec8a2c75e6efe04ccf40efd3cd0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object As of version 2.1, this ctor is deprecated; prefer to use the constructor that has the CurveType argument last.  <br /></td></tr>
+<tr class="separator:a324cec8a2c75e6efe04ccf40efd3cd0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09d33272cfb1c753d5f4fbd96d31cdbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_parametric.html#a09d33272cfb1c753d5f4fbd96d31cdbf">SetCurve</a> (CurveFn curve)</td></tr>
 <tr class="memdesc:a09d33272cfb1c753d5f4fbd96d31cdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a new curve function for the generator.  <br /></td></tr>
 <tr class="separator:a09d33272cfb1c753d5f4fbd96d31cdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,7 +248,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>finished</b> { false 
    https://easings.net
 </pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5ce073be9f7d5ce74feaaffcc53e89f3" name="a5ce073be9f7d5ce74feaaffcc53e89f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ce073be9f7d5ce74feaaffcc53e89f3">&#9670;&#160;</a></span>Parametric()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ce073be9f7d5ce74feaaffcc53e89f3">&#9670;&#160;</a></span>Parametric() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,13 +285,64 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>finished</b> { false 
       </table>
 </div><div class="memdoc">
 
-<p>Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object. </p>
+<p>Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object As of version 2.1, this ctor is deprecated; prefer to use the constructor that has the CurveType argument last. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>Type of curve to use. </td></tr>
     <tr><td class="paramname">startVal</td><td></td></tr>
     <tr><td class="paramname">endVal</td><td></td></tr>
-    <tr><td class="paramname">duration</td><td># of frames. </td></tr>
+    <tr><td class="paramname">duration</td><td>in ms </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a324cec8a2c75e6efe04ccf40efd3cd0b" name="a324cec8a2c75e6efe04ccf40efd3cd0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a324cec8a2c75e6efe04ccf40efd3cd0b">&#9670;&#160;</a></span>Parametric() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">friz::Parametric::Parametric </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>startVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>endVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>duration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CurveType&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="classfriz_1_1_parametric.html" title="A class that can generate different parametric easing curves.">Parametric</a> object As of version 2.1, this ctor is deprecated; prefer to use the constructor that has the CurveType argument last. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startVal</td><td></td></tr>
+    <tr><td class="paramname">endVal</td><td></td></tr>
+    <tr><td class="paramname">duration</td><td>in ms </td></tr>
+    <tr><td class="paramname">type</td><td>Type of curve to use. </td></tr>
   </table>
   </dd>
 </dl>
@@ -369,7 +423,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>finished</b> { false 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>friz</b></li><li class="navelem"><a class="el" href="classfriz_1_1_parametric.html">Parametric</a></li>
-    <li class="footer">Generated on Mon Feb 6 2023 13:35:36 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sat Feb 11 2023 22:14:02 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

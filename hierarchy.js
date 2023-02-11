@@ -18,10 +18,10 @@ var hierarchy =
       ] ]
     ] ],
     [ "friz::AnimationType", "classfriz_1_1_animation_type.html", [
-      [ "friz::Animation< valueCount >", "classfriz_1_1_animation.html", [
-        [ "friz::Sequence< valueCount >", "classfriz_1_1_sequence.html", null ]
-      ] ],
-      [ "friz::Animation< ValueCount >", "classfriz_1_1_animation.html", null ]
+      [ "friz::Animation< ValueCount >", "classfriz_1_1_animation.html", null ],
+      [ "friz::Chain", "classfriz_1_1_chain.html", [
+        [ "friz::Sequence< ValueCount >", "classfriz_1_1_sequence.html", null ]
+      ] ]
     ] ],
     [ "friz::Animator", "classfriz_1_1_animator.html", null ],
     [ "friz::Controller", "classfriz_1_1_controller.html", [
@@ -32,5 +32,9 @@ var hierarchy =
     [ "friz::FrameRateCalculator", "classfriz_1_1_frame_rate_calculator.html", null ],
     [ "juce::Timer", null, [
       [ "friz::TimeController", "classfriz_1_1_time_controller.html", null ]
+    ] ],
+    [ "friz::UpdateSource< ValueCount >", "classfriz_1_1_update_source.html", [
+      [ "friz::Animation< ValueCount >", "classfriz_1_1_animation.html", null ],
+      [ "friz::Sequence< ValueCount >", "classfriz_1_1_sequence.html", null ]
     ] ]
 ];

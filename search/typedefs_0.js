@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['completionfn_0',['CompletionFn',['../classfriz_1_1_animation.html#ac537d6f9607a469b420332ce2fa9868f',1,'friz::Animation']]]
+  ['completionfn_0',['CompletionFn',['../classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80',1,'friz::AnimationType']]]
 ];

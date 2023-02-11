@@ -1,0 +1,5 @@
+<map id="friz::UpdateSource&lt; ValueCount &gt;" name="friz::UpdateSource&lt; ValueCount &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="145,5,273,45"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animation.html" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate..." alt="" coords="5,93,197,119"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_sequence.html" title="An Animation class that can hold multiple Animation objects and execute them in sequence." alt="" coords="221,93,413,119"/>
+</map>

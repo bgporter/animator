@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>friz: Source/friz/curves/sequence.h Source File</title>
+<title>friz: Source/friz/control/sequence.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -118,118 +118,62 @@ $(document).ready(function(){initNavTree('sequence_8h_source.html',''); initResi
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;../control/animation.h&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;chain.h&quot;</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">namespace </span>friz</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html">   36</a></span><span class="keyword">template</span> &lt;<span class="keywordtype">int</span> valueCount&gt; <span class="keyword">class </span><a class="code hl_class" href="classfriz_1_1_sequence.html">Sequence</a> : <span class="keyword">public</span> <a class="code hl_class" href="classfriz_1_1_animation.html">Animation</a>&lt;valueCount&gt;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>{</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_class" href="classfriz_1_1_sequence.html">Sequence</a> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> = 0)</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    : <a class="code hl_class" href="classfriz_1_1_animation.html">Animation&lt;valueCount&gt;</a> (<span class="keywordtype">id</span>)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    , currentEffect { 0 }</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#a0c9bb0a0b26ce3037c8558544afcfa63">   45</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classfriz_1_1_sequence.html#a0c9bb0a0b26ce3037c8558544afcfa63">isFinished</a> ()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> (currentEffect &gt;= sequence.size ()); }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#a1ad45997af518ba4c2ecd97ad5b89841">   47</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classfriz_1_1_sequence.html#a1ad45997af518ba4c2ecd97ad5b89841">isReady</a> ()<span class="keyword"> const override</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; effect : sequence)</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordflow">if</span> ((<span class="keyword">nullptr</span> == effect) || (!effect-&gt;isReady ()))</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        }</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#ad945696bd24e3291efa753b1039ef751">   57</a></span>    <a class="code hl_enumeration" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320a">AnimationType::Status</a> <a class="code hl_function" href="classfriz_1_1_sequence.html#ad945696bd24e3291efa753b1039ef751">gotoTime</a> (juce::int64 timeInMs)<span class="keyword"> override</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keyword">auto</span> effect = <a class="code hl_function" href="classfriz_1_1_sequence.html#a6708c465313500cd253970d59f8082da">getEffect</a> (currentEffect);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordflow">if</span> (effect)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">if</span> (<a class="code hl_enumvalue" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19">AnimationType::Status::finished</a> == effect-&gt;gotoTime (timeInMs))</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                ++currentEffect;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="classfriz_1_1_sequence.html#a0c9bb0a0b26ce3037c8558544afcfa63">isFinished</a> () ? <a class="code hl_enumvalue" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19">AnimationType::Status::finished</a></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                                 : <a class="code hl_enumvalue" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aa4374990dedc873c6a9417a355a2ac4cf">AnimationType::Status::processing</a>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19">AnimationType::Status::finished</a>;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#aa1aa230f57a5527423c1cc88406a36f9">   72</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classfriz_1_1_sequence.html#aa1aa230f57a5527423c1cc88406a36f9">cancel</a> (<span class="keywordtype">bool</span> moveToEndPosition)<span class="keyword"> override</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (moveToEndPosition)</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keyword">auto</span> lastIndex  = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span> (sequence.size () - 1);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keyword">auto</span> lastEffect = <a class="code hl_function" href="classfriz_1_1_sequence.html#a6708c465313500cd253970d59f8082da">getEffect</a> (lastIndex);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">if</span> (lastEffect)</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                lastEffect-&gt;cancel (moveToEndPosition);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">void</span> addAnimation (std::unique_ptr&lt;<a class="code hl_class" href="classfriz_1_1_animation.html">Animation&lt;valueCount&gt;</a>&gt; effect)</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    {</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="comment">// We need to make each of the effects notify us on update or completion,</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment">// so that we can pass those along to whoever passed in a single</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="comment">// lambda to us.</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        effect-&gt;onUpdate (</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            [<span class="keyword">this</span>] (<span class="keywordtype">int</span> <span class="comment">/*id*/</span>, <span class="keyword">const</span> <span class="keyword">typename</span> Animation&lt;valueCount&gt;::ValueList&amp; val)</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            {</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="classfriz_1_1_animation.html#a8fdb25724f3acf0f014e5638b31b5fb0">updateFn</a> != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    this-&gt;<a class="code hl_variable" href="classfriz_1_1_animation.html#a8fdb25724f3acf0f014e5638b31b5fb0">updateFn</a> (this-&gt;<a class="code hl_function" href="classfriz_1_1_animation_type.html#ab3c0009ad355eb9e397e61f39d1125dd">getId</a> (), val);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            });</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        effect-&gt;onCompletion (</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            [<span class="keyword">this</span>] (<span class="keywordtype">int</span> <span class="comment">/*id*/</span>, <span class="keywordtype">bool</span> wasCanceled)</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            {</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                <span class="comment">// Each effect in the sequence will notify us, but we only pass</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                <span class="comment">// along the final one.</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                <span class="keywordflow">if</span> ((currentEffect == sequence.size () - 1) &amp;&amp;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                    this-&gt;completionFn != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                    this-&gt;completionFn (this-&gt;getId (), wasCanceled);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            });</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        sequence.push_back (std::move (effect));</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    }</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#a6708c465313500cd253970d59f8082da">  114</a></span>    <a class="code hl_class" href="classfriz_1_1_animation.html">Animation&lt;valueCount&gt;</a>* <a class="code hl_function" href="classfriz_1_1_sequence.html#a6708c465313500cd253970d59f8082da">getEffect</a> (<span class="keywordtype">int</span> index)</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    {</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">if</span> (juce::isPositiveAndBelow (index, sequence.size ()))</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keywordflow">return</span> sequence[index].get ();</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        jassertfalse;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    std::vector&lt;std::unique_ptr&lt;Animation&lt;valueCount&gt;&gt;&gt; sequence;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">int</span> currentEffect { 0 };</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>};</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>} <span class="comment">// namespace friz</span></div>
-<div class="ttc" id="aclassfriz_1_1_animation_html"><div class="ttname"><a href="classfriz_1_1_animation.html">friz::Animation</a></div><div class="ttdoc">This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate...</div><div class="ttdef"><b>Definition:</b> animation.h:124</div></div>
-<div class="ttc" id="aclassfriz_1_1_animation_html_a8fdb25724f3acf0f014e5638b31b5fb0"><div class="ttname"><a href="classfriz_1_1_animation.html#a8fdb25724f3acf0f014e5638b31b5fb0">friz::Animation&lt; valueCount &gt;::updateFn</a></div><div class="ttdeci">UpdateFn updateFn</div><div class="ttdef"><b>Definition:</b> animation.h:322</div></div>
-<div class="ttc" id="aclassfriz_1_1_animation_type_html_a061d5e637d7f418597a1b32ea7db320a"><div class="ttname"><a href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320a">friz::AnimationType::Status</a></div><div class="ttdeci">Status</div><div class="ttdef"><b>Definition:</b> animation.h:42</div></div>
-<div class="ttc" id="aclassfriz_1_1_animation_type_html_a061d5e637d7f418597a1b32ea7db320aa4374990dedc873c6a9417a355a2ac4cf"><div class="ttname"><a href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aa4374990dedc873c6a9417a355a2ac4cf">friz::AnimationType::Status::processing</a></div><div class="ttdeci">@ processing</div><div class="ttdoc">The animation is running right now.</div></div>
-<div class="ttc" id="aclassfriz_1_1_animation_type_html_a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19"><div class="ttname"><a href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19">friz::AnimationType::Status::finished</a></div><div class="ttdeci">@ finished</div><div class="ttdoc">Finished running, okay to clean up.</div></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> ValueCount&gt;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html">   43</a></span><span class="keyword">class </span><a class="code hl_class" href="classfriz_1_1_sequence.html">Sequence</a> : <span class="keyword">public</span> <a class="code hl_class" href="classfriz_1_1_chain.html">Chain</a>,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                 <span class="keyword">public</span> <a class="code hl_class" href="classfriz_1_1_update_source.html">UpdateSource</a>&lt;ValueCount&gt;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_class" href="classfriz_1_1_sequence.html">Sequence</a> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> = 0)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    : <a class="code hl_class" href="classfriz_1_1_chain.html">Chain</a> (<span class="keywordtype">id</span>)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classfriz_1_1_sequence.html#a86ecac09f9fd7660cf1d33001c5716a2">   58</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classfriz_1_1_sequence.html#a86ecac09f9fd7660cf1d33001c5716a2">addAnimation</a> (std::unique_ptr&lt;<a class="code hl_class" href="classfriz_1_1_animation.html">Animation&lt;ValueCount&gt;</a>&gt; effect) </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="comment">// We need to make each of the effects notify us on update or completion,</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// so that we can pass those along to whoever passed in a single</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="comment">// lambda to us.</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        effect-&gt;updateFn =</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            [<span class="keyword">this</span>] (<span class="keywordtype">int</span> <span class="comment">/*id*/</span>, <span class="keyword">const</span> <span class="keyword">typename</span> Animation&lt;ValueCount&gt;::ValueList&amp; val)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="classfriz_1_1_update_source.html#ac6e507e25d7afc203d23d9b2397e1602">updateFn</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                this-&gt;<a class="code hl_variable" href="classfriz_1_1_update_source.html#ac6e507e25d7afc203d23d9b2397e1602">updateFn</a> (this-&gt;<a class="code hl_function" href="classfriz_1_1_animation_type.html#ab3c0009ad355eb9e397e61f39d1125dd">getId</a> (), val);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        };</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        effect-&gt;completionFn = [<span class="keyword">this</span>] (<span class="keywordtype">int</span> <span class="comment">/*id*/</span>, <span class="keywordtype">bool</span> wasCanceled)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="comment">// Each effect in the sequence will notify us, but we only pass</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="comment">// along the final one.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">if</span> ((<a class="code hl_variable" href="classfriz_1_1_chain.html#af2a35e87203b6122ff059d1a1f0fe346">currentEffect</a> == <a class="code hl_variable" href="classfriz_1_1_chain.html#af233fab6bf60ff41a9db1376b5bba521">sequence</a>.size () - 1) &amp;&amp; this-&gt;<a class="code hl_variable" href="classfriz_1_1_animation_type.html#ab531eba021173829e77ad73e99293dfc">completionFn</a> != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                this-&gt;<a class="code hl_variable" href="classfriz_1_1_animation_type.html#ab531eba021173829e77ad73e99293dfc">completionFn</a> (this-&gt;<a class="code hl_function" href="classfriz_1_1_animation_type.html#ab3c0009ad355eb9e397e61f39d1125dd">getId</a> (), wasCanceled);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        };</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        Chain::addAnimation (std::move (effect));</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>};</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>} <span class="comment">// namespace friz</span></div>
+<div class="ttc" id="aclassfriz_1_1_animation_html"><div class="ttname"><a href="classfriz_1_1_animation.html">friz::Animation</a></div><div class="ttdoc">This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate...</div><div class="ttdef"><b>Definition:</b> animation.h:168</div></div>
 <div class="ttc" id="aclassfriz_1_1_animation_type_html_ab3c0009ad355eb9e397e61f39d1125dd"><div class="ttname"><a href="classfriz_1_1_animation_type.html#ab3c0009ad355eb9e397e61f39d1125dd">friz::AnimationType::getId</a></div><div class="ttdeci">int getId() const</div><div class="ttdef"><b>Definition:</b> animation.h:60</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html"><div class="ttname"><a href="classfriz_1_1_sequence.html">friz::Sequence</a></div><div class="ttdoc">An Animation class that can hold multiple Animation objects and execute them in sequence....</div><div class="ttdef"><b>Definition:</b> sequence.h:37</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html_a0c9bb0a0b26ce3037c8558544afcfa63"><div class="ttname"><a href="classfriz_1_1_sequence.html#a0c9bb0a0b26ce3037c8558544afcfa63">friz::Sequence::isFinished</a></div><div class="ttdeci">bool isFinished() override</div><div class="ttdef"><b>Definition:</b> sequence.h:45</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html_a1ad45997af518ba4c2ecd97ad5b89841"><div class="ttname"><a href="classfriz_1_1_sequence.html#a1ad45997af518ba4c2ecd97ad5b89841">friz::Sequence::isReady</a></div><div class="ttdeci">bool isReady() const override</div><div class="ttdef"><b>Definition:</b> sequence.h:47</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html_a6708c465313500cd253970d59f8082da"><div class="ttname"><a href="classfriz_1_1_sequence.html#a6708c465313500cd253970d59f8082da">friz::Sequence::getEffect</a></div><div class="ttdeci">Animation&lt; valueCount &gt; * getEffect(int index)</div><div class="ttdef"><b>Definition:</b> sequence.h:114</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html_aa1aa230f57a5527423c1cc88406a36f9"><div class="ttname"><a href="classfriz_1_1_sequence.html#aa1aa230f57a5527423c1cc88406a36f9">friz::Sequence::cancel</a></div><div class="ttdeci">void cancel(bool moveToEndPosition) override</div><div class="ttdoc">Cancel an in-progress animation, optionally moving directly to its end value.</div><div class="ttdef"><b>Definition:</b> sequence.h:72</div></div>
-<div class="ttc" id="aclassfriz_1_1_sequence_html_ad945696bd24e3291efa753b1039ef751"><div class="ttname"><a href="classfriz_1_1_sequence.html#ad945696bd24e3291efa753b1039ef751">friz::Sequence::gotoTime</a></div><div class="ttdeci">AnimationType::Status gotoTime(juce::int64 timeInMs) override</div><div class="ttdoc">Advance all active animations to this point in time.</div><div class="ttdef"><b>Definition:</b> sequence.h:57</div></div>
+<div class="ttc" id="aclassfriz_1_1_animation_type_html_ab531eba021173829e77ad73e99293dfc"><div class="ttname"><a href="classfriz_1_1_animation_type.html#ab531eba021173829e77ad73e99293dfc">friz::AnimationType::completionFn</a></div><div class="ttdeci">CompletionFn completionFn</div><div class="ttdoc">function to call when the animation is completed or canceled.</div><div class="ttdef"><b>Definition:</b> animation.h:126</div></div>
+<div class="ttc" id="aclassfriz_1_1_chain_html"><div class="ttname"><a href="classfriz_1_1_chain.html">friz::Chain</a></div><div class="ttdoc">A container animation object that holds several animations and executes them in order.</div><div class="ttdef"><b>Definition:</b> chain.h:41</div></div>
+<div class="ttc" id="aclassfriz_1_1_chain_html_af233fab6bf60ff41a9db1376b5bba521"><div class="ttname"><a href="classfriz_1_1_chain.html#af233fab6bf60ff41a9db1376b5bba521">friz::Chain::sequence</a></div><div class="ttdeci">std::vector&lt; std::unique_ptr&lt; AnimationType &gt; &gt; sequence</div><div class="ttdoc">the vector that owns our chain of effects.</div><div class="ttdef"><b>Definition:</b> chain.h:114</div></div>
+<div class="ttc" id="aclassfriz_1_1_chain_html_af2a35e87203b6122ff059d1a1f0fe346"><div class="ttname"><a href="classfriz_1_1_chain.html#af2a35e87203b6122ff059d1a1f0fe346">friz::Chain::currentEffect</a></div><div class="ttdeci">int currentEffect</div><div class="ttdoc">index (into the sequence vector) of the effect that we are currently processing.</div><div class="ttdef"><b>Definition:</b> chain.h:118</div></div>
+<div class="ttc" id="aclassfriz_1_1_sequence_html"><div class="ttname"><a href="classfriz_1_1_sequence.html">friz::Sequence</a></div><div class="ttdoc">An Animation class that can hold multiple Animation objects and execute them in sequence.</div><div class="ttdef"><b>Definition:</b> sequence.h:45</div></div>
+<div class="ttc" id="aclassfriz_1_1_sequence_html_a86ecac09f9fd7660cf1d33001c5716a2"><div class="ttname"><a href="classfriz_1_1_sequence.html#a86ecac09f9fd7660cf1d33001c5716a2">friz::Sequence::addAnimation</a></div><div class="ttdeci">void addAnimation(std::unique_ptr&lt; Animation&lt; ValueCount &gt; &gt; effect)</div><div class="ttdoc">Add an animation with the correct number of values to our sequence of effects.</div><div class="ttdef"><b>Definition:</b> sequence.h:58</div></div>
+<div class="ttc" id="aclassfriz_1_1_update_source_html"><div class="ttname"><a href="classfriz_1_1_update_source.html">friz::UpdateSource</a></div><div class="ttdef"><b>Definition:</b> animation.h:137</div></div>
+<div class="ttc" id="aclassfriz_1_1_update_source_html_ac6e507e25d7afc203d23d9b2397e1602"><div class="ttname"><a href="classfriz_1_1_update_source.html#ac6e507e25d7afc203d23d9b2397e1602">friz::UpdateSource::updateFn</a></div><div class="ttdeci">UpdateFn updateFn</div><div class="ttdef"><b>Definition:</b> animation.h:151</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_db9c940380f81cbed1295c06041746a2.html">friz</a></li><li class="navelem"><a class="el" href="dir_45ba7f103693e189ca5280a59280fcac.html">curves</a></li><li class="navelem"><b>sequence.h</b></li>
-    <li class="footer">Generated on Mon Feb 6 2023 13:35:36 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_db9c940380f81cbed1295c06041746a2.html">friz</a></li><li class="navelem"><a class="el" href="dir_00c9f2ed3bd18e307db93e5a28931f73.html">control</a></li><li class="navelem"><b>sequence.h</b></li>
+    <li class="footer">Generated on Sat Feb 11 2023 22:14:02 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

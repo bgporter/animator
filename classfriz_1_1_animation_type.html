@@ -95,6 +95,7 @@ $(document).ready(function(){initNavTree('classfriz_1_1_animation_type.html','')
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classfriz_1_1_animation_type-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">friz::AnimationType Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
@@ -110,10 +111,10 @@ Inheritance diagram for friz::AnimationType:</div>
 <div class="dyncontent">
 <div class="center"><img src="classfriz_1_1_animation_type__inherit__graph.png" border="0" usemap="#afriz_1_1_animation_type_inherit__map" alt="Inheritance graph"/></div>
 <map name="afriz_1_1_animation_type_inherit__map" id="afriz_1_1_animation_type_inherit__map">
-<area shape="rect" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="143,5,274,31"/>
-<area shape="rect" href="classfriz_1_1_animation.html" title=" " alt="" coords="5,79,196,104"/>
-<area shape="rect" href="classfriz_1_1_animation.html" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate..." alt="" coords="221,79,413,104"/>
-<area shape="rect" href="classfriz_1_1_sequence.html" title="An Animation class that can hold multiple Animation objects and execute them in sequence...." alt="" coords="5,152,196,177"/>
+<area shape="rect" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="116,5,247,31"/>
+<area shape="rect" href="classfriz_1_1_animation.html" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate..." alt="" coords="5,79,197,104"/>
+<area shape="rect" href="classfriz_1_1_chain.html" title="A container animation object that holds several animations and executes them in order." alt="" coords="222,79,301,104"/>
+<area shape="rect" href="classfriz_1_1_sequence.html" title="An Animation class that can hold multiple Animation objects and execute them in sequence." alt="" coords="165,152,357,177"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -123,6 +124,9 @@ Public Types</h2></td></tr>
 , <a class="el" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19">finished</a>
  }</td></tr>
 <tr class="separator:a061d5e637d7f418597a1b32ea7db320a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb71c4eb62203e3cc798d8590bcf7a80"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80">CompletionFn</a> = std::function&lt; void(int, bool)&gt;</td></tr>
+<tr class="memdesc:afb71c4eb62203e3cc798d8590bcf7a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">callback on completion of this effect  <br /></td></tr>
+<tr class="separator:afb71c4eb62203e3cc798d8590bcf7a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -133,6 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab3c0009ad355eb9e397e61f39d1125dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae431eff72c5c7eafbaf8e4dd0bad993c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#ae431eff72c5c7eafbaf8e4dd0bad993c">setDelay</a> (int delay)</td></tr>
 <tr class="separator:ae431eff72c5c7eafbaf8e4dd0bad993c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915a596b2e8aa7acf8e5b66add71cacc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#a915a596b2e8aa7acf8e5b66add71cacc">setValue</a> (size_t, std::unique_ptr&lt; <a class="el" href="classfriz_1_1_animated_value.html">AnimatedValue</a> &gt;)</td></tr>
+<tr class="separator:a915a596b2e8aa7acf8e5b66add71cacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92908f20b5c9665624f04a08631858cb"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320a">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#a92908f20b5c9665624f04a08631858cb">gotoTime</a> (juce::int64 timeInMs)=0</td></tr>
 <tr class="memdesc:a92908f20b5c9665624f04a08631858cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance all active animations to this point in time.  <br /></td></tr>
 <tr class="separator:a92908f20b5c9665624f04a08631858cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +152,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a688323bb3dc1843a191a4ae73ed61e7b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classfriz_1_1_animated_value.html">AnimatedValue</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#a688323bb3dc1843a191a4ae73ed61e7b">getValue</a> (size_t index)=0</td></tr>
 <tr class="memdesc:a688323bb3dc1843a191a4ae73ed61e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a pointer to one of this animation's value objects.  <br /></td></tr>
 <tr class="separator:a688323bb3dc1843a191a4ae73ed61e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3f68cbbc155abf7160b56515898761"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfriz_1_1_animation_type.html#abc3f68cbbc155abf7160b56515898761">onCompletion</a> (<a class="el" href="classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80">CompletionFn</a> complete)</td></tr>
+<tr class="separator:abc3f68cbbc155abf7160b56515898761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ab531eba021173829e77ad73e99293dfc"><td class="memItemLeft" align="right" valign="top"><a id="ab531eba021173829e77ad73e99293dfc" name="ab531eba021173829e77ad73e99293dfc"></a>
+<a class="el" href="classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80">CompletionFn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>completionFn</b></td></tr>
+<tr class="memdesc:ab531eba021173829e77ad73e99293dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to call when the animation is completed or canceled. <br /></td></tr>
+<tr class="separator:ab531eba021173829e77ad73e99293dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -160,7 +175,31 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class; all the real action happens in the derived templated <code><a class="el" href="classfriz_1_1_animation.html" title="This class owns a number of AnimatedValue objects. On each animation frame it gets the next calculate...">Animation</a></code> class, below. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="afb71c4eb62203e3cc798d8590bcf7a80" name="afb71c4eb62203e3cc798d8590bcf7a80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb71c4eb62203e3cc798d8590bcf7a80">&#9670;&#160;</a></span>CompletionFn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80">friz::AnimationType::CompletionFn</a> =  std::function&lt;void (int, bool)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>callback on completion of this effect </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">int</td><td>id &ndash; ID of this animation. </td></tr>
+    <tr><td class="paramname">bool</td><td>wasCanceled &ndash; true if the completion is because of cancellation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a061d5e637d7f418597a1b32ea7db320a" name="a061d5e637d7f418597a1b32ea7db320a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a061d5e637d7f418597a1b32ea7db320a">&#9670;&#160;</a></span>Status</h2>
 
@@ -222,7 +261,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#adbf301bc40526132c7dfd9646c7f7d74">friz::Animation&lt; ValueCount &gt;</a>, <a class="el" href="classfriz_1_1_animation.html#adbf301bc40526132c7dfd9646c7f7d74">friz::Animation&lt; valueCount &gt;</a>, and <a class="el" href="classfriz_1_1_sequence.html#aa1aa230f57a5527423c1cc88406a36f9">friz::Sequence&lt; valueCount &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#adbf301bc40526132c7dfd9646c7f7d74">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_chain.html#aedb684246544efe40d1dc53c81f92b39">friz::Chain</a>.</p>
 
 </div>
 </div>
@@ -285,7 +324,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>AnimatedValue* </dd></dl>
 
-<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#aee85afac57955b66a491ed66d53f337f">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_animation.html#aee85afac57955b66a491ed66d53f337f">friz::Animation&lt; valueCount &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#aee85afac57955b66a491ed66d53f337f">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_chain.html#aa27d120dd9f8877ff18a4e54d7b63f09">friz::Chain</a>.</p>
 
 </div>
 </div>
@@ -322,7 +361,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Status either processing or finished. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#a526d17cdaeafc4bbb6bac74125fa9578">friz::Animation&lt; ValueCount &gt;</a>, <a class="el" href="classfriz_1_1_animation.html#a526d17cdaeafc4bbb6bac74125fa9578">friz::Animation&lt; valueCount &gt;</a>, and <a class="el" href="classfriz_1_1_sequence.html#ad945696bd24e3291efa753b1039ef751">friz::Sequence&lt; valueCount &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#a526d17cdaeafc4bbb6bac74125fa9578">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_chain.html#a131d77aafb57a4002d90e92a3309e010">friz::Chain</a>.</p>
 
 </div>
 </div>
@@ -350,7 +389,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>true if the effect has completed. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#a166def6b6c5da77a533a38c819fb20f9">friz::Animation&lt; ValueCount &gt;</a>, <a class="el" href="classfriz_1_1_animation.html#a166def6b6c5da77a533a38c819fb20f9">friz::Animation&lt; valueCount &gt;</a>, and <a class="el" href="classfriz_1_1_sequence.html#a0c9bb0a0b26ce3037c8558544afcfa63">friz::Sequence&lt; valueCount &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#a166def6b6c5da77a533a38c819fb20f9">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_chain.html#a0c938d5300f3265138c0b2b67ddd02e7">friz::Chain</a>.</p>
 
 </div>
 </div>
@@ -378,7 +417,39 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>true if the animation is ready to be executed (e.g. has all its values set to valid <a class="el" href="classfriz_1_1_animated_value.html" title="Abstract base class for objects that can generate a useful series of values to drive UI animations.">AnimatedValue</a> objects.) </dd></dl>
 
-<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#afe73f29e377200b198d0d58f926ec895">friz::Animation&lt; ValueCount &gt;</a>, <a class="el" href="classfriz_1_1_animation.html#afe73f29e377200b198d0d58f926ec895">friz::Animation&lt; valueCount &gt;</a>, and <a class="el" href="classfriz_1_1_sequence.html#a1ad45997af518ba4c2ecd97ad5b89841">friz::Sequence&lt; valueCount &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfriz_1_1_animation.html#afe73f29e377200b198d0d58f926ec895">friz::Animation&lt; ValueCount &gt;</a>, and <a class="el" href="classfriz_1_1_chain.html#abcf922feb5831e117607814c4445e355">friz::Chain</a>.</p>
+
+</div>
+</div>
+<a id="abc3f68cbbc155abf7160b56515898761" name="abc3f68cbbc155abf7160b56515898761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3f68cbbc155abf7160b56515898761">&#9670;&#160;</a></span>onCompletion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void friz::AnimationType::onCompletion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80">CompletionFn</a>&#160;</td>
+          <td class="paramname"><em>complete</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the (optional) function that will be called once when this animation is complete. <code>completionFn</code> is public, so you can also just assign to it directly. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">complete</td><td>CompletionFn function. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -414,6 +485,44 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 
 </div>
 </div>
+<a id="a915a596b2e8aa7acf8e5b66add71cacc" name="a915a596b2e8aa7acf8e5b66add71cacc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915a596b2e8aa7acf8e5b66add71cacc">&#9670;&#160;</a></span>setValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool friz::AnimationType::setValue </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classfriz_1_1_animated_value.html">AnimatedValue</a> &gt;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classfriz_1_1_animation.html#ab9b4b7b4e4d6d0855d245562d130cee3">friz::Animation&lt; ValueCount &gt;</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Source/friz/control/<a class="el" href="animation_8h_source.html">animation.h</a></li>
 </ul>
@@ -423,7 +532,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>preDelay</b> { 0 }</td
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>friz</b></li><li class="navelem"><a class="el" href="classfriz_1_1_animation_type.html">AnimationType</a></li>
-    <li class="footer">Generated on Mon Feb 6 2023 13:35:36 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+    <li class="footer">Generated on Sat Feb 11 2023 22:14:02 for friz by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
 </body>

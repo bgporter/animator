@@ -1,0 +1,5 @@
+<map id="friz::Chain" name="friz::Chain">
+<area shape="rect" id="node1" title="A container animation object that holds several animations and executes them in order." alt="" coords="62,79,141,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_sequence.html" title="An Animation class that can hold multiple Animation objects and execute them in sequence." alt="" coords="5,152,197,177"/>
+<area shape="rect" id="node2" href="$classfriz_1_1_animation_type.html" title="Abstract base class; all the real action happens in the derived templated Animation class,..." alt="" coords="36,5,167,31"/>
+</map>

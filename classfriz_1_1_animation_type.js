@@ -1,5 +1,6 @@
 var classfriz_1_1_animation_type =
 [
+    [ "CompletionFn", "classfriz_1_1_animation_type.html#afb71c4eb62203e3cc798d8590bcf7a80", null ],
     [ "Status", "classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320a", [
       [ "processing", "classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aa4374990dedc873c6a9417a355a2ac4cf", null ],
       [ "finished", "classfriz_1_1_animation_type.html#a061d5e637d7f418597a1b32ea7db320aaa5d7ceb2c59b8cee46c2953fec9abc19", null ]
@@ -10,7 +11,9 @@ var classfriz_1_1_animation_type =
     [ "gotoTime", "classfriz_1_1_animation_type.html#a92908f20b5c9665624f04a08631858cb", null ],
     [ "isFinished", "classfriz_1_1_animation_type.html#a5d75021527a371fd9889d3200f6a6ac9", null ],
     [ "isReady", "classfriz_1_1_animation_type.html#a84536d678f49f4b9dfc99c0ca76f4367", null ],
+    [ "onCompletion", "classfriz_1_1_animation_type.html#abc3f68cbbc155abf7160b56515898761", null ],
     [ "setDelay", "classfriz_1_1_animation_type.html#ae431eff72c5c7eafbaf8e4dd0bad993c", null ],
     [ "animationId", "classfriz_1_1_animation_type.html#a882c205f1b1d58614bdad515f71ceed7", null ],
+    [ "completionFn", "classfriz_1_1_animation_type.html#ab531eba021173829e77ad73e99293dfc", null ],
     [ "preDelay", "classfriz_1_1_animation_type.html#aaf5663bfb8dad53d116b9b137e090ded", null ]
 ];

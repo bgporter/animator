@@ -6,6 +6,7 @@ var annotated_dup =
       [ "AnimationType", "classfriz_1_1_animation_type.html", "classfriz_1_1_animation_type" ],
       [ "Animator", "classfriz_1_1_animator.html", "classfriz_1_1_animator" ],
       [ "AsyncController", "classfriz_1_1_async_controller.html", "classfriz_1_1_async_controller" ],
+      [ "Chain", "classfriz_1_1_chain.html", "classfriz_1_1_chain" ],
       [ "Constant", "classfriz_1_1_constant.html", "classfriz_1_1_constant" ],
       [ "Controller", "classfriz_1_1_controller.html", "classfriz_1_1_controller" ],
       [ "DisplaySyncController", "classfriz_1_1_display_sync_controller.html", "classfriz_1_1_display_sync_controller" ],
@@ -21,6 +22,7 @@ var annotated_dup =
       [ "Spring", "classfriz_1_1_spring.html", "classfriz_1_1_spring" ],
       [ "TimeController", "classfriz_1_1_time_controller.html", "classfriz_1_1_time_controller" ],
       [ "TimedValue", "classfriz_1_1_timed_value.html", "classfriz_1_1_timed_value" ],
-      [ "ToleranceValue", "classfriz_1_1_tolerance_value.html", "classfriz_1_1_tolerance_value" ]
+      [ "ToleranceValue", "classfriz_1_1_tolerance_value.html", "classfriz_1_1_tolerance_value" ],
+      [ "UpdateSource", "classfriz_1_1_update_source.html", "classfriz_1_1_update_source" ]
     ] ]
 ];
