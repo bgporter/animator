@@ -65,6 +65,12 @@ public:
      */
     void setDelay (int delay) { preDelay = std::max (0, delay); }
 
+    virtual bool setValue (size_t index, std::unique_ptr<AnimatedValue> value)
+    {
+        jassertfalse;
+        return false;
+    }
+
     /**
      * @brief Advance all active animations to this point in time.
      *
@@ -127,6 +133,24 @@ protected:
     int preDelay { 0 };
 };
 
+template <std::size_t ValueCount> class UpdateSource
+{
+public:
+    UpdateSource () = default;
+    using ValueList = std::array<float, ValueCount>;
+    using UpdateFn  = std::function<void (int, const ValueList&)>;
+    /**
+     * Set the function that will be called with an array of animation values
+     * once per frame. `updateFn` is public, so you can also just assign to it directly.
+     * @param update UpdateFn function.
+     */
+    void onUpdate (UpdateFn update) { updateFn = update; }
+
+    /// function to call on each frame. Pass in std::array of new values,
+    /// return true if all is okay, false to cancel this animation.
+    UpdateFn updateFn;
+};
+
 /**
  * @class Animation
  *
@@ -138,12 +162,13 @@ protected:
  * Once this animation is complete, the `Animator` object that owns it will
  * garbage collect it.
  */
-template <std::size_t ValueCount> class Animation : public AnimationType
+template <std::size_t ValueCount>
+class Animation : public AnimationType,
+                  public UpdateSource<ValueCount>
 {
 public:
-    using ValueList  = std::array<float, ValueCount>;
     using SourceList = std::array<std::unique_ptr<AnimatedValue>, ValueCount>;
-    using UpdateFn   = std::function<void (int, const ValueList&)>;
+    using ValueList  = typename UpdateSource<ValueCount>::ValueList;
 
     /**
      * Create an animation object that can be populated with changing
@@ -176,7 +201,7 @@ public:
      * @param  value AnimatedValue object to generate data.
      * @return       true on success.
      */
-    bool setValue (size_t index, std::unique_ptr<AnimatedValue> value)
+    bool setValue (size_t index, std::unique_ptr<AnimatedValue> value) override
     {
         if (index >= ValueCount)
         {
@@ -203,13 +228,6 @@ public:
         jassertfalse;
         return nullptr;
     }
-
-    /**
-     * Set the function that will be called with an array of animation values
-     * once per frame. `updateFn` is public, so you can also just assign to it directly.
-     * @param update UpdateFn function.
-     */
-    void onUpdate (UpdateFn update) { updateFn = update; }
 
     /**
      * @brief Advance to the specified time, sending value updates to the
@@ -269,8 +287,8 @@ public:
                 jassertfalse;
         }
 
-        if (updateFn != nullptr)
-            updateFn (getId (), values);
+        if (this->updateFn != nullptr)
+            this->updateFn (getId (), values);
 
         if (completeCount == ValueCount)
             finished = true;
@@ -286,7 +304,7 @@ public:
                 val->cancel (moveToEndPosition);
         }
 
-        if (moveToEndPosition && updateFn != nullptr)
+        if (moveToEndPosition && this->updateFn != nullptr)
         {
             // send one more update where all of the individual values
             // have snapped to their end states.
@@ -298,7 +316,7 @@ public:
                 if (val != nullptr)
                     values[i] = val->getEndValue ();
             }
-            updateFn (getId (), values);
+            this->updateFn (getId (), values);
         }
 
         // notify that the effect is complete.
@@ -320,10 +338,6 @@ public:
     }
 
 public:
-    /// function to call on each frame. Pass in std::array of new values,
-    /// return true if all is okay, false to cancel this animation.
-    UpdateFn updateFn;
-
 private:
     /// @brief Timestamp of first update.
     juce::int64 startTime { -1 };

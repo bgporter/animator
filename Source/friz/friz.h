@@ -44,6 +44,7 @@ END_JUCE_MODULE_DECLARATION
 
 #include "control/animation.h"
 #include "control/animator.h"
+#include "control/chain.h"
 #include "control/controller.h"
 #include "control/sequence.h"
 #include "curves/animatedValue.h"

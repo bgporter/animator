@@ -24,6 +24,7 @@
 
 #include "control/animation.cpp"
 #include "control/animator.cpp"
+#include "control/chain.cpp"
 #include "control/controller.cpp"
 #include "control/sequence.cpp"
 #include "curves/animatedValue.cpp"

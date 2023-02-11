@@ -3,6 +3,7 @@
 ### Doxygen
 # - don't stry to store the generated output docs
 doxygen/docs/
+docs/
 
 
 # Created by https://www.gitignore.io/api/xcode,c++,visualstudio
