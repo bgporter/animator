@@ -100,6 +100,24 @@ public:
      * @return AnimatedValue*
      */
     virtual AnimatedValue* getValue (size_t index) = 0;
+    /**
+     * @brief callback on completion of this effect
+     * @param int id -- ID of this animation.
+     * @param bool wasCanceled -- true if the completion is because of cancellation.
+     *
+     */
+    using CompletionFn = std::function<void (int, bool)>;
+    /**
+     * Set the (optional) function that will be called once when this
+     * animation is complete.
+     * `completionFn` is public, so you can also just assign to it directly.
+     * @param complete CompletionFn function.
+     */
+    void onCompletion (CompletionFn complete) { completionFn = complete; }
+
+public:
+    /// function to call when the animation is completed or canceled.
+    CompletionFn completionFn;
 
 protected:
     /// optional ID value for this animation.
@@ -126,13 +144,6 @@ public:
     using ValueList  = std::array<float, ValueCount>;
     using SourceList = std::array<std::unique_ptr<AnimatedValue>, ValueCount>;
     using UpdateFn   = std::function<void (int, const ValueList&)>;
-    /**
-     * @brief callback on completion of this effect
-     * @param int id -- ID of this animation.
-     * @param bool wasCanceled -- true if the completion is because of cancellation.
-     *
-     */
-    using CompletionFn = std::function<void (int, bool)>;
 
     /**
      * Create an animation object that can be populated with changing
@@ -199,14 +210,6 @@ public:
      * @param update UpdateFn function.
      */
     void onUpdate (UpdateFn update) { updateFn = update; }
-
-    /**
-     * Set the (optional) function that will be called once when this
-     * animation is complete.
-     * `completionFn` is public, so you can also just assign to it directly.
-     * @param complete CompletionFn function.
-     */
-    void onCompletion (CompletionFn complete) { completionFn = complete; }
 
     /**
      * @brief Advance to the specified time, sending value updates to the
@@ -321,9 +324,6 @@ public:
     /// return true if all is okay, false to cancel this animation.
     UpdateFn updateFn;
 
-    /// function to call when the animation is completed or canceled.
-    CompletionFn completionFn;
-
 private:
     /// @brief Timestamp of first update.
     juce::int64 startTime { -1 };
@@ -337,11 +337,24 @@ private:
     SourceList sources;
 };
 
+/**
+ * @brief Factory function to create animations that are ready to run.
+ *
+ * @tparam T    AnimatedValue class to generate data
+ * @tparam ValueCount  number of data values used in the effect.
+ * @tparam Args parameter pack of additional args to pass to the AnimatedValue ctor
+ * @param id Animation ID
+ * @param from array (ValueCount long) of starting values for each of the values in the
+ * effect
+ * @param to array (ValueCount long of ending values for each of the values in the effect.
+ * @param args (0..n) additional arguments that will be passed to the ctor of the
+ *          AnimatedValue objects being created.
+ * @return std::unique_ptr<Animation<ValueCount>> pointer to the animation.
+ */
 template <class T, int ValueCount, class... Args>
-std::unique_ptr<Animation<ValueCount>> makeAnimation (int id,
-                                              std::array<float, ValueCount>&& from,
-                                              std::array<float, ValueCount>&& to,
-                                              Args... args)
+std::unique_ptr<Animation<ValueCount>> makeAnimation (
+    int id, std::array<float, ValueCount>&& from, std::array<float, ValueCount>&& to,
+    Args... args)
 {
     // make sure we're trying to create an animation object.
     static_assert (std::is_base_of<AnimatedValue, T>::value);
@@ -357,11 +370,21 @@ std::unique_ptr<Animation<ValueCount>> makeAnimation (int id,
     return animation;
 }
 
-// cleaner version to animate a single value:
+/**
+ * @brief 1-dimensional version of the makeAnimation function.
+ *
+ * @tparam T
+ * @tparam Args
+ * @param id
+ * @param from
+ * @param to
+ * @param args
+ * @return std::unique_ptr<Animation<1>>
+ */
 template <class T, class... Args>
 std::unique_ptr<Animation<1>> makeAnimation (int id, float from, float to, Args... args)
 {
-    return makeAnimation<T, 1> (id, {from}, {to}, std::forward<Args>(args)...);
+    return makeAnimation<T, 1> (id, { from }, { to }, std::forward<Args> (args)...);
 }
 
 } // namespace friz
