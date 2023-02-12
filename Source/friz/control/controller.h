@@ -25,6 +25,11 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#if JUCE_VERSION >= (7 << 16)
+#define FRIZ_VBLANK_ENABLED 1
+#else
+#define FRIZ_VBLANK_ENABLED 0
+#endif
 namespace friz
 {
 class Animator;
@@ -176,10 +181,13 @@ private:
     int frameRate { 30 };
 };
 
+#if FRIZ_VBLANK_ENABLED
 /**
  * @class DisplaySyncController
-
+ *
  * @brief Synchronize animations with a display's vertical blank interval.
+ *
+ * @warning This class is only available in code targeting JUCE 7.0.0 or higher
  *
  */
 class DisplaySyncController : public Controller
@@ -234,7 +242,7 @@ private:
     FrameRateCalculator frameRate;
     bool running { false };
 };
-
+#endif
 /**
  * @class AsyncController
  * @brief Controller to support clocking an animation manually, or at rates

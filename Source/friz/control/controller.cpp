@@ -73,6 +73,7 @@ void TimeController::timerCallback ()
     animator->gotoTime (getCurrentTime ());
 }
 
+#if FRIZ_VBLANK_ENABLED
 void DisplaySyncController::start ()
 {
     jassert (animator != nullptr);
@@ -88,6 +89,7 @@ void DisplaySyncController::start ()
         running = true;
     }
 }
+#endif
 
 bool AsyncController::gotoTime (juce::int64 timeInMs)
 {

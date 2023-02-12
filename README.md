@@ -170,6 +170,12 @@ animator.addAnimation (std::move (animation));
 
 ## Release History
 
+### 2.1.1 Feb 12, 2023
+
+#### Non-breaking Changes
+
+- added new `FRIZ_VBLANK_ENABLED` macro, which will be set to `1` if the version of JUCE being targeted is 7.0.0 or higher. 
+
 ### 2.1.0 Feb 11, 2023
 
 #### Non-breaking Changes

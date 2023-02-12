@@ -27,7 +27,7 @@ BEGIN_JUCE_MODULE_DECLARATION
 
 ID:               friz
 vendor:           bgporter
-version:          2.1.0
+version:          2.1.1
 name:             'friz' animator
 description:      Animation control classes for JUCE.
 website:          https://github.com/bgporter/animator
