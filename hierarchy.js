@@ -26,7 +26,6 @@ var hierarchy =
     [ "friz::Animator", "classfriz_1_1_animator.html", null ],
     [ "friz::Controller", "classfriz_1_1_controller.html", [
       [ "friz::AsyncController", "classfriz_1_1_async_controller.html", null ],
-      [ "friz::DisplaySyncController", "classfriz_1_1_display_sync_controller.html", null ],
       [ "friz::TimeController", "classfriz_1_1_time_controller.html", null ]
     ] ],
     [ "friz::FrameRateCalculator", "classfriz_1_1_frame_rate_calculator.html", null ],

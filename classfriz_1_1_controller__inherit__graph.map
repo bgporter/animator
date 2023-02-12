@@ -1,6 +1,5 @@
 <map id="friz::Controller" name="friz::Controller">
-<area shape="rect" id="node1" title=" " alt="" coords="201,5,301,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="102,5,202,31"/>
 <area shape="rect" id="node2" href="$classfriz_1_1_async_controller.html" title="Controller to support clocking an animation manually, or at rates that aren&#39;t tied to wall&#45;clock time..." alt="" coords="5,79,141,104"/>
-<area shape="rect" id="node3" href="$classfriz_1_1_display_sync_controller.html" title="Synchronize animations with a display&#39;s vertical blank interval." alt="" coords="165,79,336,104"/>
-<area shape="rect" id="node4" href="$classfriz_1_1_time_controller.html" title=" " alt="" coords="361,79,490,104"/>
+<area shape="rect" id="node3" href="$classfriz_1_1_time_controller.html" title=" " alt="" coords="166,79,295,104"/>
 </map>

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['displaysynccontroller_0',['DisplaySyncController',['../classfriz_1_1_display_sync_controller.html',1,'friz']]]
+  ['easein_0',['EaseIn',['../classfriz_1_1_ease_in.html',1,'friz']]],
+  ['easeout_1',['EaseOut',['../classfriz_1_1_ease_out.html',1,'friz']]],
+  ['easingcurve_2',['EasingCurve',['../classfriz_1_1_easing_curve.html',1,'friz']]]
 ];

@@ -9,7 +9,6 @@ var annotated_dup =
       [ "Chain", "classfriz_1_1_chain.html", "classfriz_1_1_chain" ],
       [ "Constant", "classfriz_1_1_constant.html", "classfriz_1_1_constant" ],
       [ "Controller", "classfriz_1_1_controller.html", "classfriz_1_1_controller" ],
-      [ "DisplaySyncController", "classfriz_1_1_display_sync_controller.html", "classfriz_1_1_display_sync_controller" ],
       [ "EaseIn", "classfriz_1_1_ease_in.html", "classfriz_1_1_ease_in" ],
       [ "EaseOut", "classfriz_1_1_ease_out.html", "classfriz_1_1_ease_out" ],
       [ "EasingCurve", "classfriz_1_1_easing_curve.html", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['frameratecalculator_0',['FrameRateCalculator',['../classfriz_1_1_frame_rate_calculator.html',1,'friz']]]
+  ['linear_0',['Linear',['../classfriz_1_1_linear.html',1,'friz']]]
 ];
