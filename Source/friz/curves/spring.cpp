@@ -23,9 +23,9 @@
 
 namespace friz
 {
-Spring::Spring (float startVal, float endVal, float tolerance, float accel,
+Spring::Spring (float startVal_, float endVal_, float tolerance_, float accel,
                 float damping_)
-: ToleranceValue (startVal, endVal, tolerance)
+: ToleranceValue (startVal_, endVal_, tolerance_)
 , acceleration (accel)
 , damping (damping_)
 , velocity (0)

@@ -74,8 +74,8 @@ Parametric::Parametric (CurveType type, float startVal, float endVal, int durati
 {
 }
 
-Parametric::Parametric (float startVal, float endVal, int duration, CurveType type)
-: TimedValue (startVal, endVal, duration)
+Parametric::Parametric (float startVal_, float endVal_, int duration_, CurveType type)
+: TimedValue (startVal_, endVal_, duration_)
 {
     switch (type)
     {

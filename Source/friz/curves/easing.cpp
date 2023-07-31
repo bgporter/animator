@@ -25,8 +25,8 @@
 namespace friz
 {
 
-EasingCurve::EasingCurve (float startVal, float endVal, float tolerance, float slewRate_)
-: ToleranceValue (startVal, endVal, tolerance)
+EasingCurve::EasingCurve (float startVal_, float endVal_, float tolerance_, float slewRate_)
+: ToleranceValue (startVal_, endVal_, tolerance_)
 , slewRate (slewRate_)
 {
 }
