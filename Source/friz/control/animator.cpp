@@ -76,7 +76,7 @@ void Animator::gotoTime (juce::int64 timeInMs)
     juce::ScopedLock lock { mutex };
 
     // for (auto& animation : animations)
-    for (int i { 0 }; i < animations.size (); ++i)
+    for (size_t i { 0 }; i < animations.size (); ++i)
     {
         auto& animation { animations[i] };
         if (animation.get () != nullptr)
@@ -185,7 +185,7 @@ bool Animator::updateTarget (int id, int valueIndex, float newTarget)
     {
         for (auto* animation : foundAnimations)
         {
-            auto* value { animation->getValue (valueIndex) };
+            auto* value { animation->getValue (static_cast<size_t> (valueIndex)) };
             if (value)
                 value->updateTarget (newTarget);
         }

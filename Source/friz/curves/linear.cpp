@@ -24,8 +24,8 @@
 namespace friz
 {
 
-Linear::Linear (float startVal, float endVal, int duration)
-: TimedValue (startVal, endVal, duration)
+Linear::Linear (float startVal_, float endVal_, int duration_)
+: TimedValue (startVal_, endVal_, duration_)
 {
     jassert (duration > 0);
 }

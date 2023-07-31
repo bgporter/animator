@@ -43,7 +43,7 @@ public:
     , endVal { endVal_ }
     , currentVal { startVal_ } {
 
-    };
+    }
 
     virtual ~AnimatedValue () = default;
 
@@ -120,9 +120,9 @@ protected:
 class ToleranceValue : public AnimatedValue
 {
 public:
-    ToleranceValue (float startVal, float endVal, float tolerance)
-    : AnimatedValue { startVal, endVal }
-    , tolerance { tolerance }
+    ToleranceValue (float startVal_, float endVal_, float tolerance_)
+    : AnimatedValue { startVal_, endVal_ }
+    , tolerance { tolerance_ }
     {
     }
 
@@ -193,8 +193,8 @@ protected:
 class TimedValue : public AnimatedValue
 {
 public:
-    TimedValue (float startVal, float endVal, int duration_)
-    : AnimatedValue { startVal, endVal }
+    TimedValue (float startVal_, float endVal_, int duration_)
+    : AnimatedValue { startVal_, endVal_ }
     , duration { duration_ }
     {
     }

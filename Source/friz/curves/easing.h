@@ -66,8 +66,8 @@ private:
 class SmoothedValue : public EaseIn
 {
 public:
-    SmoothedValue (float startVal, float endVal, float tolerance, float slewRate)
-    : EaseIn (startVal, endVal, tolerance, slewRate)
+    SmoothedValue (float startVal_, float endVal_, float tolerance_, float slewRate_)
+    : EaseIn (startVal_, endVal_, tolerance_, slewRate_)
     {
     }
 

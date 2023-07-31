@@ -24,13 +24,13 @@
 namespace friz
 {
 
-Constant::Constant (float value, int duration)
-: TimedValue (value, value, duration)
+Constant::Constant (float value, int duration_)
+: TimedValue (value, value, duration_)
 {
 }
 
-Constant::Constant (float /*startVal*/, float endVal_, int duration)
-: Constant (endVal_, duration)
+Constant::Constant (float /*startVal*/, float endVal_, int duration_)
+: Constant (endVal_, duration_)
 {
 }
 

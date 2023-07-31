@@ -71,7 +71,7 @@ private:
     /// @brief  keep a running sum of intervals so we can just divide.
     std::atomic<int> sum { 0 };
     std::atomic<int> updateCount { 0 };
-    int index { 0 };
+    size_t index { 0 };
 };
 
 class Controller

@@ -69,13 +69,13 @@ float easeInBounce (float x)
 namespace friz
 {
 
-Parametric::Parametric (CurveType type, float startVal, float endVal, int duration)
-: Parametric (startVal, endVal, duration, type)
+Parametric::Parametric (CurveType type, float startVal_, float endVal_, int duration_)
+: Parametric (startVal_, endVal_, duration_, type)
 {
 }
 
-Parametric::Parametric (float startVal, float endVal, int duration, CurveType type)
-: TimedValue (startVal, endVal, duration)
+Parametric::Parametric (float startVal_, float endVal_, int duration_, CurveType type)
+: TimedValue (startVal_, endVal_, duration_)
 {
     switch (type)
     {
