@@ -40,18 +40,15 @@ namespace friz
 class Chain : public AnimationType
 {
 public:
-    Chain (int id = 0)
-    : AnimationType (id)
-    {
-    }
+    Chain (int id = 0) : AnimationType (id) {}
 
-    bool isFinished () override { return (currentEffect >= sequence.size ()); }
+    bool isFinished() override { return (currentEffect >= static_cast<int> (sequence.size())); }
 
-    bool isReady () const override
+    bool isReady() const override
     {
         for (const auto& effect : sequence)
         {
-            if ((nullptr == effect) || (!effect->isReady ()))
+            if ((nullptr == effect) || (! effect->isReady()))
                 return false;
         }
         return true;
@@ -65,15 +62,15 @@ public:
             if (AnimationType::Status::finished == effect->gotoTime (timeInMs))
                 ++currentEffect;
 
-            return isFinished () ? AnimationType::Status::finished
-                                 : AnimationType::Status::processing;
+            return isFinished() ? AnimationType::Status::finished
+                                : AnimationType::Status::processing;
         }
         return AnimationType::Status::finished;
     }
 
     void cancel (bool moveToEndPosition) override
     {
-        currentEffect = static_cast<int> (sequence.size () - 1);
+        currentEffect = static_cast<int> (sequence.size() - 1);
         if (moveToEndPosition)
         {
             auto lastEffectPtr = getEffect (currentEffect);
@@ -103,7 +100,7 @@ private:
     AnimationType* getEffect (int index)
     {
         if (juce::isPositiveAndBelow (index, sequence.size ()))
-            return sequence[index].get ();
+            return sequence[static_cast<size_t> (index)].get ();
 
         jassertfalse;
         return nullptr;
