@@ -43,7 +43,7 @@ public:
     , endVal { endVal_ }
     , currentVal { startVal_ } {
 
-    };
+    }
 
     virtual ~AnimatedValue () = default;
 
