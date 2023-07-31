@@ -189,9 +189,9 @@ public:
      * @param sources List of animated value objects.
      * @param id
      */
-    Animation (SourceList&& sources, int id = 0)
+    Animation (SourceList&& sources_, int id = 0)
     : AnimationType { id }
-    , sources { std::move (sources) }
+    , sources { std::move (sources_) }
     {
     }
 
