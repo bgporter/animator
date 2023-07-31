@@ -26,7 +26,6 @@ namespace friz
 Spring::Spring (float startVal, float endVal, float tolerance, float accel,
                 float damping_)
 : ToleranceValue (startVal, endVal, tolerance)
-, startAcceleration (accel)
 , acceleration (accel)
 , damping (damping_)
 , velocity (0)

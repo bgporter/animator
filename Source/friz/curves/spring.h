@@ -53,9 +53,6 @@ private:
     float generateNextValue () override;
 
 private:
-    /// The initial acceleration for this value.
-    float startAcceleration;
-
     /// When we're in a damping state, the acceleration will change.
     float acceleration;
 
