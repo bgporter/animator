@@ -273,7 +273,7 @@ public:
         ValueList values;
         int completeCount { 0 };
 
-        for (int i = 0; i < ValueCount; ++i)
+        for (size_t i = 0; i < ValueCount; ++i)
         {
             auto& val = sources[i];
             if (val != nullptr)
@@ -309,7 +309,7 @@ public:
             // send one more update where all of the individual values
             // have snapped to their end states.
             ValueList values;
-            for (int i = 0; i < ValueCount; ++i)
+            for (size_t i = 0; i < ValueCount; ++i)
             {
                 auto& val = sources[i];
                 jassert (val != nullptr);
@@ -375,7 +375,7 @@ std::unique_ptr<Animation<ValueCount>> makeAnimation (
 
     auto animation { std::make_unique<Animation<ValueCount>> (id) };
 
-    for (int i { 0 }; i < ValueCount; ++i)
+    for (size_t i { 0 }; i < ValueCount; ++i)
     {
         auto curve { std::make_unique<T> (from[i], to[i], std::forward<Args> (args)...) };
         animation->setValue (i, std::move (curve));
