@@ -55,7 +55,7 @@ float FrameRateCalculator::get () const
     // convert the average interval between updates into a rate/sec
     const int divisor = std::min (updateCount.load (), frameCount);
     if (divisor > 0)
-        return 1000.f / (sum.load () / static_cast<float> (divisor));
+        return 1000.f / (static_cast<float> (sum.load ()) / static_cast<float> (divisor));
     return 0.f;
 }
 

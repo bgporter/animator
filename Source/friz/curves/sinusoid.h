@@ -89,8 +89,8 @@ public:
      */
 
     Sinusoid (int startQuad, int endQuad, int duration_)
-    : Sinusoid (startQuad * juce::MathConstants<float>::halfPi,
-                endQuad * juce::MathConstants<float>::halfPi, duration_)
+    : Sinusoid (static_cast<float> (startQuad) * juce::MathConstants<float>::halfPi,
+                static_cast<float> (endQuad) * juce::MathConstants<float>::halfPi, duration_)
     {
     }
 

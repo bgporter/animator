@@ -150,7 +150,7 @@ public:
      *
      * @return float
      */
-    float getFrameRate () const override { return isRunning () ? frameRate : 0.f; }
+    float getFrameRate () const override { return isRunning () ? static_cast<float> (frameRate) : 0.f; }
 
     /**
      * @brief Called whenever we need to start timer callbacks flowing.
